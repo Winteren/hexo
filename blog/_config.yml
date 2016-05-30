@@ -69,4 +69,7 @@ theme: yelee
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type:
+  type: git
+  repo: https://github.com/Summeren/hexo.git
+  branch: gh-pages
+
