@@ -6,13 +6,6 @@ sudo: false
 node_js:
 - '5'
 before_install:
-- mkdir -p ~/.ssh/
-- ls ~/.ssh/
-- openssl aes-256-cbc -K $encrypted_b5a1a1806c12_key -iv $encrypted_b5a1a1806c12_iv  -in id_rsa.enc -out ~/.ssh/id_rsa -d
-- chmod 600 ~/.ssh/id_rsa
-- eval $(ssh-agent)
-- ssh-add ~/.ssh/id_rsa
-- cp ssh_config ~/.ssh/config
 - git config --global user.name "summeren"
 - git config --global user.email "Summeren@users.noreply.github.com"
 install:
@@ -26,4 +19,14 @@ script:
 - hexo clean
 - hexo g
 - cp CNAME public/CNAME
-- hexo d
+
+after_success:
+- mkdir .deploy
+- cd .deploy
+- git clone --depth 1 --branch gh-pages --single-branch $DEPLOY_REPO . || (git init && git remote add -t gh-pages origin $DEPLOY_REPO)
+- rm -rf ./*
+- cp -r ../public/* .
+- git add -A .
+- git commit -m 'Site updated'
+- git branch -m gh-pages
+- git push -q -u origin gh-pages
