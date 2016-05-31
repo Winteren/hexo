@@ -2,7 +2,7 @@
 title: Hello World
 date: 2014-11-19 00:00:00
 categories:
-- hello
+- hexo
 tags: 
 - hello
 description: 
