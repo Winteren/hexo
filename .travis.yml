@@ -23,7 +23,6 @@ install:
 - npm install hexo-generator-sitemap --save
 - npm install hexo-deployer-git --save
 script:
-- cd blog
 - hexo clean
 - hexo g
 - cp CNAME public/CNAME
