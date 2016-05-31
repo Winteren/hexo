@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-05-31T04:28:05.695Z</updated>
+  <updated>2016-05-31T04:30:15.722Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,31 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>test</title>
+    <link href="http://yoursite.com/2016/05/31/test/"/>
+    <id>http://yoursite.com/2016/05/31/test/</id>
+    <published>2016-05-31T04:30:15.722Z</published>
+    <updated>2016-05-31T04:30:15.722Z</updated>
+    
+    <content type="html">&lt;p&gt;Welcome&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Welcome&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Hello World</title>
-    <link href="http://yoursite.com/2016/05/31/hello-world/"/>
-    <id>http://yoursite.com/2016/05/31/hello-world/</id>
-    <published>2016-05-31T04:28:05.695Z</published>
-    <updated>2016-05-31T04:28:05.695Z</updated>
+    <link href="http://yoursite.com/2014/11/18/hello-world/"/>
+    <id>http://yoursite.com/2014/11/18/hello-world/</id>
+    <published>2014-11-18T16:00:00.000Z</published>
+    <updated>2016-05-31T04:30:15.722Z</updated>
     
     <content type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
@@ -40,26 +60,10 @@
     
     </summary>
     
+      <category term="hello" scheme="http://yoursite.com/categories/hello/"/>
     
-  </entry>
-  
-  <entry>
-    <title>test</title>
-    <link href="http://yoursite.com/2016/05/31/test/"/>
-    <id>http://yoursite.com/2016/05/31/test/</id>
-    <published>2016-05-31T04:28:05.695Z</published>
-    <updated>2016-05-31T04:28:05.695Z</updated>
     
-    <content type="html">&lt;p&gt;Welcome&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Welcome&lt;/p&gt;
-
-    
-    </summary>
-    
+      <category term="hello" scheme="http://yoursite.com/tags/hello/"/>
     
   </entry>
   
