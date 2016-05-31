@@ -9,4 +9,7 @@ ls -l /usr/local/bin/node
 ls -l /usr/local/bin/npm
 
 sudo npm install hexo-cli -g
+cd blog
 npm install
+npm install hexo-deployer-git --save
+
