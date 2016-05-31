@@ -14,7 +14,7 @@ menu:
   关于我: /about/
 
 # Link to your avatar | 填写头像地址
-avatar: /img/avatar.png
+avatar: https://avatars2.githubusercontent.com/u/12403606?v=3&s=460
 
 # Small icon of Your site | 站点小图标地址
 favicon: /favicon.png
@@ -168,7 +168,7 @@ friends:
 #friends: false
 
 #是否开启“关于我”。
-aboutme: 专注于前端
+aboutme: Apple
 #aboutme: false
 
 # 是否在新窗口打开链接
