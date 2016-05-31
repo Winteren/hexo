@@ -26,4 +26,5 @@ script:
 - cd blog
 - hexo clean
 - hexo g
+- cp CNAME public/CNAME
 - hexo d
