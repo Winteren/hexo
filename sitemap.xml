@@ -2,44 +2,44 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://yoursite.com/2015/11/19/test/</loc>
+    <loc>http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/</loc>
     
-    <lastmod>2016-06-01T23:36:00.620Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/about/index.html</loc>
-    
-    <lastmod>2016-06-01T23:36:00.620Z</lastmod>
+    <lastmod>2016-06-01T23:37:23.836Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/tags/index.html</loc>
+    <loc>http://blog.xueni.ren/2016/06/01/MySQL-batch-insert/</loc>
     
-    <lastmod>2016-06-01T23:36:00.620Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/06/01/Java-compli-read-notes-basis/</loc>
-    
-    <lastmod>2016-06-01T23:36:00.616Z</lastmod>
+    <lastmod>2016-06-01T23:37:23.836Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2016/06/01/MySQL-batch-insert/</loc>
+    <loc>http://blog.xueni.ren/2014/11/19/hello-world/</loc>
     
-    <lastmod>2016-06-01T23:36:00.616Z</lastmod>
+    <lastmod>2016-06-01T23:37:23.836Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2014/11/19/hello-world/</loc>
+    <loc>http://blog.xueni.ren/2015/11/19/test/</loc>
     
-    <lastmod>2016-06-01T23:36:00.616Z</lastmod>
+    <lastmod>2016-06-01T23:37:23.836Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.xueni.ren/about/index.html</loc>
+    
+    <lastmod>2016-06-01T23:37:23.836Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.xueni.ren/tags/index.html</loc>
+    
+    <lastmod>2016-06-01T23:37:23.836Z</lastmod>
     
   </url>
   
