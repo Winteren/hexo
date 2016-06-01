@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.xueni.ren/"/>
-  <updated>2016-06-01T23:53:59.409Z</updated>
+  <updated>2016-06-01T23:56:25.921Z</updated>
   <id>http://blog.xueni.ren/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/"/>
     <id>http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/</id>
     <published>2016-06-01T15:15:45.000Z</published>
-    <updated>2016-06-01T23:53:59.409Z</updated>
+    <updated>2016-06-01T23:56:25.921Z</updated>
     
     <content type="html">&lt;p&gt;基础篇，从各种概念开始。&lt;br&gt;       所谓线程安全：&lt;br&gt;       -当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步货协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。&lt;br&gt;       -在线程安全类中封装来必要的同步机制，因此客户端无须进一步采取同步措施。&lt;br&gt;       -无状态对象一定是线程安全的。&lt;br&gt;       在并发编程中，这种由于不恰当的执行时序而出现的不正确的结果是一种非常重要的情况，它有一个正式的名字：&lt;strong&gt;竞态条件&lt;/strong&gt;。&lt;br&gt;       原子操作：作为一个不可分割的操作来执行。我们所熟知的 ++i 并不是一个原子操作，它实际上是一个 ¨读取 i 值 – 修改 i 值 – 写入 i 值¨ 的操作序列，并且其结果依赖于之前的状态。&lt;/p&gt;
 </content>
@@ -43,7 +43,7 @@
     <link href="http://blog.xueni.ren/2016/06/01/MySQL-batch-insert/"/>
     <id>http://blog.xueni.ren/2016/06/01/MySQL-batch-insert/</id>
     <published>2016-06-01T14:22:22.000Z</published>
-    <updated>2016-06-01T23:53:59.409Z</updated>
+    <updated>2016-06-01T23:56:25.921Z</updated>
     
     <content type="html">&lt;h1 id=&quot;MySQL-优化&quot;&gt;&lt;a href=&quot;#MySQL-优化&quot; class=&quot;headerlink&quot; title=&quot;MySQL 优化&quot;&gt;&lt;/a&gt;MySQL 优化&lt;/h1&gt;</content>
     
@@ -65,7 +65,7 @@
     <link href="http://blog.xueni.ren/2015/11/19/test/"/>
     <id>http://blog.xueni.ren/2015/11/19/test/</id>
     <published>2015-11-18T16:00:00.000Z</published>
-    <updated>2016-06-01T23:53:59.409Z</updated>
+    <updated>2016-06-01T23:56:25.921Z</updated>
     
     <content type="html">&lt;h1 id=&quot;Welcome&quot;&gt;&lt;a href=&quot;#Welcome&quot; class=&quot;headerlink&quot; title=&quot;Welcome&quot;&gt;&lt;/a&gt;Welcome&lt;/h1&gt;</content>
     
@@ -83,11 +83,43 @@
   </entry>
   
   <entry>
+    <title>发布pelican博客</title>
+    <link href="http://blog.xueni.ren/2015/04/01/pelican-blog/"/>
+    <id>http://blog.xueni.ren/2015/04/01/pelican-blog/</id>
+    <published>2015-03-31T16:00:00.000Z</published>
+    <updated>2016-06-01T23:56:25.921Z</updated>
+    
+    <content type="html">&lt;p&gt;没有前言，没有概述，做个笔记而已。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;在&lt;code&gt;content&lt;/code&gt;目录里新建 &lt;code&gt;.py&lt;/code&gt; 文件，写完之后执行&lt;code&gt;pelican content&lt;/code&gt;，生成页面。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cd&lt;/code&gt; 到&lt;code&gt;output&lt;/code&gt;里 执行&lt;code&gt;python -m pelican.server&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;localhost:8000&lt;/code&gt; 查看效果。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cd&lt;/code&gt;到&lt;code&gt;blog&lt;/code&gt;的根目录，执行 &lt;code&gt;sh push_to.sh&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;最后，记得也要把&lt;code&gt;blog&lt;/code&gt;的&lt;code&gt;content&lt;/code&gt;也&lt;code&gt;push&lt;/code&gt;到&lt;code&gt;github&lt;/code&gt;上。&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+    
+    <summary type="html">
+    
+      记录发布python pelican博客的发布方法
+    
+    </summary>
+    
+      <category term="pelican" scheme="http://blog.xueni.ren/categories/pelican/"/>
+    
+      <category term="python" scheme="http://blog.xueni.ren/categories/pelican/python/"/>
+    
+    
+      <category term="blog" scheme="http://blog.xueni.ren/tags/blog/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Hello World</title>
     <link href="http://blog.xueni.ren/2014/11/19/hello-world/"/>
     <id>http://blog.xueni.ren/2014/11/19/hello-world/</id>
     <published>2014-11-18T16:00:00.000Z</published>
-    <updated>2016-06-01T23:53:59.409Z</updated>
+    <updated>2016-06-01T23:56:25.921Z</updated>
     
     <content type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
