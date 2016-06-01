@@ -6,8 +6,7 @@ categories:
 - python
 tags: 
 - blog
-description: 
-记录发布python pelican博客的发布方法
+description: 记录发布python pelican博客的发布方法
 ---
 
 没有前言，没有概述，做个笔记而已。
