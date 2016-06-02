@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.xueni.ren/"/>
-  <updated>2016-06-02T04:34:04.359Z</updated>
+  <updated>2016-06-02T04:36:55.697Z</updated>
   <id>http://blog.xueni.ren/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/"/>
     <id>http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/</id>
     <published>2016-06-01T15:15:45.000Z</published>
-    <updated>2016-06-02T04:34:04.359Z</updated>
+    <updated>2016-06-02T04:36:55.697Z</updated>
     
     <content type="html">&lt;p&gt;基础篇，从各种概念开始。&lt;br&gt;       所谓线程安全：&lt;br&gt;       -当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步货协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。&lt;br&gt;       -在线程安全类中封装来必要的同步机制，因此客户端无须进一步采取同步措施。&lt;br&gt;       -无状态对象一定是线程安全的。&lt;br&gt;       在并发编程中，这种由于不恰当的执行时序而出现的不正确的结果是一种非常重要的情况，它有一个正式的名字：&lt;strong&gt;竞态条件&lt;/strong&gt;。&lt;br&gt;       原子操作：作为一个不可分割的操作来执行。我们所熟知的 ++i 并不是一个原子操作，它实际上是一个 ¨读取 i 值 – 修改 i 值 – 写入 i 值¨ 的操作序列，并且其结果依赖于之前的状态。&lt;/p&gt;
 </content>
@@ -43,7 +43,7 @@
     <link href="http://blog.xueni.ren/2016/06/01/MySQL-batch-insert/"/>
     <id>http://blog.xueni.ren/2016/06/01/MySQL-batch-insert/</id>
     <published>2016-06-01T14:22:22.000Z</published>
-    <updated>2016-06-02T04:34:04.363Z</updated>
+    <updated>2016-06-02T04:36:55.697Z</updated>
     
     <content type="html">&lt;p&gt;最近开始玩 &lt;strong&gt;MyBatis&lt;/strong&gt; ，想实现这么一个功能，就是将一张表里的数据作为历史数据存储到另一张表里去。&lt;br&gt;一开始我的代码是这么写的：&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
@@ -76,10 +76,11 @@
     <link href="http://blog.xueni.ren/2015/11/19/test/"/>
     <id>http://blog.xueni.ren/2015/11/19/test/</id>
     <published>2015-11-18T16:00:00.000Z</published>
-    <updated>2016-06-02T04:34:04.363Z</updated>
+    <updated>2016-06-02T04:36:55.697Z</updated>
     
     <content type="html">&lt;p&gt;&lt;a href=&quot;https://help.github.com/articles/basic-writing-and-formatting-syntax/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;md语法&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id=&quot;This-is-an-tag&quot;&gt;&lt;a href=&quot;#This-is-an-tag&quot; class=&quot;headerlink&quot; title=&quot;This is an  tag&quot;&gt;&lt;/a&gt;This is an &lt;h1&gt; tag&lt;/h1&gt;&lt;h2 id=&quot;This-is-an-tag-1&quot;&gt;&lt;a href=&quot;#This-is-an-tag-1&quot; class=&quot;headerlink&quot; title=&quot;This is an  tag&quot;&gt;&lt;/a&gt;This is an &lt;h2&gt; tag&lt;/h2&gt;&lt;h6 id=&quot;This-is-an-tag-2&quot;&gt;&lt;a href=&quot;#This-is-an-tag-2&quot; class=&quot;headerlink&quot; title=&quot;This is an  tag&quot;&gt;&lt;/a&gt;This is an &lt;h6&gt; tag&lt;/h6&gt;&lt;p&gt;&lt;em&gt;This text will be italic&lt;/em&gt;&lt;br&gt;&lt;em&gt;This will also be italic&lt;/em&gt;&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h1 id=&quot;This-is-an-h1-tag&quot;&gt;&lt;a href=&quot;#This-is-an-h1-tag&quot; class=&quot;headerlink&quot; title=&quot;This is an h1 tag&quot;&gt;&lt;/a&gt;This is an h1 tag&lt;/h1&gt;&lt;h2 id=&quot;This-is-an-h2-tag&quot;&gt;&lt;a href=&quot;#This-is-an-h2-tag&quot; class=&quot;headerlink&quot; title=&quot;This is an h2 tag&quot;&gt;&lt;/a&gt;This is an h2 tag&lt;/h2&gt;&lt;h6 id=&quot;This-is-an-h6-tag&quot;&gt;&lt;a href=&quot;#This-is-an-h6-tag&quot; class=&quot;headerlink&quot; title=&quot;This is an h6 tag&quot;&gt;&lt;/a&gt;This is an h6 tag&lt;/h6&gt;&lt;p&gt;&lt;em&gt;This text will be italic&lt;/em&gt;&lt;br&gt;&lt;em&gt;This will also be italic&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;This text will be bold&lt;/strong&gt;&lt;br&gt;&lt;strong&gt;This will also be bold&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;You &lt;strong&gt;can&lt;/strong&gt; combine them&lt;/em&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -130,12 +131,11 @@
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;p&gt;@octocat :+1: This PR looks great - it’s ready to merge! :shipit:&lt;/p&gt;
-&lt;/h6&gt;&lt;/h2&gt;&lt;/h1&gt;</content>
+</content>
     
     <summary type="html">
     
-      &lt;p&gt;&lt;a href=&quot;https://help.github.com/articles/basic-writing-and-formatting-syntax/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;md语法&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id=&quot;This-
+      &lt;p&gt;&lt;a href=&quot;https://help.github.com/articles/basic-writing-and-formatting-syntax/&quot;&gt;md语法&lt;/a&gt;&lt;/p&gt;
     
     </summary>
     
@@ -151,7 +151,7 @@
     <link href="http://blog.xueni.ren/2015/04/01/pelican-blog/"/>
     <id>http://blog.xueni.ren/2015/04/01/pelican-blog/</id>
     <published>2015-03-31T16:00:00.000Z</published>
-    <updated>2016-06-02T04:34:04.363Z</updated>
+    <updated>2016-06-02T04:36:55.697Z</updated>
     
     <content type="html">&lt;p&gt;没有前言，没有概述，做个笔记而已。&lt;/p&gt;
 &lt;ol&gt;
@@ -183,7 +183,7 @@
     <link href="http://blog.xueni.ren/2014/11/19/hello-world/"/>
     <id>http://blog.xueni.ren/2014/11/19/hello-world/</id>
     <published>2014-11-18T16:00:00.000Z</published>
-    <updated>2016-06-02T04:34:04.363Z</updated>
+    <updated>2016-06-02T04:36:55.697Z</updated>
     
     <content type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
