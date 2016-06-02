@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.xueni.ren/"/>
-  <updated>2016-06-02T02:42:00.526Z</updated>
+  <updated>2016-06-02T02:43:15.102Z</updated>
   <id>http://blog.xueni.ren/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/"/>
     <id>http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/</id>
     <published>2016-06-01T15:15:45.000Z</published>
-    <updated>2016-06-02T02:42:00.526Z</updated>
+    <updated>2016-06-02T02:43:15.102Z</updated>
     
     <content type="html">&lt;p&gt;基础篇，从各种概念开始。&lt;br&gt;       所谓线程安全：&lt;br&gt;       -当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步货协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。&lt;br&gt;       -在线程安全类中封装来必要的同步机制，因此客户端无须进一步采取同步措施。&lt;br&gt;       -无状态对象一定是线程安全的。&lt;br&gt;       在并发编程中，这种由于不恰当的执行时序而出现的不正确的结果是一种非常重要的情况，它有一个正式的名字：&lt;strong&gt;竞态条件&lt;/strong&gt;。&lt;br&gt;       原子操作：作为一个不可分割的操作来执行。我们所熟知的 ++i 并不是一个原子操作，它实际上是一个 ¨读取 i 值 – 修改 i 值 – 写入 i 值¨ 的操作序列，并且其结果依赖于之前的状态。&lt;/p&gt;
 </content>
@@ -43,11 +43,11 @@
     <link href="http://blog.xueni.ren/2016/06/01/MySQL-batch-insert/"/>
     <id>http://blog.xueni.ren/2016/06/01/MySQL-batch-insert/</id>
     <published>2016-06-01T14:22:22.000Z</published>
-    <updated>2016-06-02T02:42:00.526Z</updated>
+    <updated>2016-06-02T02:43:15.102Z</updated>
     
     <content type="html">&lt;p&gt;最近开始玩 &lt;strong&gt;MyBatis&lt;/strong&gt; ，想实现这么一个功能，就是将一张表里的数据作为历史数据存储到另一张表里去。&lt;br&gt;一开始我的代码是这么写的：&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;  List&amp;lt;BookHistory&amp;gt; bookHistories = bookHisDao.getBookList();&lt;span class=&quot;comment&quot;&gt;//获取需要存储的历史数据&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; (BookHistory BookHistory:bookHistories) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			BookHistory book = bookHisDao.selectBookById(BookHistory);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt; == book)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;				bookHisDao.insertBook(bookHistory);&lt;span class=&quot;comment&quot;&gt;// 数据入库操作&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;```	&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;看起来简单粗暴，似乎没有什么问题，查询出来一个`list`，然后循环遍历，检查是否已经存在历史库中，如果不存在则入库。功能也正确实现，但是，存在的问题是，速度有点太慢。`&lt;span class=&quot;number&quot;&gt;2007&lt;/span&gt;` 条数据的执行时间是 `&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;m &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;s &lt;span class=&quot;number&quot;&gt;505&lt;/span&gt;ms` 。对于追求完美的我，这是不能忍受的，首先我能想到的就是优化入库操作，因为一条数据一条数据的插入，确实会速度特别慢，说干就干，首先先将入库操作由原来的一条一条入库改成批量入库。接下来我的代码变成了这样：&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;```java&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  List&amp;lt;BookHistory&amp;gt; bookHistories = bookHisDao.getBookList();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		Iterator&amp;lt;BookHistory&amp;gt; bookIter= bookHistories.iterator();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt; (bookIter.hasNext())&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			BookHistory bookHistory = bookIter.next();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			BookHistory book = bookHisDao.selectBookById(bookHistory);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt; != book)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;				bookIter.remove();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; count = bookHisDao.insertBookBatch(bookHistories);&lt;span class=&quot;comment&quot;&gt;//批量入库操作&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;insert &quot;&lt;/span&gt;+count+&lt;span class=&quot;string&quot;&gt;&quot; records&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;改成批量入库操作后，速度直线上升，`2007`条数据的执行时间是 `6s 737ms` ，现在看来，情况很乐观，但是随之而来的又出来了另一个问题，因为做测试，我并没有将所有字段都进行入库操作。    当我把字段补齐时，控制台报了这样一个错：
-&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;改成批量入库操作后，速度直线上升，&lt;code&gt;2007&lt;/code&gt;条数据的执行时间是 &lt;code&gt;6s 737ms&lt;/code&gt; ，现在看来，情况很乐观，但是随之而来的又出来了另一个问题，因为做测试，我并没有将所有字段都进行入库操作。    当我把字段补齐时，控制台报了这样一个错：&lt;/p&gt;
+&lt;blockquote&gt;
 &lt;p&gt;org.springframework.dao.TransientDataAccessResourceException: &lt;/p&gt;
 &lt;h3 id=&quot;Error-updating-database-Cause-com-mysql-jdbc-PacketTooBigException-Packet-for-query-is-too-large-13513737-gt-4194304-You-can-change-this-value-on-the-server-by-setting-the-max-allowed-packet’-variable&quot;&gt;&lt;a href=&quot;#Error-updating-database-Cause-com-mysql-jdbc-PacketTooBigException-Packet-for-query-is-too-large-13513737-gt-4194304-You-can-change-this-value-on-the-server-by-setting-the-max-allowed-packet’-variable&quot; class=&quot;headerlink&quot; title=&quot;Error updating database.  Cause: com.mysql.jdbc.PacketTooBigException: Packet for query is too large (13513737 &amp;gt; 4194304). You can change this value on the server by setting the max_allowed_packet’ variable.&quot;&gt;&lt;/a&gt;Error updating database.  Cause: com.mysql.jdbc.PacketTooBigException: Packet for query is too large (13513737 &amp;gt; 4194304). You can change this value on the server by setting the max_allowed_packet’ variable.&lt;/h3&gt;&lt;h3 id=&quot;The-error-may-involve-BookHistory-insertBookBatch-Inline&quot;&gt;&lt;a href=&quot;#The-error-may-involve-BookHistory-insertBookBatch-Inline&quot; class=&quot;headerlink&quot; title=&quot;The error may involve BookHistory.insertBookBatch-Inline&quot;&gt;&lt;/a&gt;The error may involve BookHistory.insertBookBatch-Inline&lt;/h3&gt;&lt;/blockquote&gt;
 &lt;p&gt;看到控制台提到了  &lt;strong&gt;max_allowed_packet&lt;/strong&gt; 这个参数，那么我们就需要了解一下，这个参数是干什么用的。&lt;strong&gt;max_allowed_packet&lt;/strong&gt; 是 &lt;strong&gt;MySQL&lt;/strong&gt; 变量的一个变量，用于控制其通信缓冲区的最大长度。默认值是：&lt;code&gt;4194304&lt;/code&gt;.从控制台的报错信息可以看出来，我此时需要的缓冲区长度为：&lt;code&gt;13513737&lt;/code&gt;，远大于&lt;code&gt;4194304&lt;/code&gt;。最简单粗暴的办法就是修改 &lt;strong&gt;MySQL&lt;/strong&gt; 的 &lt;strong&gt;max_allowed_packet&lt;/strong&gt; 参数。修改这个参数，可以暂时的解决问题，但是不能长久的解决问题，因为我无法保证线上的数据量会是多大。这时候，我需要寻找别的突破点。既然&lt;code&gt;2007&lt;/code&gt;条数据同时入库，会导致 &lt;strong&gt;MySQL&lt;/strong&gt; 的缓冲区不够用，那么，我是否可以改一下自己的程序，不让数据一次性都插入，而是，分批插入，比如说每次 &lt;code&gt;500&lt;/code&gt; 条数据呢？接下来，我又对我的代码做了如下修改：&lt;/p&gt;
@@ -76,7 +76,7 @@
     <link href="http://blog.xueni.ren/2015/11/19/test/"/>
     <id>http://blog.xueni.ren/2015/11/19/test/</id>
     <published>2015-11-18T16:00:00.000Z</published>
-    <updated>2016-06-02T02:42:00.526Z</updated>
+    <updated>2016-06-02T02:43:15.102Z</updated>
     
     <content type="html">&lt;p&gt;&lt;a href=&quot;https://help.github.com/articles/basic-writing-and-formatting-syntax/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;md语法&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&quot;This-is-an-tag&quot;&gt;&lt;a href=&quot;#This-is-an-tag&quot; class=&quot;headerlink&quot; title=&quot;This is an  tag&quot;&gt;&lt;/a&gt;This is an &lt;h1&gt; tag&lt;/h1&gt;&lt;h2 id=&quot;This-is-an-tag-1&quot;&gt;&lt;a href=&quot;#This-is-an-tag-1&quot; class=&quot;headerlink&quot; title=&quot;This is an  tag&quot;&gt;&lt;/a&gt;This is an &lt;h2&gt; tag&lt;/h2&gt;&lt;h6 id=&quot;This-is-an-tag-2&quot;&gt;&lt;a href=&quot;#This-is-an-tag-2&quot; class=&quot;headerlink&quot; title=&quot;This is an  tag&quot;&gt;&lt;/a&gt;This is an &lt;h6&gt; tag&lt;/h6&gt;&lt;p&gt;&lt;em&gt;This text will be italic&lt;/em&gt;&lt;br&gt;&lt;em&gt;This will also be italic&lt;/em&gt;&lt;/p&gt;
@@ -151,7 +151,7 @@
     <link href="http://blog.xueni.ren/2015/04/01/pelican-blog/"/>
     <id>http://blog.xueni.ren/2015/04/01/pelican-blog/</id>
     <published>2015-03-31T16:00:00.000Z</published>
-    <updated>2016-06-02T02:42:00.526Z</updated>
+    <updated>2016-06-02T02:43:15.102Z</updated>
     
     <content type="html">&lt;p&gt;没有前言，没有概述，做个笔记而已。&lt;/p&gt;
 &lt;ol&gt;
@@ -183,7 +183,7 @@
     <link href="http://blog.xueni.ren/2014/11/19/hello-world/"/>
     <id>http://blog.xueni.ren/2014/11/19/hello-world/</id>
     <published>2014-11-18T16:00:00.000Z</published>
-    <updated>2016-06-02T02:42:00.526Z</updated>
+    <updated>2016-06-02T02:43:15.102Z</updated>
     
     <content type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
