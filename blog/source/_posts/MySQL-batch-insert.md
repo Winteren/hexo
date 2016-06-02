@@ -16,12 +16,12 @@ description:
 
 ```java
 List<BookHistory> bookHistories = bookHisDao.getBookList();//获取需要存储的历史数据
-	for (BookHistory BookHistory:bookHistories) {
-		BookHistory book = bookHisDao.selectBookById(BookHistory);
-		if(null == book){
-			bookHisDao.insertBook(bookHistory);// 数据入库操作
-		}
+for (BookHistory BookHistory:bookHistories) {
+	BookHistory book = bookHisDao.selectBookById(BookHistory);
+	if(null == book){
+		bookHisDao.insertBook(bookHistory);// 数据入库操作
 	}
+}
 ```
 
 看起来简单粗暴，似乎没有什么问题，查询出来一个`list`，然后循环遍历，检查是否已经存在历史库中，如果不存在则入库。功能也正确实现，但是，存在的问题是，速度有点太慢。`2007` 条数据的执行时间是 `2m 1s 505ms` 。对于追求完美的我，这是不能忍受的，首先我能想到的就是优化入库操作，因为一条数据一条数据的插入，确实会速度特别慢，说干就干，首先先将入库操作由原来的一条一条入库改成批量入库。接下来我的代码变成了这样：
@@ -29,16 +29,16 @@ List<BookHistory> bookHistories = bookHisDao.getBookList();//获取需要存储�
 
 ```java
 List<BookHistory> bookHistories = bookHisDao.getBookList();
-	Iterator<BookHistory> bookIter= bookHistories.iterator();
-	while (bookIter.hasNext()){
-		BookHistory bookHistory = bookIter.next();
-		BookHistory book = bookHisDao.selectBookById(bookHistory);
-		if(null != book){
-			bookIter.remove();
-		}
+Iterator<BookHistory> bookIter= bookHistories.iterator();
+while (bookIter.hasNext()){
+	BookHistory bookHistory = bookIter.next();
+	BookHistory book = bookHisDao.selectBookById(bookHistory);
+	if(null != book){
+		bookIter.remove();
 	}
-	int count = bookHisDao.insertBookBatch(bookHistories);//批量入库操作
-	System.out.println("insert "+count+" records");
+}
+int count = bookHisDao.insertBookBatch(bookHistories);//批量入库操作
+System.out.println("insert "+count+" records");
 ```
 
 改成批量入库操作后，速度直线上升，`2007`条数据的执行时间是 `6s 737ms` ，现在看来，情况很乐观，但是随之而来的又出来了另一个问题，因为做测试，我并没有将所有字段都进行入库操作。	当我把字段补齐时，控制台报了这样一个错：
@@ -54,32 +54,32 @@ org.springframework.dao.TransientDataAccessResourceException:
 
 ```java
 List<BookHistory> bookHistories = bookHisDao.getBookList();
-	Iterator<BookHistory> bookIter= bookHistories.iterator();
-	while (bookIter.hasNext()){
-		BookHistory bookHistory = bookIter.next();
-		BookHistory book = bookHisDao.selectBookById(bookHistory);
-		if(null != book){
-			bookIter.remove();
-		}
+Iterator<BookHistory> bookIter= bookHistories.iterator();
+while (bookIter.hasNext()){
+	BookHistory bookHistory = bookIter.next();
+	BookHistory book = bookHisDao.selectBookById(bookHistory);
+	if(null != book){
+		bookIter.remove();
 	}
-	//int count = bookHisDao.insertBookBatch(bookHistories);//批量入库操作
-	//System.out.println("insert "+count+" records");
+}
+//int count = bookHisDao.insertBookBatch(bookHistories);//批量入库操作
+//System.out.println("insert "+count+" records");
 
-	//分批，批量入库操作
-	int batch = 0;
-	List<BookHistory>  bookList = new ArrayList<BookHistory>();
-	for (BookHistory bookHistory:bookHistories){
-		batch++;
-		bookList.add(bookHistory);
-		System.out.println(batch);
-		if (batch == 500){
-			bookHisDao.insertBookBatch(bookList);
-			System.out.println(bookList.size());
-			batch = 0;
-			bookList.clear();
-		}
+//分批，批量入库操作
+int batch = 0;
+List<BookHistory>  bookList = new ArrayList<BookHistory>();
+for (BookHistory bookHistory:bookHistories){
+	batch++;
+	bookList.add(bookHistory);
+	System.out.println(batch);
+	if (batch == 500){
+		bookHisDao.insertBookBatch(bookList);
+		System.out.println(bookList.size());
+		batch = 0;
+		bookList.clear();
 	}
-	bookHisDao.insertBookBatch(bookList);
+}
+bookHisDao.insertBookBatch(bookList);
 ```
 
 这样一修改之后，控制台的错误消失，程序的运行速度是 `8s 393ms` 。比刚才的 一次性批量入库慢了 `2s` 。。。暂时还没有想到更好的解决方案，先这样，我再想想还有么有更好的解决方案。
