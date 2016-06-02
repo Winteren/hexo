@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.xueni.ren/"/>
-  <updated>2016-06-01T23:56:25.921Z</updated>
+  <updated>2016-06-02T00:07:00.214Z</updated>
   <id>http://blog.xueni.ren/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/"/>
     <id>http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/</id>
     <published>2016-06-01T15:15:45.000Z</published>
-    <updated>2016-06-01T23:56:25.921Z</updated>
+    <updated>2016-06-02T00:07:00.214Z</updated>
     
     <content type="html">&lt;p&gt;基础篇，从各种概念开始。&lt;br&gt;       所谓线程安全：&lt;br&gt;       -当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步货协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。&lt;br&gt;       -在线程安全类中封装来必要的同步机制，因此客户端无须进一步采取同步措施。&lt;br&gt;       -无状态对象一定是线程安全的。&lt;br&gt;       在并发编程中，这种由于不恰当的执行时序而出现的不正确的结果是一种非常重要的情况，它有一个正式的名字：&lt;strong&gt;竞态条件&lt;/strong&gt;。&lt;br&gt;       原子操作：作为一个不可分割的操作来执行。我们所熟知的 ++i 并不是一个原子操作，它实际上是一个 ¨读取 i 值 – 修改 i 值 – 写入 i 值¨ 的操作序列，并且其结果依赖于之前的状态。&lt;/p&gt;
 </content>
@@ -43,7 +43,7 @@
     <link href="http://blog.xueni.ren/2016/06/01/MySQL-batch-insert/"/>
     <id>http://blog.xueni.ren/2016/06/01/MySQL-batch-insert/</id>
     <published>2016-06-01T14:22:22.000Z</published>
-    <updated>2016-06-01T23:56:25.921Z</updated>
+    <updated>2016-06-02T00:07:00.214Z</updated>
     
     <content type="html">&lt;h1 id=&quot;MySQL-优化&quot;&gt;&lt;a href=&quot;#MySQL-优化&quot; class=&quot;headerlink&quot; title=&quot;MySQL 优化&quot;&gt;&lt;/a&gt;MySQL 优化&lt;/h1&gt;</content>
     
@@ -65,13 +65,64 @@
     <link href="http://blog.xueni.ren/2015/11/19/test/"/>
     <id>http://blog.xueni.ren/2015/11/19/test/</id>
     <published>2015-11-18T16:00:00.000Z</published>
-    <updated>2016-06-01T23:56:25.921Z</updated>
+    <updated>2016-06-02T00:07:00.214Z</updated>
     
-    <content type="html">&lt;h1 id=&quot;Welcome&quot;&gt;&lt;a href=&quot;#Welcome&quot; class=&quot;headerlink&quot; title=&quot;Welcome&quot;&gt;&lt;/a&gt;Welcome&lt;/h1&gt;</content>
+    <content type="html">&lt;h1 id=&quot;This-is-an-tag&quot;&gt;&lt;a href=&quot;#This-is-an-tag&quot; class=&quot;headerlink&quot; title=&quot;This is an  tag&quot;&gt;&lt;/a&gt;This is an &lt;h1&gt; tag&lt;/h1&gt;&lt;h2 id=&quot;This-is-an-tag-1&quot;&gt;&lt;a href=&quot;#This-is-an-tag-1&quot; class=&quot;headerlink&quot; title=&quot;This is an  tag&quot;&gt;&lt;/a&gt;This is an &lt;h2&gt; tag&lt;/h2&gt;&lt;h6 id=&quot;This-is-an-tag-2&quot;&gt;&lt;a href=&quot;#This-is-an-tag-2&quot; class=&quot;headerlink&quot; title=&quot;This is an  tag&quot;&gt;&lt;/a&gt;This is an &lt;h6&gt; tag&lt;/h6&gt;&lt;p&gt;&lt;em&gt;This text will be italic&lt;/em&gt;&lt;br&gt;&lt;em&gt;This will also be italic&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;This text will be bold&lt;/strong&gt;&lt;br&gt;&lt;strong&gt;This will also be bold&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;You &lt;strong&gt;can&lt;/strong&gt; combine them&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Item 1&lt;/li&gt;
+&lt;li&gt;Item 2&lt;ul&gt;
+&lt;li&gt;Item 2a&lt;/li&gt;
+&lt;li&gt;Item 2b&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;Item 1&lt;/li&gt;
+&lt;li&gt;Item 2&lt;/li&gt;
+&lt;li&gt;Item 3&lt;ul&gt;
+&lt;li&gt;Item 3a&lt;/li&gt;
+&lt;li&gt;Item 3b&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;As Kanye West said:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;We’re living the future so&lt;br&gt;the present is our past.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;I think you should use an&lt;br&gt;&lt;code&gt;&amp;lt;addr&amp;gt;&lt;/code&gt; element here instead.&lt;/p&gt;
+&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;fancyAlert&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;arg&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(arg) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    $.facebox(&amp;#123;div:&lt;span class=&quot;string&quot;&gt;&#39;#foo&#39;&lt;/span&gt;&amp;#125;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;[x] @mentions, #refs, &lt;a href=&quot;&quot;&gt;links&lt;/a&gt;, &lt;strong&gt;formatting&lt;/strong&gt;, and &lt;del&gt;tags&lt;/del&gt; supported&lt;/li&gt;
+&lt;li&gt;[x] list syntax required (any unordered or ordered list supported)&lt;/li&gt;
+&lt;li&gt;[x] this is a complete item&lt;/li&gt;
+&lt;li&gt;[ ] this is an incomplete item&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;First Header&lt;/th&gt;
+&lt;th&gt;Second Header&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Content from cell 1&lt;/td&gt;
+&lt;td&gt;Content from cell 2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Content in the first column&lt;/td&gt;
+&lt;td&gt;Content in the second column&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;@octocat :+1: This PR looks great - it’s ready to merge! :shipit:&lt;/p&gt;
+&lt;/h6&gt;&lt;/h2&gt;&lt;/h1&gt;</content>
     
     <summary type="html">
     
-      &lt;h1 id=&quot;Welcome&quot;&gt;&lt;a href=&quot;#Welcome&quot; class=&quot;headerlink&quot; title=&quot;Welcome&quot;&gt;&lt;/a&gt;Welcome&lt;/h1&gt;
+      &lt;h1 id=&quot;This-is-an-tag&quot;&gt;&lt;a href=&quot;#This-is-an-tag&quot; class=&quot;headerlink&quot; title=&quot;This is an  tag&quot;&gt;&lt;/a&gt;This is an &lt;h1&gt; tag&lt;/h1&gt;&lt;h2 id=&quot;This-is-an-
     
     </summary>
     
@@ -87,7 +138,7 @@
     <link href="http://blog.xueni.ren/2015/04/01/pelican-blog/"/>
     <id>http://blog.xueni.ren/2015/04/01/pelican-blog/</id>
     <published>2015-03-31T16:00:00.000Z</published>
-    <updated>2016-06-01T23:56:25.921Z</updated>
+    <updated>2016-06-02T00:07:00.214Z</updated>
     
     <content type="html">&lt;p&gt;没有前言，没有概述，做个笔记而已。&lt;/p&gt;
 &lt;ol&gt;
@@ -119,7 +170,7 @@
     <link href="http://blog.xueni.ren/2014/11/19/hello-world/"/>
     <id>http://blog.xueni.ren/2014/11/19/hello-world/</id>
     <published>2014-11-18T16:00:00.000Z</published>
-    <updated>2016-06-01T23:56:25.921Z</updated>
+    <updated>2016-06-02T00:07:00.214Z</updated>
     
     <content type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
