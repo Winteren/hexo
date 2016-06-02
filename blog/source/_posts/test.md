@@ -10,9 +10,11 @@ description:
 
 [md语法](https://help.github.com/articles/basic-writing-and-formatting-syntax/)
 
-# This is an <h1> tag
-## This is an <h2> tag
-###### This is an <h6> tag
+<!-- more -->
+
+# This is an h1 tag
+## This is an h2 tag
+###### This is an h6 tag
 
 
 *This text will be italic*
