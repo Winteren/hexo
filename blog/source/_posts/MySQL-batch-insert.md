@@ -36,7 +36,9 @@ description:
 		int count = bookHisDao.insertBookBatch(bookHistories);//批量入库操作
 		System.out.println("insert "+count+" records");
 ```
-	改成批量入库操作后，速度直线上升，`2007`条数据的执行时间是 `6s 737ms` ，现在看来，情况很乐观，但是随之而来的又出来了另一个问题，因为做测试，我并没有将所有字段都进行入库操作。	当我把字段补齐时，控制台报了这样一个错：
+
+改成批量入库操作后，速度直线上升，`2007`条数据的执行时间是 `6s 737ms` ，现在看来，情况很乐观，但是随之而来的又出来了另一个问题，因为做测试，我并没有将所有字段都进行入库操作。	当我把字段补齐时，控制台报了这样一个错：
+
 > org.springframework.dao.TransientDataAccessResourceException: 
 > ### Error updating database.  Cause: com.mysql.jdbc.PacketTooBigException: Packet for query is too large (13513737 > 4194304). You can change this value on the server by setting the max_allowed_packet' variable.
 > ### The error may involve BookHistory.insertBookBatch-Inline
