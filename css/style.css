@@ -1996,14 +1996,14 @@ li:hover {
 }
 .article-entry pre,
 .article-entry .highlight {
-  background: rgba(51,51,51,0.85);
+  background: rgba(32,34,37,0.85);
   margin: auto;
   padding: 0.35em 1.5em;
   border-style: solid;
   border-color: #ddd;
   border-width: 1px;
   overflow: auto;
-  color: #ccc;
+  color: #c5c8c6;
   line-height: 1.3rem;
 }
 .article-entry .highlight .gutter pre,
@@ -2020,7 +2020,7 @@ li:hover {
   text-shadow: none;
   padding: 0;
   background: none;
-  color: #ccc;
+  color: #c5c8c6;
 }
 .article-entry .highlight {
   -webkit-border-radius: 2px;
@@ -2046,7 +2046,7 @@ li:hover {
 }
 .article-entry .highlight figcaption {
   font-size: 0.85em;
-  color: #999;
+  color: #969896;
   line-height: 1em;
   margin-bottom: 1em;
 }
@@ -2073,7 +2073,7 @@ li:hover {
   border-style: solid;
   border-color: #ddd;
   border-width: 1px 0;
-  background: rgba(51,51,51,0.85);
+  background: rgba(32,34,37,0.85);
   padding: 15px 20px 15px 0;
 }
 .article-entry .gist .gist-file {
@@ -2099,8 +2099,8 @@ li:hover {
   border: none;
 }
 .article-entry .gist .gist-file .gist-meta {
-  background: rgba(51,51,51,0.85);
-  color: #999;
+  background: rgba(32,34,37,0.85);
+  color: #969896;
   font: 0.85em "Lucida Grande", Verdana, "Helvetica Neue", Arial;
   text-shadow: 0 0;
   padding: 0;
@@ -2126,7 +2126,7 @@ li:hover {
 }
 pre .comment,
 pre .title {
-  color: #999;
+  color: #969896;
 }
 pre .variable,
 pre .attribute,
@@ -2140,7 +2140,7 @@ pre .html .doctype,
 pre .css .id,
 pre .css .class,
 pre .css .pseudo {
-  color: #f2777a;
+  color: #c66;
 }
 pre .number,
 pre .preprocessor,
@@ -2148,12 +2148,12 @@ pre .built_in,
 pre .literal,
 pre .params,
 pre .constant {
-  color: #f99157;
+  color: #de935f;
 }
 pre .class,
 pre .ruby .class .title,
 pre .css .rules .attribute {
-  color: #9c9;
+  color: #b5bd68;
 }
 pre .string,
 pre .value,
@@ -2161,10 +2161,10 @@ pre .inheritance,
 pre .header,
 pre .ruby .symbol,
 pre .xml .cdata {
-  color: #9c9;
+  color: #b5bd68;
 }
 pre .css .hexcolor {
-  color: #6cc;
+  color: #8abeb7;
 }
 pre .function,
 pre .python .decorator,
@@ -2174,11 +2174,11 @@ pre .ruby .title .keyword,
 pre .perl .sub,
 pre .javascript .title,
 pre .coffeescript .title {
-  color: #69c;
+  color: #81a2be;
 }
 pre .keyword,
 pre .javascript .function {
-  color: #c9c;
+  color: #b294bb;
 }
 #footer {
   font-size: 0.8em;
