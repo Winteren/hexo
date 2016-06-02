@@ -37,13 +37,14 @@ description:
 		System.out.println("insert "+count+" records");
 ```
 	改成批量入库操作后，速度直线上升，`2007`条数据的执行时间是 `6s 737ms` ，现在看来，情况很乐观，但是随之而来的又出来了另一个问题，因为做测试，我并没有将所有字段都进行入库操作。	当我把字段补齐时，控制台报了这样一个错：
-	```
-	org.springframework.dao.TransientDataAccessResourceException: 
-  ### Error updating database.  Cause: com.mysql.jdbc.PacketTooBigException: Packet for query is too large (13513737 > 4194304). You can change this value on the server by setting the max_allowed_packet' variable.
-  ### The error may involve BookHistory.insertBookBatch-Inline
-  ```
+> org.springframework.dao.TransientDataAccessResourceException: 
+> ### Error updating database.  Cause: com.mysql.jdbc.PacketTooBigException: Packet for query is too large (13513737 > 4194304). You can change this value on the server by setting the max_allowed_packet' variable.
+> ### The error may involve BookHistory.insertBookBatch-Inline
+  
+  
 
 看到控制台提到了  **max_allowed_packet** 这个参数，那么我们就需要了解一下，这个参数是干什么用的。**max_allowed_packet** 是 **MySQL** 变量的一个变量，用于控制其通信缓冲区的最大长度。默认值是：`4194304`.从控制台的报错信息可以看出来，我此时需要的缓冲区长度为：`13513737`，远大于`4194304`。最简单粗暴的办法就是修改 **MySQL** 的 **max_allowed_packet** 参数。修改这个参数，可以暂时的解决问题，但是不能长久的解决问题，因为我无法保证线上的数据量会是多大。这时候，我需要寻找别的突破点。既然`2007`条数据同时入库，会导致 **MySQL** 的缓冲区不够用，那么，我是否可以改一下自己的程序，不让数据一次性都插入，而是，分批插入，比如说每次 `500` 条数据呢？接下来，我又对我的代码做了如下修改：
+
 ```java
   List<BookHistory> bookHistories = bookHisDao.getBookList();
 		Iterator<BookHistory> bookIter= bookHistories.iterator();
