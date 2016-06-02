@@ -11,6 +11,9 @@ description:
 
 最近开始玩 **MyBatis** ，想实现这么一个功能，就是将一张表里的数据作为历史数据存储到另一张表里去。
 一开始我的代码是这么写的：
+
+<!-- more -->
+
 ```java
   List<BookHistory> bookHistories = bookHisDao.getBookList();//获取需要存储的历史数据
 		for (BookHistory BookHistory:bookHistories) {
