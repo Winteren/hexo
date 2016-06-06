@@ -220,7 +220,7 @@ pom.xml
 		</dependency>
 	</dependencies>
 	
-</project
+</project>
 ```
 
 
