@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="Apple">
 <meta property="og:description" content="基础篇，从各种概念开始。线程安全
 当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步货协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。">
-<meta property="og:updated_time" content="2016-06-06T14:32:43.345Z">
+<meta property="og:updated_time" content="2016-06-06T15:23:29.195Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 并发编程读书笔记(基础篇)">
 <meta name="twitter:description" content="基础篇，从各种概念开始。线程安全
@@ -294,6 +294,20 @@
 </ul>
 <h2 id="原子操作"><a href="#原子操作" class="headerlink" title="原子操作"></a>原子操作</h2><p>作为一个不可分割的操作来执行。我们所熟知的 <strong>++i</strong> 并不是一个原子操作，它实际上是一个 <em>*¨读取 i 值 – 修改 i 值 – 写入 i 值¨</em> 的操作序列，并且其结果依赖于之前的状态。</p>
 <h2 id="内置锁"><a href="#内置锁" class="headerlink" title="内置锁"></a>内置锁</h2><p>每个 Java 对象都可以用做一个实现同步的锁，这些锁被称为内置锁(Inteinsic Lock)或者监视器锁(Monitor Lock)。获得内置锁的唯一途径就是进入由这个锁保护的同步代码块或方法。Java 的内置锁相当于一种互斥体(互斥锁)，这意味着最多只有一个线程能持有这种锁。</p>
+<h2 id="重入"><a href="#重入" class="headerlink" title="重入"></a>重入</h2><p>当某个线程请求一个由其他线程持有的锁是，发出请求的线程就会阻塞。¨重入¨ 意味着获取锁的操作的粒度是¨线程¨，而不是¨调用¨。重入的一种实现方法是，为每个锁关联一个获取计数值和一个所有者线程。</p>
+<h2 id="Volatile-关键字"><a href="#Volatile-关键字" class="headerlink" title="Volatile 关键字"></a>Volatile 关键字</h2><p>Java 语言提供来一种弱同步机制，即 volatile 变量，用来确保变量的更新操作通知到其他线程。<br>仅当 volatile 变量能简化代码的实现以及对同步策略的验证时，才应该使用它们。如果在验证正确性时需要对可见性进行复杂的判断，那么就不要使用 volatile 变量。volatile 变量的正确使用方式包括：确保它们自身状态的可见性，确保它们锁引用对象的状态的可见性，以及标识一些重要的程序生命周期事件的发生。</p>
+<h2 id="发布与逸出"><a href="#发布与逸出" class="headerlink" title="发布与逸出"></a>发布与逸出</h2><p>发布一个对象的意思是指，使对象能够在当前作用域之外的代码中使用。一般来说，如果一个已经发布的对象能够通过非私有的变量引用和方法调用到达其他对象，那么这些对象也都会被发布。<br>当某个不应该发布的对象被发布时，就称为逸出。</p>
+<h2 id="线程封闭"><a href="#线程封闭" class="headerlink" title="线程封闭"></a>线程封闭</h2><p>线程封闭的对象只能由一个线程拥有，对象被封闭在该线程中，并且只能由该线程修改。</p>
+<h3 id="Ad-hoc-线程封闭"><a href="#Ad-hoc-线程封闭" class="headerlink" title="Ad-hoc 线程封闭"></a>Ad-hoc 线程封闭</h3><p>Ad-hoc 线程封闭是指，维护线程封闭性的职责完全由程序实现来承担。</p>
+<h3 id="栈封闭"><a href="#栈封闭" class="headerlink" title="栈封闭"></a>栈封闭</h3><p>栈封闭是线程封闭的一种特例，在栈封闭中，只能通过局部变量才能访问对象。栈封闭比 Ad-hoc 线程封闭更易于维护，也更健壮。</p>
+<h3 id="ThreadLocal-类"><a href="#ThreadLocal-类" class="headerlink" title="ThreadLocal 类"></a>ThreadLocal 类</h3><p>维持线程封闭性的一种更规范方法是使用 ThreadLocal，这个类能使线程中的某个值与保存值的对象关联起来。ThreadLocal 对象通常用于防止对可变的单实例变量或全局变量进行共享。</p>
+<h2 id="不变性"><a href="#不变性" class="headerlink" title="不变性"></a>不变性</h2><p>如果某个对象在被创建后其状态就不能被修改，那么这个对象就称为不可变对象。<br><strong>不可变对象一定是线程安全的</strong>。</p>
+<p>当满足一下条件时，对象才是不可变的：</p>
+<ul>
+<li>对象创建以后其状态就不能被修改。</li>
+<li>对象的所有域都是 final 类型。</li>
+<li>对象是正确创建的(在对象创建期间，this 引用没有逸出)。</li>
+</ul>
 
       
     </div>
@@ -305,7 +319,7 @@
         <p><span>本文标题:</span><a href="/2016/06/01/Java-compli-read-notes-basis/">Java 并发编程读书笔记(基础篇)</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Apple</a></p>
         <p><span>发布时间:</span>2016-06-01, 23:15:45</p>
-        <p><span>最后更新:</span>2016-06-06, 22:32:43</p>
+        <p><span>最后更新:</span>2016-06-06, 23:23:29</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/06/01/Java-compli-read-notes-basis/" title="Java 并发编程读书笔记(基础篇)">http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/</a>
             <span class="copy-path" data-clipboard-text="原文: http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/　　作者: Apple" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -340,7 +354,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基础篇，从各种概念开始。"><span class="toc-number">1.</span> <span class="toc-text">基础篇，从各种概念开始。</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#线程安全"><span class="toc-number">1.1.</span> <span class="toc-text">线程安全</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原子操作"><span class="toc-number">1.2.</span> <span class="toc-text">原子操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内置锁"><span class="toc-number">1.3.</span> <span class="toc-text">内置锁</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基础篇，从各种概念开始。"><span class="toc-number">1.</span> <span class="toc-text">基础篇，从各种概念开始。</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#线程安全"><span class="toc-number">1.1.</span> <span class="toc-text">线程安全</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原子操作"><span class="toc-number">1.2.</span> <span class="toc-text">原子操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内置锁"><span class="toc-number">1.3.</span> <span class="toc-text">内置锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重入"><span class="toc-number">1.4.</span> <span class="toc-text">重入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Volatile-关键字"><span class="toc-number">1.5.</span> <span class="toc-text">Volatile 关键字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发布与逸出"><span class="toc-number">1.6.</span> <span class="toc-text">发布与逸出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线程封闭"><span class="toc-number">1.7.</span> <span class="toc-text">线程封闭</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ad-hoc-线程封闭"><span class="toc-number">1.7.1.</span> <span class="toc-text">Ad-hoc 线程封闭</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#栈封闭"><span class="toc-number">1.7.2.</span> <span class="toc-text">栈封闭</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ThreadLocal-类"><span class="toc-number">1.7.3.</span> <span class="toc-text">ThreadLocal 类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#不变性"><span class="toc-number">1.8.</span> <span class="toc-text">不变性</span></a></li></ol></li></ol>
 </div>
 <style>
     .left-col .switch-btn {

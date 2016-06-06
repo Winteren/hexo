@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.xueni.ren/"/>
-  <updated>2016-06-06T14:32:43.345Z</updated>
+  <updated>2016-06-06T15:23:29.195Z</updated>
   <id>http://blog.xueni.ren/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://blog.xueni.ren/2016/06/06/spring-data-mongodb/"/>
     <id>http://blog.xueni.ren/2016/06/06/spring-data-mongodb/</id>
     <published>2016-06-06T14:27:45.000Z</published>
-    <updated>2016-06-06T14:32:43.345Z</updated>
+    <updated>2016-06-06T15:23:29.195Z</updated>
     
     <content type="html">&lt;h1 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h1&gt;&lt;p&gt;平时都在用 SpringMVC 进行开发，但是，基本上都是在用 SpringMVC+Mybatis+MySQL 进行开发。对于 Mongodb 只是听说过，&lt;br&gt;自己实际没有操作过，近期，在工作之余决定研究一下 Mongodb 。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;br&gt;那么，开始进入正题吧，此次我构建的项目是 SpringMVC+Mongodb+Maven ，有不对之处，还望指出。&lt;/p&gt;
 &lt;p&gt;作为一个 Maven 工程，我们还是先从 pom.xml 文件开始把,在 pom.xml 里配置我们的工程所依赖的 jar。&lt;br&gt;pom.xml&lt;/p&gt;
@@ -120,7 +120,7 @@
     <link href="http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/"/>
     <id>http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/</id>
     <published>2016-06-01T15:15:45.000Z</published>
-    <updated>2016-06-06T14:32:43.345Z</updated>
+    <updated>2016-06-06T15:23:29.195Z</updated>
     
     <content type="html">&lt;h1 id=&quot;基础篇，从各种概念开始。&quot;&gt;&lt;a href=&quot;#基础篇，从各种概念开始。&quot; class=&quot;headerlink&quot; title=&quot;基础篇，从各种概念开始。&quot;&gt;&lt;/a&gt;基础篇，从各种概念开始。&lt;/h1&gt;&lt;h2 id=&quot;线程安全&quot;&gt;&lt;a href=&quot;#线程安全&quot; class=&quot;headerlink&quot; title=&quot;线程安全&quot;&gt;&lt;/a&gt;线程安全&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步货协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/li&gt;
@@ -129,6 +129,20 @@
 &lt;/ul&gt;
 &lt;h2 id=&quot;原子操作&quot;&gt;&lt;a href=&quot;#原子操作&quot; class=&quot;headerlink&quot; title=&quot;原子操作&quot;&gt;&lt;/a&gt;原子操作&lt;/h2&gt;&lt;p&gt;作为一个不可分割的操作来执行。我们所熟知的 &lt;strong&gt;++i&lt;/strong&gt; 并不是一个原子操作，它实际上是一个 &lt;em&gt;*¨读取 i 值 – 修改 i 值 – 写入 i 值¨&lt;/em&gt; 的操作序列，并且其结果依赖于之前的状态。&lt;/p&gt;
 &lt;h2 id=&quot;内置锁&quot;&gt;&lt;a href=&quot;#内置锁&quot; class=&quot;headerlink&quot; title=&quot;内置锁&quot;&gt;&lt;/a&gt;内置锁&lt;/h2&gt;&lt;p&gt;每个 Java 对象都可以用做一个实现同步的锁，这些锁被称为内置锁(Inteinsic Lock)或者监视器锁(Monitor Lock)。获得内置锁的唯一途径就是进入由这个锁保护的同步代码块或方法。Java 的内置锁相当于一种互斥体(互斥锁)，这意味着最多只有一个线程能持有这种锁。&lt;/p&gt;
+&lt;h2 id=&quot;重入&quot;&gt;&lt;a href=&quot;#重入&quot; class=&quot;headerlink&quot; title=&quot;重入&quot;&gt;&lt;/a&gt;重入&lt;/h2&gt;&lt;p&gt;当某个线程请求一个由其他线程持有的锁是，发出请求的线程就会阻塞。¨重入¨ 意味着获取锁的操作的粒度是¨线程¨，而不是¨调用¨。重入的一种实现方法是，为每个锁关联一个获取计数值和一个所有者线程。&lt;/p&gt;
+&lt;h2 id=&quot;Volatile-关键字&quot;&gt;&lt;a href=&quot;#Volatile-关键字&quot; class=&quot;headerlink&quot; title=&quot;Volatile 关键字&quot;&gt;&lt;/a&gt;Volatile 关键字&lt;/h2&gt;&lt;p&gt;Java 语言提供来一种弱同步机制，即 volatile 变量，用来确保变量的更新操作通知到其他线程。&lt;br&gt;仅当 volatile 变量能简化代码的实现以及对同步策略的验证时，才应该使用它们。如果在验证正确性时需要对可见性进行复杂的判断，那么就不要使用 volatile 变量。volatile 变量的正确使用方式包括：确保它们自身状态的可见性，确保它们锁引用对象的状态的可见性，以及标识一些重要的程序生命周期事件的发生。&lt;/p&gt;
+&lt;h2 id=&quot;发布与逸出&quot;&gt;&lt;a href=&quot;#发布与逸出&quot; class=&quot;headerlink&quot; title=&quot;发布与逸出&quot;&gt;&lt;/a&gt;发布与逸出&lt;/h2&gt;&lt;p&gt;发布一个对象的意思是指，使对象能够在当前作用域之外的代码中使用。一般来说，如果一个已经发布的对象能够通过非私有的变量引用和方法调用到达其他对象，那么这些对象也都会被发布。&lt;br&gt;当某个不应该发布的对象被发布时，就称为逸出。&lt;/p&gt;
+&lt;h2 id=&quot;线程封闭&quot;&gt;&lt;a href=&quot;#线程封闭&quot; class=&quot;headerlink&quot; title=&quot;线程封闭&quot;&gt;&lt;/a&gt;线程封闭&lt;/h2&gt;&lt;p&gt;线程封闭的对象只能由一个线程拥有，对象被封闭在该线程中，并且只能由该线程修改。&lt;/p&gt;
+&lt;h3 id=&quot;Ad-hoc-线程封闭&quot;&gt;&lt;a href=&quot;#Ad-hoc-线程封闭&quot; class=&quot;headerlink&quot; title=&quot;Ad-hoc 线程封闭&quot;&gt;&lt;/a&gt;Ad-hoc 线程封闭&lt;/h3&gt;&lt;p&gt;Ad-hoc 线程封闭是指，维护线程封闭性的职责完全由程序实现来承担。&lt;/p&gt;
+&lt;h3 id=&quot;栈封闭&quot;&gt;&lt;a href=&quot;#栈封闭&quot; class=&quot;headerlink&quot; title=&quot;栈封闭&quot;&gt;&lt;/a&gt;栈封闭&lt;/h3&gt;&lt;p&gt;栈封闭是线程封闭的一种特例，在栈封闭中，只能通过局部变量才能访问对象。栈封闭比 Ad-hoc 线程封闭更易于维护，也更健壮。&lt;/p&gt;
+&lt;h3 id=&quot;ThreadLocal-类&quot;&gt;&lt;a href=&quot;#ThreadLocal-类&quot; class=&quot;headerlink&quot; title=&quot;ThreadLocal 类&quot;&gt;&lt;/a&gt;ThreadLocal 类&lt;/h3&gt;&lt;p&gt;维持线程封闭性的一种更规范方法是使用 ThreadLocal，这个类能使线程中的某个值与保存值的对象关联起来。ThreadLocal 对象通常用于防止对可变的单实例变量或全局变量进行共享。&lt;/p&gt;
+&lt;h2 id=&quot;不变性&quot;&gt;&lt;a href=&quot;#不变性&quot; class=&quot;headerlink&quot; title=&quot;不变性&quot;&gt;&lt;/a&gt;不变性&lt;/h2&gt;&lt;p&gt;如果某个对象在被创建后其状态就不能被修改，那么这个对象就称为不可变对象。&lt;br&gt;&lt;strong&gt;不可变对象一定是线程安全的&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;当满足一下条件时，对象才是不可变的：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对象创建以后其状态就不能被修改。&lt;/li&gt;
+&lt;li&gt;对象的所有域都是 final 类型。&lt;/li&gt;
+&lt;li&gt;对象是正确创建的(在对象创建期间，this 引用没有逸出)。&lt;/li&gt;
+&lt;/ul&gt;
 </content>
     
     <summary type="html">
@@ -150,7 +164,7 @@
     <link href="http://blog.xueni.ren/2016/06/01/MySQL-batch-insert/"/>
     <id>http://blog.xueni.ren/2016/06/01/MySQL-batch-insert/</id>
     <published>2016-06-01T14:22:22.000Z</published>
-    <updated>2016-06-06T14:32:43.345Z</updated>
+    <updated>2016-06-06T15:23:29.195Z</updated>
     
     <content type="html">&lt;p&gt;最近开始玩 &lt;strong&gt;MyBatis&lt;/strong&gt; ，想实现这么一个功能，就是将一张表里的数据作为历史数据存储到另一张表里去。&lt;br&gt;一开始我的代码是这么写的：&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
@@ -183,7 +197,7 @@
     <link href="http://blog.xueni.ren/2015/11/19/test/"/>
     <id>http://blog.xueni.ren/2015/11/19/test/</id>
     <published>2015-11-18T16:00:00.000Z</published>
-    <updated>2016-06-06T14:32:43.345Z</updated>
+    <updated>2016-06-06T15:23:29.195Z</updated>
     
     <content type="html">&lt;p&gt;&lt;a href=&quot;https://help.github.com/articles/basic-writing-and-formatting-syntax/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;md语法&lt;/a&gt;&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
@@ -258,7 +272,7 @@
     <link href="http://blog.xueni.ren/2015/04/01/pelican-blog/"/>
     <id>http://blog.xueni.ren/2015/04/01/pelican-blog/</id>
     <published>2015-03-31T16:00:00.000Z</published>
-    <updated>2016-06-06T14:32:43.345Z</updated>
+    <updated>2016-06-06T15:23:29.195Z</updated>
     
     <content type="html">&lt;p&gt;没有前言，没有概述，做个笔记而已。&lt;/p&gt;
 &lt;ol&gt;
@@ -290,7 +304,7 @@
     <link href="http://blog.xueni.ren/2014/11/19/hello-world/"/>
     <id>http://blog.xueni.ren/2014/11/19/hello-world/</id>
     <published>2014-11-18T16:00:00.000Z</published>
-    <updated>2016-06-06T14:32:43.345Z</updated>
+    <updated>2016-06-06T15:23:29.195Z</updated>
     
     <content type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
