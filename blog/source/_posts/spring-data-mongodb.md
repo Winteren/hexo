@@ -12,7 +12,7 @@ description:
 #引言
 平时都在用 SpringMVC 进行开发，但是，基本上都是在用 SpringMVC+Mybatis+MySQL 进行开发。对于 Mongodb 只是听说过，
 自己实际没有操作过，近期，在工作之余决定研究一下 Mongodb 。
-
+<!-- more -->
 那么，开始进入正题吧，此次我构建的项目是 SpringMVC+Mongodb+Maven ，有不对之处，还望指出。
 
 作为一个 Maven 工程，我们还是先从 pom.xml 文件开始把,在 pom.xml 里配置我们的工程所依赖的 jar。
