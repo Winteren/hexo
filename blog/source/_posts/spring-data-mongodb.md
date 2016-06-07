@@ -257,8 +257,7 @@ web.xml
 
 ``` 
 
-  db.properties 文件
-
+db.properties 文件
 
 ```xml
 
