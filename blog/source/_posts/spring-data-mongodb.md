@@ -185,8 +185,8 @@ pom.xml
 入口。
 web.xml
 
-
 ``` xml
+
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <context-param>
@@ -254,6 +254,7 @@ web.xml
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
 </web-app>
+
 ``` 
 
 
@@ -261,11 +262,13 @@ db.properties 文件
 
 
 ```
+
 mongo.host=127.0.0.1
 mongo.port=27017
 mongo.username=
 mongo.password=
 mongo.database=test
+
 ```
 
 
@@ -273,6 +276,7 @@ applicationContext-mvc.xml
 
 
 ```xml
+
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p" xmlns:c="http://www.springframework.org/schema/c" xmlns:tool="http://www.springframework.org/schema/tool" xmlns:util="http://www.springframework.org/schema/util" xmlns:context="http://www.springframework.org/schema/context" xmlns:jee="http://www.springframework.org/schema/jee" xmlns:lang="http://www.springframework.org/schema/lang" xmlns:task="http://www.springframework.org/schema/task" xmlns:cache="http://www.springframework.org/schema/cache" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jms="http://www.springframework.org/schema/jms"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -348,12 +352,14 @@ applicationContext-mvc.xml
 	</bean>
 
 </beans>
+
 ```
 
 applicationContext-dao.xml
 
 
 ```xml
+
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
@@ -402,6 +408,7 @@ applicationContext-dao.xml
 	<context:component-scan base-package="com.apple.mongo.dao.impl" />
 
 </beans>
+
 ```
 
 
@@ -409,6 +416,7 @@ applicationContext-service.xml
 
 
 ```xml
+
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:c="http://www.springframework.org/schema/c" xmlns:tool="http://www.springframework.org/schema/tool"
@@ -451,6 +459,7 @@ applicationContext-service.xml
 	<context:component-scan base-package="com.apple.mongo.service" resource-pattern="**/*ServiceImpl.class" />
 
 </beans>
+
 ```
 
 
