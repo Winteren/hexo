@@ -257,11 +257,10 @@ web.xml
 
 ``` 
 
+  db.properties 文件
 
-db.properties 文件
 
-
-```
+```xml
 
 mongo.host=127.0.0.1
 mongo.port=27017
