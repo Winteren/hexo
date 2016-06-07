@@ -184,6 +184,8 @@ pom.xml
 接着就是web.xml 文件，有一点我们需要明确的就是， web.xml 文件并不是 web 工程所必须的，但是，一般情况下，我们都是以 web.xml 作为我们 web工程的
 入口。
 web.xml
+
+
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
@@ -253,3 +255,205 @@ web.xml
   </welcome-file-list>
 </web-app>
 ``` 
+
+
+db.properties 文件
+
+
+```
+mongo.host=127.0.0.1
+mongo.port=27017
+mongo.username=
+mongo.password=
+mongo.database=test
+```
+
+
+applicationContext-mvc.xml
+
+
+```xml
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p" xmlns:c="http://www.springframework.org/schema/c" xmlns:tool="http://www.springframework.org/schema/tool" xmlns:util="http://www.springframework.org/schema/util" xmlns:context="http://www.springframework.org/schema/context" xmlns:jee="http://www.springframework.org/schema/jee" xmlns:lang="http://www.springframework.org/schema/lang" xmlns:task="http://www.springframework.org/schema/task" xmlns:cache="http://www.springframework.org/schema/cache" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jms="http://www.springframework.org/schema/jms"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/tool
+	http://www.springframework.org/schema/tool/spring-tool.xsd
+	http://www.springframework.org/schema/util
+	http://www.springframework.org/schema/util/spring-util.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/jee
+	http://www.springframework.org/schema/jee/spring-jee.xsd
+	http://www.springframework.org/schema/lang
+	http://www.springframework.org/schema/lang/spring-lang.xsd
+	http://www.springframework.org/schema/task
+	http://www.springframework.org/schema/task/spring-task.xsd
+	http://www.springframework.org/schema/cache
+	http://www.springframework.org/schema/cache/spring-cache.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	http://www.springframework.org/schema/jdbc
+	http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+	http://www.springframework.org/schema/jms
+	http://www.springframework.org/schema/jms/spring-jms.xsd">
+
+	<!-- 扫描包 -->
+	<context:component-scan base-package="com.apple.mongo.controller" />
+
+	<!-- 这个配置用于返回json或者jsonp,具体的序列化器可以自定义 -->
+	<mvc:annotation-driven>
+		<mvc:message-converters register-defaults="false"> <!-- 注意：不设置为false的话存在性能问题差1倍 -->
+			<bean class="web.converter.RestResponseMessageConverter">
+				<property name="features">
+					<array>
+						<util:constant static-field="com.alibaba.fastjson.serializer.SerializerFeature.QuoteFieldNames" /><!-- 输出key时是否使用双引号,默认为true -->
+						<util:constant static-field="com.alibaba.fastjson.serializer.SerializerFeature.WriteMapNullValue" /><!-- 是否输出值为null的字段,默认为false -->
+						<util:constant static-field="com.alibaba.fastjson.serializer.SerializerFeature.WriteEnumUsingToString" />
+						<util:constant static-field="com.alibaba.fastjson.serializer.SerializerFeature.SkipTransientField" />
+						<util:constant static-field="com.alibaba.fastjson.serializer.SerializerFeature.WriteDateUseDateFormat" />
+						<util:constant static-field="com.alibaba.fastjson.serializer.SerializerFeature.DisableCheckSpecialChar" />
+					</array>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	<!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射,解决@ResponseBody乱码问题, 需要在annotation-driven之前,否则乱码问题同样无法解决 -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+					<property name="supportedMediaTypes">
+						<list>
+							<bean class="org.springframework.http.MediaType">
+								<constructor-arg index="0" value="text" />
+								<constructor-arg index="1" value="plain" />
+								<constructor-arg index="2" value="UTF-8" />
+							</bean>
+						</list>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 视图 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/pages/" /><!-- 前缀路径 -->
+		<property name="suffix" value="" /><!-- 后缀 -->
+	</bean>
+
+</beans>
+```
+
+applicationContext-dao.xml
+
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:task="http://www.springframework.org/schema/task"
+	   xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.1.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+        http://www.springframework.org/schema/data/mongo
+        http://www.springframework.org/schema/data/mongo/spring-mongo-1.7.xsd
+        http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task-4.1.xsd">
+
+	<context:annotation-config />
+
+
+	<!-- 提供该PropertyPlaceholderConfigurer bean支持把properties文件中的信息读取到XML配置文件的表达式中 -->
+	<context:property-placeholder location="classpath:conf/db.properties" />
+
+	<!-- 通过工厂Bean创建mongo连接实例,没有密码就把username和password属性删除了-->
+	<mongo:db-factory host="${mongo.host}" port="${mongo.port}" dbname="${mongo.database}" />
+
+
+	<!-- mongo模板操作对象 -->
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>
+	</bean>
+
+	<!-- MongoDB GridFS Template 支持，操作mongodb存放的文件 -->
+	<mongo:mapping-converter id="converter" db-factory-ref="mongoDbFactory"/>
+	<bean id="gridFsTemplate" class="org.springframework.data.mongodb.gridfs.GridFsTemplate">
+		<constructor-arg ref="mongoDbFactory"/>
+		<constructor-arg ref="converter"/>
+	</bean>
+
+
+	<!-- 使用annotation定义事务
+	<tx:annotation-driven transaction-manager="transactionManager" /> -->
+
+	<!-- 扫描实现 -->
+	<context:component-scan base-package="com.apple.mongo.dao.impl" />
+
+</beans>
+```
+
+
+applicationContext-service.xml
+
+
+```xml
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c" xmlns:tool="http://www.springframework.org/schema/tool"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:jms="http://www.springframework.org/schema/jms"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans   
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/tool
+    http://www.springframework.org/schema/tool/spring-tool.xsd
+    http://www.springframework.org/schema/util
+    http://www.springframework.org/schema/util/spring-util.xsd
+    http://www.springframework.org/schema/context  
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/jee
+    http://www.springframework.org/schema/jee/spring-jee.xsd
+    http://www.springframework.org/schema/lang
+    http://www.springframework.org/schema/lang/spring-lang.xsd
+    http://www.springframework.org/schema/task
+    http://www.springframework.org/schema/task/spring-task.xsd
+    http://www.springframework.org/schema/cache
+    http://www.springframework.org/schema/cache/spring-cache.xsd
+    http://www.springframework.org/schema/aop 
+    http://www.springframework.org/schema/aop/spring-aop.xsd  
+    http://www.springframework.org/schema/tx   
+    http://www.springframework.org/schema/tx/spring-tx.xsd  
+    http://www.springframework.org/schema/mvc 
+    http://www.springframework.org/schema/mvc/spring-mvc.xsd
+    http://www.springframework.org/schema/jdbc 
+    http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+    http://www.springframework.org/schema/jms 
+    http://www.springframework.org/schema/jms/spring-jms.xsd
+    ">
+	<!-- 该配置文件主要针对service层(服务层)做配置 -->
+
+	<context:component-scan base-package="com.apple.mongo.service" resource-pattern="**/*ServiceImpl.class" />
+
+</beans>
+```
+
+
+
+
+
