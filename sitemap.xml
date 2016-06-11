@@ -2,58 +2,58 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/</loc>
-    
-    <lastmod>2016-06-07T16:06:23.433Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://blog.xueni.ren/2016/06/01/MySQL-batch-insert/</loc>
     
-    <lastmod>2016-06-07T16:06:23.433Z</lastmod>
+    <lastmod>2016-06-11T11:08:04.633Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://blog.xueni.ren/2014/11/19/hello-world/</loc>
     
-    <lastmod>2016-06-07T16:06:23.433Z</lastmod>
+    <lastmod>2016-06-11T11:08:04.633Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://blog.xueni.ren/2015/04/01/pelican-blog/</loc>
     
-    <lastmod>2016-06-07T16:06:23.433Z</lastmod>
+    <lastmod>2016-06-11T11:08:04.633Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://blog.xueni.ren/2016/06/06/spring-data-mongodb/</loc>
     
-    <lastmod>2016-06-07T16:06:23.433Z</lastmod>
+    <lastmod>2016-06-11T11:08:04.633Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://blog.xueni.ren/2015/11/19/test/</loc>
     
-    <lastmod>2016-06-07T16:06:23.433Z</lastmod>
+    <lastmod>2016-06-11T11:08:04.633Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://blog.xueni.ren/about/index.html</loc>
     
-    <lastmod>2016-06-07T16:06:23.433Z</lastmod>
+    <lastmod>2016-06-11T11:08:04.633Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://blog.xueni.ren/tags/index.html</loc>
     
-    <lastmod>2016-06-07T16:06:23.433Z</lastmod>
+    <lastmod>2016-06-11T11:08:04.633Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/</loc>
+    
+    <lastmod>2016-06-11T11:08:04.629Z</lastmod>
     
   </url>
   

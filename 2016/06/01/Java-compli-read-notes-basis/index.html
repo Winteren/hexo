@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="Apple">
 <meta property="og:description" content="基础篇，从各种概念开始。线程安全
 当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步货协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。">
-<meta property="og:updated_time" content="2016-06-07T16:06:23.433Z">
+<meta property="og:updated_time" content="2016-06-11T11:08:04.629Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 并发编程读书笔记(基础篇)">
 <meta name="twitter:description" content="基础篇，从各种概念开始。线程安全
@@ -308,6 +308,14 @@
 <li>对象的所有域都是 final 类型。</li>
 <li>对象是正确创建的(在对象创建期间，this 引用没有逸出)。</li>
 </ul>
+<h3 id="Final-域"><a href="#Final-域" class="headerlink" title="Final 域"></a>Final 域</h3><p>final 域能确保初始化过程的安全性，从而可以不受限制的访问不可变对象，并在共享这些对象时无须同步。</p>
+<p>要安全地发布一个对象，对象的引用以及对象的状态必须同事对其他线程可见。一个正确构造的对象可以通过以下方式来安全地发布：</p>
+<ul>
+<li>在静态初始化函数中初始化一个对象引用。</li>
+<li>将对象的引用保存到 olatile 类型的域或者 AtomicReferance 对象中。</li>
+<li>将对象的引用保存到某个正确构造对象的 final 类型域中。</li>
+<li>将对象的引用保存到一个由锁保护的域中。</li>
+</ul>
 
       
     </div>
@@ -319,7 +327,7 @@
         <p><span>本文标题:</span><a href="/2016/06/01/Java-compli-read-notes-basis/">Java 并发编程读书笔记(基础篇)</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Apple</a></p>
         <p><span>发布时间:</span>2016-06-01, 23:15:45</p>
-        <p><span>最后更新:</span>2016-06-08, 00:06:23</p>
+        <p><span>最后更新:</span>2016-06-11, 19:08:04</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/06/01/Java-compli-read-notes-basis/" title="Java 并发编程读书笔记(基础篇)">http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/</a>
             <span class="copy-path" data-clipboard-text="原文: http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/　　作者: Apple" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -354,7 +362,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基础篇，从各种概念开始。"><span class="toc-number">1.</span> <span class="toc-text">基础篇，从各种概念开始。</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#线程安全"><span class="toc-number">1.1.</span> <span class="toc-text">线程安全</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原子操作"><span class="toc-number">1.2.</span> <span class="toc-text">原子操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内置锁"><span class="toc-number">1.3.</span> <span class="toc-text">内置锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重入"><span class="toc-number">1.4.</span> <span class="toc-text">重入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Volatile-关键字"><span class="toc-number">1.5.</span> <span class="toc-text">Volatile 关键字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发布与逸出"><span class="toc-number">1.6.</span> <span class="toc-text">发布与逸出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线程封闭"><span class="toc-number">1.7.</span> <span class="toc-text">线程封闭</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ad-hoc-线程封闭"><span class="toc-number">1.7.1.</span> <span class="toc-text">Ad-hoc 线程封闭</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#栈封闭"><span class="toc-number">1.7.2.</span> <span class="toc-text">栈封闭</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ThreadLocal-类"><span class="toc-number">1.7.3.</span> <span class="toc-text">ThreadLocal 类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#不变性"><span class="toc-number">1.8.</span> <span class="toc-text">不变性</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基础篇，从各种概念开始。"><span class="toc-number">1.</span> <span class="toc-text">基础篇，从各种概念开始。</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#线程安全"><span class="toc-number">1.1.</span> <span class="toc-text">线程安全</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原子操作"><span class="toc-number">1.2.</span> <span class="toc-text">原子操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内置锁"><span class="toc-number">1.3.</span> <span class="toc-text">内置锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重入"><span class="toc-number">1.4.</span> <span class="toc-text">重入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Volatile-关键字"><span class="toc-number">1.5.</span> <span class="toc-text">Volatile 关键字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发布与逸出"><span class="toc-number">1.6.</span> <span class="toc-text">发布与逸出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线程封闭"><span class="toc-number">1.7.</span> <span class="toc-text">线程封闭</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ad-hoc-线程封闭"><span class="toc-number">1.7.1.</span> <span class="toc-text">Ad-hoc 线程封闭</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#栈封闭"><span class="toc-number">1.7.2.</span> <span class="toc-text">栈封闭</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ThreadLocal-类"><span class="toc-number">1.7.3.</span> <span class="toc-text">ThreadLocal 类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#不变性"><span class="toc-number">1.8.</span> <span class="toc-text">不变性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Final-域"><span class="toc-number">1.8.1.</span> <span class="toc-text">Final 域</span></a></li></ol></li></ol></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
