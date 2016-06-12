@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.xueni.ren/"/>
-  <updated>2016-06-11T12:49:49.278Z</updated>
+  <updated>2016-06-12T14:42:28.330Z</updated>
   <id>http://blog.xueni.ren/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://blog.xueni.ren/2016/06/06/spring-data-mongodb/"/>
     <id>http://blog.xueni.ren/2016/06/06/spring-data-mongodb/</id>
     <published>2016-06-06T14:27:45.000Z</published>
-    <updated>2016-06-11T12:49:49.278Z</updated>
+    <updated>2016-06-12T14:42:28.330Z</updated>
     
     <content type="html">&lt;h1 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h1&gt;&lt;p&gt;平时都在用 SpringMVC 进行开发，但是，基本上都是在用 SpringMVC+Mybatis+MySQL 进行开发。对于 Mongodb 只是听说过，&lt;br&gt;自己实际没有操作过，近期，在工作之余决定研究一下 Mongodb 。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;br&gt;那么，开始进入正题吧，此次我构建的项目是 SpringMVC+Mongodb+Maven ，有不对之处，还望指出。&lt;/p&gt;
 &lt;p&gt;作为一个 Maven 工程，我们还是先从 pom.xml 文件开始把,在 pom.xml 里配置我们的工程所依赖的 jar。&lt;br&gt;pom.xml&lt;/p&gt;
@@ -55,7 +55,7 @@
     <link href="http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/"/>
     <id>http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/</id>
     <published>2016-06-01T15:15:45.000Z</published>
-    <updated>2016-06-11T12:49:49.278Z</updated>
+    <updated>2016-06-12T14:42:28.330Z</updated>
     
     <content type="html">&lt;h1 id=&quot;基础篇，从各种概念开始。&quot;&gt;&lt;a href=&quot;#基础篇，从各种概念开始。&quot; class=&quot;headerlink&quot; title=&quot;基础篇，从各种概念开始。&quot;&gt;&lt;/a&gt;基础篇，从各种概念开始。&lt;/h1&gt;&lt;h2 id=&quot;线程安全&quot;&gt;&lt;a href=&quot;#线程安全&quot; class=&quot;headerlink&quot; title=&quot;线程安全&quot;&gt;&lt;/a&gt;线程安全&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步货协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/li&gt;
@@ -88,7 +88,35 @@
 &lt;/ul&gt;
 &lt;p&gt;线程安全库中的容器类提供以下安全发布保证：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;通过将一个键或者值放入 Hashtable、sychronziedMap 或者 &lt;/li&gt;
+&lt;li&gt;通过将一个键或者值放入 Hashtable、sychronziedMap 或者 ConcurrentMap 中，可以安全地将它发布给任何从这些容器中访问它的线程（无论是直接访问还是通过迭代器访问）。&lt;/li&gt;
+&lt;li&gt;通过将某个元素放入 Vector、CopyOnWriteArrayList、CopyWriteArraySet、synchronizedist 或 synchroizedSet 中，可以将该元素安全地发布到任何从这些容器中访问该元素的线程。&lt;/li&gt;
+&lt;li&gt;通过将某个元素放入 BlockingQueue 或者 ConcurrentLinkedQueue 中，可以将该元素安全地发布到任何从这些队列中访问该元素的线程。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;对象的发布需求取决于它的可变性：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;不可变对象可以通过任意机制来发布。&lt;/li&gt;
+&lt;li&gt;事实不可变对象必须通过安全方式来发布。&lt;/li&gt;
+&lt;li&gt;可变对象必须通过安全方式来发布，并且必须是线程安全的或者由某个锁保护起来。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在并发程序中使用和共享对象时，可以使用一些实用的策略，包括：&lt;br&gt;&lt;strong&gt;线封闭&lt;/strong&gt; 线程封闭的对象只能由一个线程拥有，对象被封闭在该线程中，并且只能由这个线程修改。&lt;br&gt;&lt;strong&gt;只读共享&lt;/strong&gt; 在没有额外同步的情况下，共享的只对对象可以由多个线程并发访问，但任何线程都不能修改它。共享只读对象包括不可变对象和事实不可变对象。&lt;br&gt;&lt;strong&gt;线程安全共享&lt;/strong&gt; 线程安全的对象在其内部实现同步，因此多个线程可以通过对象的公有接口来进行访问而不需要进一步的同步。&lt;br&gt;&lt;strong&gt;保护对象&lt;/strong&gt; 被保护的对象只能通过持有特定的锁来访问。保护对象包括封装在其他线程安全对象中的对象，以及已发布的并且有某个特定锁保护的对象。&lt;/p&gt;
+&lt;p&gt;在设计线程安全类的过程中，需要包含一下三个基本要素：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;找出构成对象状态的所有变量。&lt;/li&gt;
+&lt;li&gt;找出约束状态变量的不变性条件。&lt;/li&gt;
+&lt;li&gt;建立对象状态的并发访问管理策略。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;小结&quot;&gt;&lt;a href=&quot;#小结&quot; class=&quot;headerlink&quot; title=&quot;小结&quot;&gt;&lt;/a&gt;小结&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;可变状态是至关重要的。&lt;br&gt;所有的并发问题都可以归结为如何协调对并发状态的访问。可变状态越少，就越容易确保线程的安全性。&lt;/li&gt;
+&lt;li&gt;尽量将域声明为 final 类型，除非需要它们是可变的。&lt;/li&gt;
+&lt;li&gt;不可变对象一定是线程阿安全的。&lt;br&gt;不可变对象能极大地降低并发编程到的复杂性。它们更为简单而且安全，可以任意共享而无须使用加锁或保护性复制等机制。&lt;/li&gt;
+&lt;li&gt;封装有助于管理复杂性。&lt;br&gt;将数据封装在对象中，更易于维持不变性条件，将同步机制封装在对象中，更易于遵循同步策略。&lt;/li&gt;
+&lt;li&gt;用锁来保护每个可变变量。&lt;/li&gt;
+&lt;li&gt;当保护用一个不变性条件中的所有变量时，要使用同一个锁。&lt;/li&gt;
+&lt;li&gt;在执行符合操作期间，要持有锁。&lt;/li&gt;
+&lt;li&gt;如果从多线程中访问同一个可变变量时没有同步机制，那么程序会出现问题。&lt;/li&gt;
+&lt;li&gt;不要故作聪明地推断出不需要使用同步。&lt;/li&gt;
+&lt;li&gt;在设计过程中考虑线程安全，或者文档中明确指出它不是线程安全的。&lt;/li&gt;
+&lt;li&gt;将同步策略文档化。&lt;/li&gt;
 &lt;/ul&gt;
 </content>
     
@@ -111,7 +139,7 @@
     <link href="http://blog.xueni.ren/2016/06/01/MySQL-batch-insert/"/>
     <id>http://blog.xueni.ren/2016/06/01/MySQL-batch-insert/</id>
     <published>2016-06-01T14:22:22.000Z</published>
-    <updated>2016-06-11T12:49:49.278Z</updated>
+    <updated>2016-06-12T14:42:28.330Z</updated>
     
     <content type="html">&lt;p&gt;最近开始玩 &lt;strong&gt;MyBatis&lt;/strong&gt; ，想实现这么一个功能，就是将一张表里的数据作为历史数据存储到另一张表里去。&lt;br&gt;一开始我的代码是这么写的：&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
@@ -144,7 +172,7 @@
     <link href="http://blog.xueni.ren/2015/11/19/test/"/>
     <id>http://blog.xueni.ren/2015/11/19/test/</id>
     <published>2015-11-18T16:00:00.000Z</published>
-    <updated>2016-06-11T12:49:49.278Z</updated>
+    <updated>2016-06-12T14:42:28.330Z</updated>
     
     <content type="html">&lt;p&gt;&lt;a href=&quot;https://help.github.com/articles/basic-writing-and-formatting-syntax/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;md语法&lt;/a&gt;&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
@@ -219,7 +247,7 @@
     <link href="http://blog.xueni.ren/2015/04/01/pelican-blog/"/>
     <id>http://blog.xueni.ren/2015/04/01/pelican-blog/</id>
     <published>2015-03-31T16:00:00.000Z</published>
-    <updated>2016-06-11T12:49:49.278Z</updated>
+    <updated>2016-06-12T14:42:28.330Z</updated>
     
     <content type="html">&lt;p&gt;没有前言，没有概述，做个笔记而已。&lt;/p&gt;
 &lt;ol&gt;
@@ -251,7 +279,7 @@
     <link href="http://blog.xueni.ren/2014/11/19/hello-world/"/>
     <id>http://blog.xueni.ren/2014/11/19/hello-world/</id>
     <published>2014-11-18T16:00:00.000Z</published>
-    <updated>2016-06-11T12:49:49.278Z</updated>
+    <updated>2016-06-12T14:42:28.330Z</updated>
     
     <content type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;

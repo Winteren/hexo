@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="Apple">
 <meta property="og:description" content="基础篇，从各种概念开始。线程安全
 当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步货协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。">
-<meta property="og:updated_time" content="2016-06-11T12:49:49.278Z">
+<meta property="og:updated_time" content="2016-06-12T14:42:28.330Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 并发编程读书笔记(基础篇)">
 <meta name="twitter:description" content="基础篇，从各种概念开始。线程安全
@@ -318,7 +318,35 @@
 </ul>
 <p>线程安全库中的容器类提供以下安全发布保证：</p>
 <ul>
-<li>通过将一个键或者值放入 Hashtable、sychronziedMap 或者 </li>
+<li>通过将一个键或者值放入 Hashtable、sychronziedMap 或者 ConcurrentMap 中，可以安全地将它发布给任何从这些容器中访问它的线程（无论是直接访问还是通过迭代器访问）。</li>
+<li>通过将某个元素放入 Vector、CopyOnWriteArrayList、CopyWriteArraySet、synchronizedist 或 synchroizedSet 中，可以将该元素安全地发布到任何从这些容器中访问该元素的线程。</li>
+<li>通过将某个元素放入 BlockingQueue 或者 ConcurrentLinkedQueue 中，可以将该元素安全地发布到任何从这些队列中访问该元素的线程。</li>
+</ul>
+<p>对象的发布需求取决于它的可变性：</p>
+<ul>
+<li>不可变对象可以通过任意机制来发布。</li>
+<li>事实不可变对象必须通过安全方式来发布。</li>
+<li>可变对象必须通过安全方式来发布，并且必须是线程安全的或者由某个锁保护起来。</li>
+</ul>
+<p>在并发程序中使用和共享对象时，可以使用一些实用的策略，包括：<br><strong>线封闭</strong> 线程封闭的对象只能由一个线程拥有，对象被封闭在该线程中，并且只能由这个线程修改。<br><strong>只读共享</strong> 在没有额外同步的情况下，共享的只对对象可以由多个线程并发访问，但任何线程都不能修改它。共享只读对象包括不可变对象和事实不可变对象。<br><strong>线程安全共享</strong> 线程安全的对象在其内部实现同步，因此多个线程可以通过对象的公有接口来进行访问而不需要进一步的同步。<br><strong>保护对象</strong> 被保护的对象只能通过持有特定的锁来访问。保护对象包括封装在其他线程安全对象中的对象，以及已发布的并且有某个特定锁保护的对象。</p>
+<p>在设计线程安全类的过程中，需要包含一下三个基本要素：</p>
+<ul>
+<li>找出构成对象状态的所有变量。</li>
+<li>找出约束状态变量的不变性条件。</li>
+<li>建立对象状态的并发访问管理策略。</li>
+</ul>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ul>
+<li>可变状态是至关重要的。<br>所有的并发问题都可以归结为如何协调对并发状态的访问。可变状态越少，就越容易确保线程的安全性。</li>
+<li>尽量将域声明为 final 类型，除非需要它们是可变的。</li>
+<li>不可变对象一定是线程阿安全的。<br>不可变对象能极大地降低并发编程到的复杂性。它们更为简单而且安全，可以任意共享而无须使用加锁或保护性复制等机制。</li>
+<li>封装有助于管理复杂性。<br>将数据封装在对象中，更易于维持不变性条件，将同步机制封装在对象中，更易于遵循同步策略。</li>
+<li>用锁来保护每个可变变量。</li>
+<li>当保护用一个不变性条件中的所有变量时，要使用同一个锁。</li>
+<li>在执行符合操作期间，要持有锁。</li>
+<li>如果从多线程中访问同一个可变变量时没有同步机制，那么程序会出现问题。</li>
+<li>不要故作聪明地推断出不需要使用同步。</li>
+<li>在设计过程中考虑线程安全，或者文档中明确指出它不是线程安全的。</li>
+<li>将同步策略文档化。</li>
 </ul>
 
       
@@ -331,7 +359,7 @@
         <p><span>本文标题:</span><a href="/2016/06/01/Java-compli-read-notes-basis/">Java 并发编程读书笔记(基础篇)</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Apple</a></p>
         <p><span>发布时间:</span>2016-06-01, 23:15:45</p>
-        <p><span>最后更新:</span>2016-06-11, 20:49:49</p>
+        <p><span>最后更新:</span>2016-06-12, 22:42:28</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/06/01/Java-compli-read-notes-basis/" title="Java 并发编程读书笔记(基础篇)">http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/</a>
             <span class="copy-path" data-clipboard-text="原文: http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/　　作者: Apple" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -366,7 +394,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基础篇，从各种概念开始。"><span class="toc-number">1.</span> <span class="toc-text">基础篇，从各种概念开始。</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#线程安全"><span class="toc-number">1.1.</span> <span class="toc-text">线程安全</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原子操作"><span class="toc-number">1.2.</span> <span class="toc-text">原子操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内置锁"><span class="toc-number">1.3.</span> <span class="toc-text">内置锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重入"><span class="toc-number">1.4.</span> <span class="toc-text">重入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Volatile-关键字"><span class="toc-number">1.5.</span> <span class="toc-text">Volatile 关键字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发布与逸出"><span class="toc-number">1.6.</span> <span class="toc-text">发布与逸出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线程封闭"><span class="toc-number">1.7.</span> <span class="toc-text">线程封闭</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ad-hoc-线程封闭"><span class="toc-number">1.7.1.</span> <span class="toc-text">Ad-hoc 线程封闭</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#栈封闭"><span class="toc-number">1.7.2.</span> <span class="toc-text">栈封闭</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ThreadLocal-类"><span class="toc-number">1.7.3.</span> <span class="toc-text">ThreadLocal 类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#不变性"><span class="toc-number">1.8.</span> <span class="toc-text">不变性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Final-域"><span class="toc-number">1.8.1.</span> <span class="toc-text">Final 域</span></a></li></ol></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基础篇，从各种概念开始。"><span class="toc-number">1.</span> <span class="toc-text">基础篇，从各种概念开始。</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#线程安全"><span class="toc-number">1.1.</span> <span class="toc-text">线程安全</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原子操作"><span class="toc-number">1.2.</span> <span class="toc-text">原子操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内置锁"><span class="toc-number">1.3.</span> <span class="toc-text">内置锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重入"><span class="toc-number">1.4.</span> <span class="toc-text">重入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Volatile-关键字"><span class="toc-number">1.5.</span> <span class="toc-text">Volatile 关键字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发布与逸出"><span class="toc-number">1.6.</span> <span class="toc-text">发布与逸出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线程封闭"><span class="toc-number">1.7.</span> <span class="toc-text">线程封闭</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ad-hoc-线程封闭"><span class="toc-number">1.7.1.</span> <span class="toc-text">Ad-hoc 线程封闭</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#栈封闭"><span class="toc-number">1.7.2.</span> <span class="toc-text">栈封闭</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ThreadLocal-类"><span class="toc-number">1.7.3.</span> <span class="toc-text">ThreadLocal 类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#不变性"><span class="toc-number">1.8.</span> <span class="toc-text">不变性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Final-域"><span class="toc-number">1.8.1.</span> <span class="toc-text">Final 域</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小结"><span class="toc-number">1.9.</span> <span class="toc-text">小结</span></a></li></ol></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
