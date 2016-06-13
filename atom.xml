@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.xueni.ren/"/>
-  <updated>2016-06-12T14:42:28.330Z</updated>
+  <updated>2016-06-13T14:13:28.530Z</updated>
   <id>http://blog.xueni.ren/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://blog.xueni.ren/2016/06/06/spring-data-mongodb/"/>
     <id>http://blog.xueni.ren/2016/06/06/spring-data-mongodb/</id>
     <published>2016-06-06T14:27:45.000Z</published>
-    <updated>2016-06-12T14:42:28.330Z</updated>
+    <updated>2016-06-13T14:13:28.530Z</updated>
     
     <content type="html">&lt;h1 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h1&gt;&lt;p&gt;平时都在用 SpringMVC 进行开发，但是，基本上都是在用 SpringMVC+Mybatis+MySQL 进行开发。对于 Mongodb 只是听说过，&lt;br&gt;自己实际没有操作过，近期，在工作之余决定研究一下 Mongodb 。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;br&gt;那么，开始进入正题吧，此次我构建的项目是 SpringMVC+Mongodb+Maven ，有不对之处，还望指出。&lt;/p&gt;
 &lt;p&gt;作为一个 Maven 工程，我们还是先从 pom.xml 文件开始把,在 pom.xml 里配置我们的工程所依赖的 jar。&lt;br&gt;pom.xml&lt;/p&gt;
@@ -55,7 +55,7 @@
     <link href="http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/"/>
     <id>http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/</id>
     <published>2016-06-01T15:15:45.000Z</published>
-    <updated>2016-06-12T14:42:28.330Z</updated>
+    <updated>2016-06-13T14:13:28.530Z</updated>
     
     <content type="html">&lt;h1 id=&quot;基础篇，从各种概念开始。&quot;&gt;&lt;a href=&quot;#基础篇，从各种概念开始。&quot; class=&quot;headerlink&quot; title=&quot;基础篇，从各种概念开始。&quot;&gt;&lt;/a&gt;基础篇，从各种概念开始。&lt;/h1&gt;&lt;h2 id=&quot;线程安全&quot;&gt;&lt;a href=&quot;#线程安全&quot; class=&quot;headerlink&quot; title=&quot;线程安全&quot;&gt;&lt;/a&gt;线程安全&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步货协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/li&gt;
@@ -139,7 +139,7 @@
     <link href="http://blog.xueni.ren/2016/06/01/MySQL-batch-insert/"/>
     <id>http://blog.xueni.ren/2016/06/01/MySQL-batch-insert/</id>
     <published>2016-06-01T14:22:22.000Z</published>
-    <updated>2016-06-12T14:42:28.330Z</updated>
+    <updated>2016-06-13T14:13:28.530Z</updated>
     
     <content type="html">&lt;p&gt;最近开始玩 &lt;strong&gt;MyBatis&lt;/strong&gt; ，想实现这么一个功能，就是将一张表里的数据作为历史数据存储到另一张表里去。&lt;br&gt;一开始我的代码是这么写的：&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
@@ -172,7 +172,7 @@
     <link href="http://blog.xueni.ren/2015/11/19/test/"/>
     <id>http://blog.xueni.ren/2015/11/19/test/</id>
     <published>2015-11-18T16:00:00.000Z</published>
-    <updated>2016-06-12T14:42:28.330Z</updated>
+    <updated>2016-06-13T14:13:28.530Z</updated>
     
     <content type="html">&lt;p&gt;&lt;a href=&quot;https://help.github.com/articles/basic-writing-and-formatting-syntax/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;md语法&lt;/a&gt;&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
@@ -247,7 +247,7 @@
     <link href="http://blog.xueni.ren/2015/04/01/pelican-blog/"/>
     <id>http://blog.xueni.ren/2015/04/01/pelican-blog/</id>
     <published>2015-03-31T16:00:00.000Z</published>
-    <updated>2016-06-12T14:42:28.330Z</updated>
+    <updated>2016-06-13T14:13:28.530Z</updated>
     
     <content type="html">&lt;p&gt;没有前言，没有概述，做个笔记而已。&lt;/p&gt;
 &lt;ol&gt;
@@ -279,7 +279,7 @@
     <link href="http://blog.xueni.ren/2014/11/19/hello-world/"/>
     <id>http://blog.xueni.ren/2014/11/19/hello-world/</id>
     <published>2014-11-18T16:00:00.000Z</published>
-    <updated>2016-06-12T14:42:28.330Z</updated>
+    <updated>2016-06-13T14:13:28.530Z</updated>
     
     <content type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
