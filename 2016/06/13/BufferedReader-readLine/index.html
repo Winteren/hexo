@@ -9,21 +9,21 @@
 
   <meta charset="utf-8">
   
-  <title>Java 并发编程读书笔记(基础篇) | Apple</title>
+  <title>BufferedReader.readLine() 的使用中遇到的问题 | Apple</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="基础篇，从各种概念开始。线程安全
-当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步货协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。">
+  <meta name="description" content="前言遇到这么一个问题，需要从网络上下载图片到本地，单元测试一直停不下来，有次让单元测试跑起来之后，自己出去吃了个早饭回来发现单元测试还没有跑完。然后跟断点发现程序阻塞在 readLine() 方法上了。
+BufferedReaderBufferedReader 是由 Reader 类扩展而来，提供通用的缓冲方式文本读取，而且提供了很实用的 readLine 方法，也就是今天我要重点说的那个方法。B">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java 并发编程读书笔记(基础篇)">
-<meta property="og:url" content="http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/index.html">
+<meta property="og:title" content="BufferedReader.readLine() 的使用中遇到的问题">
+<meta property="og:url" content="http://blog.xueni.ren/2016/06/13/BufferedReader-readLine/index.html">
 <meta property="og:site_name" content="Apple">
-<meta property="og:description" content="基础篇，从各种概念开始。线程安全
-当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步货协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。">
+<meta property="og:description" content="前言遇到这么一个问题，需要从网络上下载图片到本地，单元测试一直停不下来，有次让单元测试跑起来之后，自己出去吃了个早饭回来发现单元测试还没有跑完。然后跟断点发现程序阻塞在 readLine() 方法上了。
+BufferedReaderBufferedReader 是由 Reader 类扩展而来，提供通用的缓冲方式文本读取，而且提供了很实用的 readLine 方法，也就是今天我要重点说的那个方法。B">
 <meta property="og:updated_time" content="2016-06-13T14:21:12.118Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java 并发编程读书笔记(基础篇)">
-<meta name="twitter:description" content="基础篇，从各种概念开始。线程安全
-当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步货协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。">
+<meta name="twitter:title" content="BufferedReader.readLine() 的使用中遇到的问题">
+<meta name="twitter:description" content="前言遇到这么一个问题，需要从网络上下载图片到本地，单元测试一直停不下来，有次让单元测试跑起来之后，自己出去吃了个早饭回来发现单元测试还没有跑完。然后跟断点发现程序阻塞在 readLine() 方法上了。
+BufferedReaderBufferedReader 是由 Reader 类扩展而来，提供通用的缓冲方式文本读取，而且提供了很实用的 readLine 方法，也就是今天我要重点说的那个方法。B">
   
     <link rel="alternative" href="/atom.xml" title="Apple" type="application/atom+xml">
   
@@ -245,11 +245,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-Java-compli-read-notes-basis" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-BufferedReader-readLine" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/06/01/Java-compli-read-notes-basis/" class="article-date">
-      <time datetime="2016-06-01T15:15:45.000Z" itemprop="datePublished">2016-06-01</time>
+      <a href="/2016/06/13/BufferedReader-readLine/" class="article-date">
+      <time datetime="2016-06-13T14:11:00.000Z" itemprop="datePublished">2016-06-13</time>
 </a>
     </div>
   
@@ -262,7 +262,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Java 并发编程读书笔记(基础篇)
+      BufferedReader.readLine() 的使用中遇到的问题
     </h1>
   
 
@@ -271,13 +271,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/读书笔记/">读书笔记</a>
+    <a class="article-category-link" href="/categories/Java-编程/">Java 编程</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BufferedReader/">BufferedReader</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -287,66 +287,16 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h1 id="基础篇，从各种概念开始。"><a href="#基础篇，从各种概念开始。" class="headerlink" title="基础篇，从各种概念开始。"></a>基础篇，从各种概念开始。</h1><h2 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h2><ul>
-<li>当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步货协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。<a id="more"></a></li>
-<li>在线程安全类中封装来必要的同步机制，因此客户端无须进一步采取同步措施。</li>
-<li>无状态对象一定是线程安全的。<br>在并发编程中，这种由于不恰当的执行时序而出现的不正确的结果是一种非常重要的情况，它有一个正式的名字：<strong>竞态条件</strong>。</li>
-</ul>
-<h2 id="原子操作"><a href="#原子操作" class="headerlink" title="原子操作"></a>原子操作</h2><p>作为一个不可分割的操作来执行。我们所熟知的 <strong>++i</strong> 并不是一个原子操作，它实际上是一个 <em>*¨读取 i 值 – 修改 i 值 – 写入 i 值¨</em> 的操作序列，并且其结果依赖于之前的状态。</p>
-<h2 id="内置锁"><a href="#内置锁" class="headerlink" title="内置锁"></a>内置锁</h2><p>每个 Java 对象都可以用做一个实现同步的锁，这些锁被称为内置锁(Inteinsic Lock)或者监视器锁(Monitor Lock)。获得内置锁的唯一途径就是进入由这个锁保护的同步代码块或方法。Java 的内置锁相当于一种互斥体(互斥锁)，这意味着最多只有一个线程能持有这种锁。</p>
-<h2 id="重入"><a href="#重入" class="headerlink" title="重入"></a>重入</h2><p>当某个线程请求一个由其他线程持有的锁是，发出请求的线程就会阻塞。¨重入¨ 意味着获取锁的操作的粒度是¨线程¨，而不是¨调用¨。重入的一种实现方法是，为每个锁关联一个获取计数值和一个所有者线程。</p>
-<h2 id="Volatile-关键字"><a href="#Volatile-关键字" class="headerlink" title="Volatile 关键字"></a>Volatile 关键字</h2><p>Java 语言提供来一种弱同步机制，即 volatile 变量，用来确保变量的更新操作通知到其他线程。<br>仅当 volatile 变量能简化代码的实现以及对同步策略的验证时，才应该使用它们。如果在验证正确性时需要对可见性进行复杂的判断，那么就不要使用 volatile 变量。volatile 变量的正确使用方式包括：确保它们自身状态的可见性，确保它们锁引用对象的状态的可见性，以及标识一些重要的程序生命周期事件的发生。</p>
-<h2 id="发布与逸出"><a href="#发布与逸出" class="headerlink" title="发布与逸出"></a>发布与逸出</h2><p>发布一个对象的意思是指，使对象能够在当前作用域之外的代码中使用。一般来说，如果一个已经发布的对象能够通过非私有的变量引用和方法调用到达其他对象，那么这些对象也都会被发布。<br>当某个不应该发布的对象被发布时，就称为逸出。</p>
-<h2 id="线程封闭"><a href="#线程封闭" class="headerlink" title="线程封闭"></a>线程封闭</h2><p>线程封闭的对象只能由一个线程拥有，对象被封闭在该线程中，并且只能由该线程修改。</p>
-<h3 id="Ad-hoc-线程封闭"><a href="#Ad-hoc-线程封闭" class="headerlink" title="Ad-hoc 线程封闭"></a>Ad-hoc 线程封闭</h3><p>Ad-hoc 线程封闭是指，维护线程封闭性的职责完全由程序实现来承担。</p>
-<h3 id="栈封闭"><a href="#栈封闭" class="headerlink" title="栈封闭"></a>栈封闭</h3><p>栈封闭是线程封闭的一种特例，在栈封闭中，只能通过局部变量才能访问对象。栈封闭比 Ad-hoc 线程封闭更易于维护，也更健壮。</p>
-<h3 id="ThreadLocal-类"><a href="#ThreadLocal-类" class="headerlink" title="ThreadLocal 类"></a>ThreadLocal 类</h3><p>维持线程封闭性的一种更规范方法是使用 ThreadLocal，这个类能使线程中的某个值与保存值的对象关联起来。ThreadLocal 对象通常用于防止对可变的单实例变量或全局变量进行共享。</p>
-<h2 id="不变性"><a href="#不变性" class="headerlink" title="不变性"></a>不变性</h2><p>如果某个对象在被创建后其状态就不能被修改，那么这个对象就称为不可变对象。<br><strong>不可变对象一定是线程安全的</strong>。</p>
-<p>当满足一下条件时，对象才是不可变的：</p>
-<ul>
-<li>对象创建以后其状态就不能被修改。</li>
-<li>对象的所有域都是 final 类型。</li>
-<li>对象是正确创建的(在对象创建期间，this 引用没有逸出)。</li>
-</ul>
-<h3 id="Final-域"><a href="#Final-域" class="headerlink" title="Final 域"></a>Final 域</h3><p>final 域能确保初始化过程的安全性，从而可以不受限制的访问不可变对象，并在共享这些对象时无须同步。</p>
-<p>要安全地发布一个对象，对象的引用以及对象的状态必须同事对其他线程可见。一个正确构造的对象可以通过以下方式来安全地发布：</p>
-<ul>
-<li>在静态初始化函数中初始化一个对象引用。</li>
-<li>将对象的引用保存到 olatile 类型的域或者 AtomicReferance 对象中。</li>
-<li>将对象的引用保存到某个正确构造对象的 final 类型域中。</li>
-<li>将对象的引用保存到一个由锁保护的域中。</li>
-</ul>
-<p>线程安全库中的容器类提供以下安全发布保证：</p>
-<ul>
-<li>通过将一个键或者值放入 Hashtable、sychronziedMap 或者 ConcurrentMap 中，可以安全地将它发布给任何从这些容器中访问它的线程（无论是直接访问还是通过迭代器访问）。</li>
-<li>通过将某个元素放入 Vector、CopyOnWriteArrayList、CopyWriteArraySet、synchronizedist 或 synchroizedSet 中，可以将该元素安全地发布到任何从这些容器中访问该元素的线程。</li>
-<li>通过将某个元素放入 BlockingQueue 或者 ConcurrentLinkedQueue 中，可以将该元素安全地发布到任何从这些队列中访问该元素的线程。</li>
-</ul>
-<p>对象的发布需求取决于它的可变性：</p>
-<ul>
-<li>不可变对象可以通过任意机制来发布。</li>
-<li>事实不可变对象必须通过安全方式来发布。</li>
-<li>可变对象必须通过安全方式来发布，并且必须是线程安全的或者由某个锁保护起来。</li>
-</ul>
-<p>在并发程序中使用和共享对象时，可以使用一些实用的策略，包括：<br><strong>线封闭</strong> 线程封闭的对象只能由一个线程拥有，对象被封闭在该线程中，并且只能由这个线程修改。<br><strong>只读共享</strong> 在没有额外同步的情况下，共享的只对对象可以由多个线程并发访问，但任何线程都不能修改它。共享只读对象包括不可变对象和事实不可变对象。<br><strong>线程安全共享</strong> 线程安全的对象在其内部实现同步，因此多个线程可以通过对象的公有接口来进行访问而不需要进一步的同步。<br><strong>保护对象</strong> 被保护的对象只能通过持有特定的锁来访问。保护对象包括封装在其他线程安全对象中的对象，以及已发布的并且有某个特定锁保护的对象。</p>
-<p>在设计线程安全类的过程中，需要包含一下三个基本要素：</p>
-<ul>
-<li>找出构成对象状态的所有变量。</li>
-<li>找出约束状态变量的不变性条件。</li>
-<li>建立对象状态的并发访问管理策略。</li>
-</ul>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ul>
-<li>可变状态是至关重要的。<br>所有的并发问题都可以归结为如何协调对并发状态的访问。可变状态越少，就越容易确保线程的安全性。</li>
-<li>尽量将域声明为 final 类型，除非需要它们是可变的。</li>
-<li>不可变对象一定是线程阿安全的。<br>不可变对象能极大地降低并发编程到的复杂性。它们更为简单而且安全，可以任意共享而无须使用加锁或保护性复制等机制。</li>
-<li>封装有助于管理复杂性。<br>将数据封装在对象中，更易于维持不变性条件，将同步机制封装在对象中，更易于遵循同步策略。</li>
-<li>用锁来保护每个可变变量。</li>
-<li>当保护用一个不变性条件中的所有变量时，要使用同一个锁。</li>
-<li>在执行符合操作期间，要持有锁。</li>
-<li>如果从多线程中访问同一个可变变量时没有同步机制，那么程序会出现问题。</li>
-<li>不要故作聪明地推断出不需要使用同步。</li>
-<li>在设计过程中考虑线程安全，或者文档中明确指出它不是线程安全的。</li>
-<li>将同步策略文档化。</li>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>遇到这么一个问题，需要从网络上下载图片到本地，单元测试一直停不下来，有次让单元测试跑起来之后，自己出去吃了个早饭回来发现<br>单元测试还没有跑完。然后跟断点发现程序阻塞在 <strong>readLine()</strong> 方法上了。</p>
+<h2 id="BufferedReader"><a href="#BufferedReader" class="headerlink" title="BufferedReader"></a>BufferedReader</h2><p><strong>BufferedReader</strong> 是由 <strong>Reader</strong> 类扩展而来，提供通用的缓冲方式文本读取，而且提供了很实用的 <strong>readLine</strong> 方法，也就是今天<br>我要重点说的那个方法。<strong>BufferReader</strong> 的作用是为 <strong>Reader</strong> 提供缓冲功能。 <strong>readLine</strong> 方法一次读取一个文本行，从字符输入流中读取<br>文本，缓冲各个字符，从而提供字符、数组和行的高效读取。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">StringBuffer sb = <span class="keyword">new</span> StringBuffer();</span><br><span class="line">   BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(conn.getInputStream()));</span><br><span class="line">           String line = <span class="keyword">null</span>;</span><br><span class="line">           <span class="keyword">while</span> ((line = reader.readLine()) != <span class="keyword">null</span>) &#123;</span><br><span class="line">           System.out.println(¨---here¨);</span><br><span class="line">               sb.append(line);</span><br><span class="line">           &#125;</span><br></pre></td></tr></table></figure>
+<p>然后程序就阻塞在了 <strong> while ((line = reader.readLine()) != null)</strong> 这一行。System.out.println(¨—here¨); 这一句始终没有打印。</p>
+<p>那么，程序为什么会阻塞呢？那么我们就需要了解一下 <strong>readLine</strong> 这个<br>方法了。<br><strong>readLine</strong> 是一个阻塞方法，在没有读取到数据的时候并不会返回 <strong>null</strong> 。<strong>readLine</strong> 只有在数据流发生异常时才会返回null值。如果<br>不指定 <strong>buffer</strong> 大小，则<strong> readLine</strong> 的 <strong>buffer</strong> 默认大小是 <strong>8192</strong> 个字符。在没有达到buffer大小之前，只有遇到<strong>“/r”、”/n”、”/r/n”</strong>才会返回。<br>这个时候这个时候，我就在猜想到底是我的图片太小，不足 <strong>8192</strong> 个字符呢？还是说别的什么原因才导致 readLine 才没有一直返回。。<br>为了不让程序阻塞，可以设置超时时间，但是这个不是解决问题的最终办法。因为这个 url 上的图片通过浏览器是可以正常访问，且完全<br>可以通过浏览器下载到本地。断点一路跟来，最后锁定问题出在了这一句 <strong>conn.getInputStream()</strong> 因为 <strong>InputStream</strong> 流的原因，导致 <strong>readine</strong> 读不到数据才一直阻塞</p>
+<p>InputStream 我是通过一下方式获取的。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">HttpURLConnection conn = (HttpURLConnection) <span class="keyword">new</span> URL(picURL).openConnection();</span><br><span class="line">  conn.setRequestProperty(<span class="string">"Accept-Charset"</span>, <span class="string">"utf-8"</span>);</span><br><span class="line">  conn.setRequestProperty(<span class="string">"Content-Type"</span>, <span class="string">"application/x-www-form-urlencoded"</span>);</span><br><span class="line"></span><br><span class="line">  conn.setConnectTimeout(timeout * <span class="number">1000</span>);</span><br><span class="line">  conn.setReadTimeout(timeout * <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> conn.getInputStream();</span><br></pre></td></tr></table></figure></p>
+<p>看代码似乎没有什么问题，但是通过在控制台打印我发现来，<strong>conn.getConnectionType</strong> 的值为 <strong>null</strong> 和 <strong>gzip</strong> 的会导致 <strong>readLine</strong> 阻塞。这个时候问题就有两种解决方案了<br>一种是，在返回 InputStream 流的时候进行类型判断，还有一种方案就是换一种图片下载的方式。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>通过在网上查资料，大多数人都建议在使用socket之类的数据流时，要避免使用 <strong>readLine</strong>。</li>
+<li><strong>conn.getInputStream()</strong> 有可能会获取到 gzip 流，我们可以通过 <strong>new GZIPInputStream(conn.getInputStream())</strong> 来解压我们的流。</li>
 </ul>
 
       
@@ -356,13 +306,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/06/01/Java-compli-read-notes-basis/">Java 并发编程读书笔记(基础篇)</a></p>
+        <p><span>本文标题:</span><a href="/2016/06/13/BufferedReader-readLine/">BufferedReader.readLine() 的使用中遇到的问题</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Apple</a></p>
-        <p><span>发布时间:</span>2016-06-01, 23:15:45</p>
+        <p><span>发布时间:</span>2016-06-13, 22:11:00</p>
         <p><span>最后更新:</span>2016-06-13, 22:21:12</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/06/01/Java-compli-read-notes-basis/" title="Java 并发编程读书笔记(基础篇)">http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/　　作者: Apple" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/06/13/BufferedReader-readLine/" title="BufferedReader.readLine() 的使用中遇到的问题">http://blog.xueni.ren/2016/06/13/BufferedReader-readLine/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.xueni.ren/2016/06/13/BufferedReader-readLine/　　作者: Apple" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -374,16 +324,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/06/06/spring-data-mongodb/">
-                    SpringMVC 整合Mongodb
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/06/01/MySQL-batch-insert/">
-                    MySQL 入库操作的优化
+                <a href="/2016/06/06/spring-data-mongodb/">
+                    SpringMVC 整合Mongodb
                 </a>
             </div>
         
@@ -394,7 +338,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基础篇，从各种概念开始。"><span class="toc-number">1.</span> <span class="toc-text">基础篇，从各种概念开始。</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#线程安全"><span class="toc-number">1.1.</span> <span class="toc-text">线程安全</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原子操作"><span class="toc-number">1.2.</span> <span class="toc-text">原子操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内置锁"><span class="toc-number">1.3.</span> <span class="toc-text">内置锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重入"><span class="toc-number">1.4.</span> <span class="toc-text">重入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Volatile-关键字"><span class="toc-number">1.5.</span> <span class="toc-text">Volatile 关键字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发布与逸出"><span class="toc-number">1.6.</span> <span class="toc-text">发布与逸出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线程封闭"><span class="toc-number">1.7.</span> <span class="toc-text">线程封闭</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ad-hoc-线程封闭"><span class="toc-number">1.7.1.</span> <span class="toc-text">Ad-hoc 线程封闭</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#栈封闭"><span class="toc-number">1.7.2.</span> <span class="toc-text">栈封闭</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ThreadLocal-类"><span class="toc-number">1.7.3.</span> <span class="toc-text">ThreadLocal 类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#不变性"><span class="toc-number">1.8.</span> <span class="toc-text">不变性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Final-域"><span class="toc-number">1.8.1.</span> <span class="toc-text">Final 域</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小结"><span class="toc-number">1.9.</span> <span class="toc-text">小结</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BufferedReader"><span class="toc-number">2.</span> <span class="toc-text">BufferedReader</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
@@ -451,7 +395,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"Java 并发编程读书笔记(基础篇)　| Apple　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"BufferedReader.readLine() 的使用中遇到的问题　| Apple　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -487,15 +431,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/06/06/spring-data-mongodb/" title="上一篇: SpringMVC 整合Mongodb">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/06/01/MySQL-batch-insert/" title="下一篇: MySQL 入库操作的优化">
+            <a href="/2016/06/06/spring-data-mongodb/" title="下一篇: SpringMVC 整合Mongodb">
                 <i class="fa fa-angle-right"></i>
             </a>
         

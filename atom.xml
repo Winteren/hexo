@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.xueni.ren/"/>
-  <updated>2016-06-13T14:14:34.422Z</updated>
+  <updated>2016-06-13T14:21:12.118Z</updated>
   <id>http://blog.xueni.ren/</id>
   
   <author>
@@ -16,11 +16,46 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>BufferedReader.readLine() 的使用中遇到的问题</title>
+    <link href="http://blog.xueni.ren/2016/06/13/BufferedReader-readLine/"/>
+    <id>http://blog.xueni.ren/2016/06/13/BufferedReader-readLine/</id>
+    <published>2016-06-13T14:11:00.000Z</published>
+    <updated>2016-06-13T14:21:12.118Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;遇到这么一个问题，需要从网络上下载图片到本地，单元测试一直停不下来，有次让单元测试跑起来之后，自己出去吃了个早饭回来发现&lt;br&gt;单元测试还没有跑完。然后跟断点发现程序阻塞在 &lt;strong&gt;readLine()&lt;/strong&gt; 方法上了。&lt;/p&gt;
+&lt;h2 id=&quot;BufferedReader&quot;&gt;&lt;a href=&quot;#BufferedReader&quot; class=&quot;headerlink&quot; title=&quot;BufferedReader&quot;&gt;&lt;/a&gt;BufferedReader&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;BufferedReader&lt;/strong&gt; 是由 &lt;strong&gt;Reader&lt;/strong&gt; 类扩展而来，提供通用的缓冲方式文本读取，而且提供了很实用的 &lt;strong&gt;readLine&lt;/strong&gt; 方法，也就是今天&lt;br&gt;我要重点说的那个方法。&lt;strong&gt;BufferReader&lt;/strong&gt; 的作用是为 &lt;strong&gt;Reader&lt;/strong&gt; 提供缓冲功能。 &lt;strong&gt;readLine&lt;/strong&gt; 方法一次读取一个文本行，从字符输入流中读取&lt;br&gt;文本，缓冲各个字符，从而提供字符、数组和行的高效读取。&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;StringBuffer sb = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; StringBuffer();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   BufferedReader reader = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; BufferedReader(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; InputStreamReader(conn.getInputStream()));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;           String line = &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;           &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt; ((line = reader.readLine()) != &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;           System.out.println(¨---here¨);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;               sb.append(line);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;           &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;然后程序就阻塞在了 &lt;strong&gt; while ((line = reader.readLine()) != null)&lt;/strong&gt; 这一行。System.out.println(¨—here¨); 这一句始终没有打印。&lt;/p&gt;
+&lt;p&gt;那么，程序为什么会阻塞呢？那么我们就需要了解一下 &lt;strong&gt;readLine&lt;/strong&gt; 这个&lt;br&gt;方法了。&lt;br&gt;&lt;strong&gt;readLine&lt;/strong&gt; 是一个阻塞方法，在没有读取到数据的时候并不会返回 &lt;strong&gt;null&lt;/strong&gt; 。&lt;strong&gt;readLine&lt;/strong&gt; 只有在数据流发生异常时才会返回null值。如果&lt;br&gt;不指定 &lt;strong&gt;buffer&lt;/strong&gt; 大小，则&lt;strong&gt; readLine&lt;/strong&gt; 的 &lt;strong&gt;buffer&lt;/strong&gt; 默认大小是 &lt;strong&gt;8192&lt;/strong&gt; 个字符。在没有达到buffer大小之前，只有遇到&lt;strong&gt;“/r”、”/n”、”/r/n”&lt;/strong&gt;才会返回。&lt;br&gt;这个时候这个时候，我就在猜想到底是我的图片太小，不足 &lt;strong&gt;8192&lt;/strong&gt; 个字符呢？还是说别的什么原因才导致 readLine 才没有一直返回。。&lt;br&gt;为了不让程序阻塞，可以设置超时时间，但是这个不是解决问题的最终办法。因为这个 url 上的图片通过浏览器是可以正常访问，且完全&lt;br&gt;可以通过浏览器下载到本地。断点一路跟来，最后锁定问题出在了这一句 &lt;strong&gt;conn.getInputStream()&lt;/strong&gt; 因为 &lt;strong&gt;InputStream&lt;/strong&gt; 流的原因，导致 &lt;strong&gt;readine&lt;/strong&gt; 读不到数据才一直阻塞&lt;/p&gt;
+&lt;p&gt;InputStream 我是通过一下方式获取的。&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;HttpURLConnection conn = (HttpURLConnection) &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; URL(picURL).openConnection();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  conn.setRequestProperty(&lt;span class=&quot;string&quot;&gt;&quot;Accept-Charset&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;utf-8&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  conn.setRequestProperty(&lt;span class=&quot;string&quot;&gt;&quot;Content-Type&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;application/x-www-form-urlencoded&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  conn.setConnectTimeout(timeout * &lt;span class=&quot;number&quot;&gt;1000&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  conn.setReadTimeout(timeout * &lt;span class=&quot;number&quot;&gt;1000&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; conn.getInputStream();&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;看代码似乎没有什么问题，但是通过在控制台打印我发现来，&lt;strong&gt;conn.getConnectionType&lt;/strong&gt; 的值为 &lt;strong&gt;null&lt;/strong&gt; 和 &lt;strong&gt;gzip&lt;/strong&gt; 的会导致 &lt;strong&gt;readLine&lt;/strong&gt; 阻塞。这个时候问题就有两种解决方案了&lt;br&gt;一种是，在返回 InputStream 流的时候进行类型判断，还有一种方案就是换一种图片下载的方式。&lt;/p&gt;
+&lt;h2 id=&quot;总结&quot;&gt;&lt;a href=&quot;#总结&quot; class=&quot;headerlink&quot; title=&quot;总结&quot;&gt;&lt;/a&gt;总结&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;通过在网上查资料，大多数人都建议在使用socket之类的数据流时，要避免使用 &lt;strong&gt;readLine&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;conn.getInputStream()&lt;/strong&gt; 有可能会获取到 gzip 流，我们可以通过 &lt;strong&gt;new GZIPInputStream(conn.getInputStream())&lt;/strong&gt; 来解压我们的流。&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;遇到这么一个问题，需要从网络上下载图片到本地，单元测试一直停不下来，有次让单元测试跑起来之后，自己出去吃了个早饭回来发现&lt;br&gt;单元测试还没
+    
+    </summary>
+    
+      <category term="Java 编程" scheme="http://blog.xueni.ren/categories/Java-%E7%BC%96%E7%A8%8B/"/>
+    
+    
+      <category term="Java" scheme="http://blog.xueni.ren/tags/Java/"/>
+    
+      <category term="BufferedReader" scheme="http://blog.xueni.ren/tags/BufferedReader/"/>
+    
+  </entry>
+  
+  <entry>
     <title>SpringMVC 整合Mongodb</title>
     <link href="http://blog.xueni.ren/2016/06/06/spring-data-mongodb/"/>
     <id>http://blog.xueni.ren/2016/06/06/spring-data-mongodb/</id>
     <published>2016-06-06T14:27:45.000Z</published>
-    <updated>2016-06-13T14:14:34.422Z</updated>
+    <updated>2016-06-13T14:21:12.118Z</updated>
     
     <content type="html">&lt;h1 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h1&gt;&lt;p&gt;平时都在用 SpringMVC 进行开发，但是，基本上都是在用 SpringMVC+Mybatis+MySQL 进行开发。对于 Mongodb 只是听说过，&lt;br&gt;自己实际没有操作过，近期，在工作之余决定研究一下 Mongodb 。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;br&gt;那么，开始进入正题吧，此次我构建的项目是 SpringMVC+Mongodb+Maven ，有不对之处，还望指出。&lt;/p&gt;
 &lt;p&gt;作为一个 Maven 工程，我们还是先从 pom.xml 文件开始把,在 pom.xml 里配置我们的工程所依赖的 jar。&lt;br&gt;pom.xml&lt;/p&gt;
@@ -55,7 +90,7 @@
     <link href="http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/"/>
     <id>http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/</id>
     <published>2016-06-01T15:15:45.000Z</published>
-    <updated>2016-06-13T14:14:34.422Z</updated>
+    <updated>2016-06-13T14:21:12.118Z</updated>
     
     <content type="html">&lt;h1 id=&quot;基础篇，从各种概念开始。&quot;&gt;&lt;a href=&quot;#基础篇，从各种概念开始。&quot; class=&quot;headerlink&quot; title=&quot;基础篇，从各种概念开始。&quot;&gt;&lt;/a&gt;基础篇，从各种概念开始。&lt;/h1&gt;&lt;h2 id=&quot;线程安全&quot;&gt;&lt;a href=&quot;#线程安全&quot; class=&quot;headerlink&quot; title=&quot;线程安全&quot;&gt;&lt;/a&gt;线程安全&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步货协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/li&gt;
@@ -139,7 +174,7 @@
     <link href="http://blog.xueni.ren/2016/06/01/MySQL-batch-insert/"/>
     <id>http://blog.xueni.ren/2016/06/01/MySQL-batch-insert/</id>
     <published>2016-06-01T14:22:22.000Z</published>
-    <updated>2016-06-13T14:14:34.422Z</updated>
+    <updated>2016-06-13T14:21:12.118Z</updated>
     
     <content type="html">&lt;p&gt;最近开始玩 &lt;strong&gt;MyBatis&lt;/strong&gt; ，想实现这么一个功能，就是将一张表里的数据作为历史数据存储到另一张表里去。&lt;br&gt;一开始我的代码是这么写的：&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
@@ -172,7 +207,7 @@
     <link href="http://blog.xueni.ren/2015/11/19/test/"/>
     <id>http://blog.xueni.ren/2015/11/19/test/</id>
     <published>2015-11-18T16:00:00.000Z</published>
-    <updated>2016-06-13T14:14:34.422Z</updated>
+    <updated>2016-06-13T14:21:12.118Z</updated>
     
     <content type="html">&lt;p&gt;&lt;a href=&quot;https://help.github.com/articles/basic-writing-and-formatting-syntax/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;md语法&lt;/a&gt;&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
@@ -247,7 +282,7 @@
     <link href="http://blog.xueni.ren/2015/04/01/pelican-blog/"/>
     <id>http://blog.xueni.ren/2015/04/01/pelican-blog/</id>
     <published>2015-03-31T16:00:00.000Z</published>
-    <updated>2016-06-13T14:14:34.422Z</updated>
+    <updated>2016-06-13T14:21:12.118Z</updated>
     
     <content type="html">&lt;p&gt;没有前言，没有概述，做个笔记而已。&lt;/p&gt;
 &lt;ol&gt;
@@ -279,7 +314,7 @@
     <link href="http://blog.xueni.ren/2014/11/19/hello-world/"/>
     <id>http://blog.xueni.ren/2014/11/19/hello-world/</id>
     <published>2014-11-18T16:00:00.000Z</published>
-    <updated>2016-06-13T14:14:34.422Z</updated>
+    <updated>2016-06-13T14:21:12.118Z</updated>
     
     <content type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
