@@ -11,19 +11,16 @@
   
   <title>BufferedReader.readLine() 的使用中遇到的问题 | Apple</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言遇到这么一个问题，需要从网络上下载图片到本地，单元测试一直停不下来，有次让单元测试跑起来之后，自己出去吃了个早饭回来发现单元测试还没有跑完。然后跟断点发现程序阻塞在 readLine() 方法上了。
-BufferedReaderBufferedReader 是由 Reader 类扩展而来，提供通用的缓冲方式文本读取，而且提供了很实用的 readLine 方法，也就是今天我要重点说的那个方法。B">
+  <meta name="description" content="前言遇到这么一个问题，需要从网络上下载图片到本地，单元测试一直停不下来，有次让单元测试跑起来之后，自己出去吃了个早饭回来发现单元测试还没有跑完。然后跟断点发现程序阻塞在 readLine() 方法上了。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="BufferedReader.readLine() 的使用中遇到的问题">
 <meta property="og:url" content="http://blog.xueni.ren/2016/06/13/BufferedReader-readLine/index.html">
 <meta property="og:site_name" content="Apple">
-<meta property="og:description" content="前言遇到这么一个问题，需要从网络上下载图片到本地，单元测试一直停不下来，有次让单元测试跑起来之后，自己出去吃了个早饭回来发现单元测试还没有跑完。然后跟断点发现程序阻塞在 readLine() 方法上了。
-BufferedReaderBufferedReader 是由 Reader 类扩展而来，提供通用的缓冲方式文本读取，而且提供了很实用的 readLine 方法，也就是今天我要重点说的那个方法。B">
-<meta property="og:updated_time" content="2016-06-13T14:21:12.118Z">
+<meta property="og:description" content="前言遇到这么一个问题，需要从网络上下载图片到本地，单元测试一直停不下来，有次让单元测试跑起来之后，自己出去吃了个早饭回来发现单元测试还没有跑完。然后跟断点发现程序阻塞在 readLine() 方法上了。">
+<meta property="og:updated_time" content="2016-06-13T14:25:44.471Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="BufferedReader.readLine() 的使用中遇到的问题">
-<meta name="twitter:description" content="前言遇到这么一个问题，需要从网络上下载图片到本地，单元测试一直停不下来，有次让单元测试跑起来之后，自己出去吃了个早饭回来发现单元测试还没有跑完。然后跟断点发现程序阻塞在 readLine() 方法上了。
-BufferedReaderBufferedReader 是由 Reader 类扩展而来，提供通用的缓冲方式文本读取，而且提供了很实用的 readLine 方法，也就是今天我要重点说的那个方法。B">
+<meta name="twitter:description" content="前言遇到这么一个问题，需要从网络上下载图片到本地，单元测试一直停不下来，有次让单元测试跑起来之后，自己出去吃了个早饭回来发现单元测试还没有跑完。然后跟断点发现程序阻塞在 readLine() 方法上了。">
   
     <link rel="alternative" href="/atom.xml" title="Apple" type="application/atom+xml">
   
@@ -288,6 +285,7 @@ BufferedReaderBufferedReader 是由 Reader 类扩展而来，提供通用的缓�
       
           
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>遇到这么一个问题，需要从网络上下载图片到本地，单元测试一直停不下来，有次让单元测试跑起来之后，自己出去吃了个早饭回来发现<br>单元测试还没有跑完。然后跟断点发现程序阻塞在 <strong>readLine()</strong> 方法上了。</p>
+<a id="more"></a>
 <h2 id="BufferedReader"><a href="#BufferedReader" class="headerlink" title="BufferedReader"></a>BufferedReader</h2><p><strong>BufferedReader</strong> 是由 <strong>Reader</strong> 类扩展而来，提供通用的缓冲方式文本读取，而且提供了很实用的 <strong>readLine</strong> 方法，也就是今天<br>我要重点说的那个方法。<strong>BufferReader</strong> 的作用是为 <strong>Reader</strong> 提供缓冲功能。 <strong>readLine</strong> 方法一次读取一个文本行，从字符输入流中读取<br>文本，缓冲各个字符，从而提供字符、数组和行的高效读取。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">StringBuffer sb = <span class="keyword">new</span> StringBuffer();</span><br><span class="line">   BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(conn.getInputStream()));</span><br><span class="line">           String line = <span class="keyword">null</span>;</span><br><span class="line">           <span class="keyword">while</span> ((line = reader.readLine()) != <span class="keyword">null</span>) &#123;</span><br><span class="line">           System.out.println(¨---here¨);</span><br><span class="line">               sb.append(line);</span><br><span class="line">           &#125;</span><br></pre></td></tr></table></figure>
 <p>然后程序就阻塞在了 <strong> while ((line = reader.readLine()) != null)</strong> 这一行。System.out.println(¨—here¨); 这一句始终没有打印。</p>
@@ -309,7 +307,7 @@ BufferedReaderBufferedReader 是由 Reader 类扩展而来，提供通用的缓�
         <p><span>本文标题:</span><a href="/2016/06/13/BufferedReader-readLine/">BufferedReader.readLine() 的使用中遇到的问题</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Apple</a></p>
         <p><span>发布时间:</span>2016-06-13, 22:11:00</p>
-        <p><span>最后更新:</span>2016-06-13, 22:21:12</p>
+        <p><span>最后更新:</span>2016-06-13, 22:25:44</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/06/13/BufferedReader-readLine/" title="BufferedReader.readLine() 的使用中遇到的问题">http://blog.xueni.ren/2016/06/13/BufferedReader-readLine/</a>
             <span class="copy-path" data-clipboard-text="原文: http://blog.xueni.ren/2016/06/13/BufferedReader-readLine/　　作者: Apple" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
