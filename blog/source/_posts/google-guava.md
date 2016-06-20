@@ -19,7 +19,8 @@ description:
 - 分布式缓存
 - 数据库缓存
 - CPU 缓存
-- http 缓存
+- Http 缓存
 
 ## Guava Cache
-Guava Cache 是一个全内存的本地缓存，它提供了线程安全的实现机制。
+Guava Cache 是一个全内存的本地缓存，它提供了线程安全的实现机制。使用缓存就意味着你要牺牲一部分内存空间
+
