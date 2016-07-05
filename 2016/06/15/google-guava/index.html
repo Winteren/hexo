@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://blog.xueni.ren/2016/06/15/google-guava/index.html">
 <meta property="og:site_name" content="Apple">
 <meta property="og:description" content="缓存缓存主要作用是就是预读取（预先读取将要载入的数据）、存储临时访问过的数据和对写入的数据进行暂时存放。">
-<meta property="og:updated_time" content="2016-07-05T08:57:48.056Z">
+<meta property="og:updated_time" content="2016-07-05T09:04:43.706Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Google Guava Cache 学习笔记">
 <meta name="twitter:description" content="缓存缓存主要作用是就是预读取（预先读取将要载入的数据）、存储临时访问过的数据和对写入的数据进行暂时存放。">
@@ -302,7 +302,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">LoadingCache&lt;Key, Graph&gt; graphs = CacheBuilder.newBuilder()</div><div class="line">        .expireAfterAccess(<span class="number">10</span>, TimeUnit.MINUTES)</div><div class="line">        .build(</div><div class="line">            <span class="keyword">new</span> CacheLoader&lt;Key, Graph&gt;() &#123;</div><div class="line">                <span class="function"><span class="keyword">public</span> Graph <span class="title">load</span><span class="params">(Key key)</span> </span>&#123; <span class="comment">// no checked exception</span></div><div class="line">                    <span class="keyword">return</span> createExpensiveGraph(key);</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line"> </div><div class="line">...</div><div class="line"><span class="keyword">return</span> graphs.getUnchecked(key);</div></pre></td></tr></table></figure>
 <h3 id="Callable"><a href="#Callable" class="headerlink" title="Callable"></a>Callable</h3><p>所有类型的 <code>Guava Cache</code> ，不管有没有自动加载功能，都支持 <code>get(K,Callable&lt;V&gt;)</code> 方法。这个方法返回缓存中相应的值，或者用给定的 <code>Callable</code> 运算并把结果加到缓存中。在整个加载方法完成前，缓存项相关的可观察状态都不会更改。这个方法简便第实现了模式 <strong>“如果有缓存则返回；否则运算、缓存、然后返回”</strong>。<br>官网示例：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">Cache&lt;Key, Graph&gt; cache = CacheBuilder.newBuilder()</div><div class="line">        .maximumSize(<span class="number">1000</span>)</div><div class="line">        .build(); <span class="comment">// look Ma, no CacheLoader</span></div><div class="line"></div><div class="line">...</div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    <span class="comment">// If the key wasn't in the "easy to compute" group, we need to</span></div><div class="line">    <span class="comment">// do things the hard way.</span></div><div class="line">    cache.get(key, <span class="keyword">new</span> Callable&lt;Key, Graph&gt;() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> Value <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> AnyException </span>&#123;</div><div class="line">            <span class="keyword">return</span> doThingsTheHardWay(key);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125; <span class="keyword">catch</span> (ExecutionException e) &#123;</div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> OtherException(e.getCause());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>[参考资料]</strong>(<a href="http://ifeve.com/google-guava-cachesexplained/" target="_blank" rel="external">http://ifeve.com/google-guava-cachesexplained/</a>)</p>
+<p><strong><a href="http://ifeve.com/google-guava-cachesexplained/" target="_blank" rel="external">参考资料</a></strong></p>
 
       
     </div>
@@ -314,7 +314,7 @@
         <p><span>本文标题:</span><a href="/2016/06/15/google-guava/">Google Guava Cache 学习笔记</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Apple</a></p>
         <p><span>发布时间:</span>2016-06-15, 00:00:00</p>
-        <p><span>最后更新:</span>2016-07-05, 16:57:48</p>
+        <p><span>最后更新:</span>2016-07-05, 17:04:43</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/06/15/google-guava/" title="Google Guava Cache 学习笔记">http://blog.xueni.ren/2016/06/15/google-guava/</a>
             <span class="copy-path" data-clipboard-text="原文: http://blog.xueni.ren/2016/06/15/google-guava/　　作者: Apple" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
