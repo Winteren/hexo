@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://blog.xueni.ren/2016/06/15/google-guava/index.html">
 <meta property="og:site_name" content="Apple">
 <meta property="og:description" content="缓存缓存主要作用是就是预读取（预先读取将要载入的数据）、存储临时访问过的数据和对写入的数据进行暂时存放。">
-<meta property="og:updated_time" content="2016-07-05T10:39:32.766Z">
+<meta property="og:updated_time" content="2016-07-05T10:40:34.482Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Google Guava Cache 学习笔记">
 <meta name="twitter:description" content="缓存缓存主要作用是就是预读取（预先读取将要载入的数据）、存储临时访问过的数据和对写入的数据进行暂时存放。">
@@ -310,7 +310,7 @@
 * CacheBuilder.maxumumWeigher(long):指定权重最大总重。_在权重限定场景中，除了要注意回收也是在冲了逼近限定值时就进行了，还要知道重量是在缓存创建时计算的，因此要考虑重量计算的复杂度。_
 </code></pre><p>　　2. 定时回收(Timed Eviction)<br>　　    <em> expireAfterAccess(long, TimeUnit):缓存项在给定时间内没有被读/写访问，则回收。<em>请注意这种缓存的回收顺序和基于大小回收一样。</em>
 　　    </em> expireAfterWrite(long, TimeUnit):缓存项在给定时间内没有被写访问（创建或覆盖），则回收。<em>如果认为缓存数据总是在固定时候会变得         陈旧不可用，这种回收方式是可取的。</em><br>　　3. 引用的回收(Reference-based Eviction)<br>　　    通过使用弱引用的键、或弱引用的值、或软引用的值，Guava Cache 可以把缓存设置为允许垃圾回收：<br>　　    <em> CacheBuilder.weakKeys():使用弱引用存储键，当键没有其它（强或软）引用时，缓存项可以被垃圾回收。因为垃圾回收仅依赖恒等式<code>（==         ）</code>，使用弱医用建的缓存用 <code>==</code> 而不是 <code>equals</code> 比较键。
-　　    </em> CacheBuilder.weakValues():使用弱引用存储值。当值没有其它（强或软）引用是，缓存项可以被垃圾回收。因为垃圾回收仅依赖恒等式<code>（=         =）</code>而不是 <code>equals</code> 比较值。<br>　　    * CacheBuilder.softValues():使用软引用存储值。软引用只有在响应内存需要是，才按照全局最近最少使用的顺序回收。考虑到使用软引用的         性能影响。我们通常建议使用更有性能预测性的缓存大小限定。使用软引用值的缓存同样用 <code>==</code> 而不是 <code>equals</code> 比较值。<br>　　4. 显式清除<br>　　    任何时候，你都可以显式地清除缓存项，而不是等到它被回收：</p>
+　　    </em> CacheBuilder.weakValues():使用弱引用存储值。当值没有其它（强或软）引用是，缓存项可以被垃圾回收。因为垃圾回收仅依赖恒等式<code>（=         =）</code>而不是 <code>equals</code> 比较值。<br>　　    * CacheBuilder.softValues():使用软引用存储值。软引用只有在响应内存需要是，才按照全局最近最少使用的顺序回收。考虑到使用软引用的         性能影响。我们通常建议使用更有性能预测性的缓存大小限定。使用软引用值的缓存同样用 <code>==</code> 而不是 <code>equals</code> 比较值。<br>　　4. 显式清除<br>　　    任何时候，你都可以显式地清除缓存项，而不是等到它被回收：  </p>
 <pre><code>* Cache.invalidate(key):个别清除。
 * Cache.invalidateAll(keys):批量清除。
 * Cache.invalidateAll():清除所有缓存项。
@@ -327,7 +327,7 @@
         <p><span>本文标题:</span><a href="/2016/06/15/google-guava/">Google Guava Cache 学习笔记</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Apple</a></p>
         <p><span>发布时间:</span>2016-06-15, 00:00:00</p>
-        <p><span>最后更新:</span>2016-07-05, 18:39:32</p>
+        <p><span>最后更新:</span>2016-07-05, 18:40:34</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/06/15/google-guava/" title="Google Guava Cache 学习笔记">http://blog.xueni.ren/2016/06/15/google-guava/</a>
             <span class="copy-path" data-clipboard-text="原文: http://blog.xueni.ren/2016/06/15/google-guava/　　作者: Apple" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
