@@ -122,4 +122,61 @@ try {
 
 ```
 
+参照官网的范例，我的测试代码如下：
+
+```java
+ private Cache<String,List<User>> cache = null;
+    private List<User> users = null;
+    @Before
+    public void callableCache(){
+        cache = CacheBuilder.newBuilder().maximumSize(1000).build();
+        try {
+                users = cache.get("user", new Callable<List<User>>() {
+                public List<User> call() throws Exception {
+                return userService.getAllUser();
+                }
+            });
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @Test
+    public void testCallableCache() throws Exception{
+
+        System.out.println("user value : " + users);
+        System.out.println("user value : " + users);
+        System.out.println("user value : " + users);
+        System.out.println("user value : " + users);
+    }
+    
+```
+
+使用 `cache.put(key,value)` 方法可以直接向缓存中插入值，这回直接覆盖掉给定键之前映射的值。使用 `Cache.asMap()` 视图提供的任何方法也能修改缓存。但请注意，`asMap` 视图的任何方法都不能保证缓存项被院子地加载到缓存中。进一步说，`asMap` 视图的原子运算在 **Guava Cache** 的原子加载范畴之外，所以相比于 `Cache.asMap().putIfAbsent(K,V)`, `Cache.get(K,Callable<K>)` 应该总是优先使用。
+
+## Cache 参数说明：
+
+回收的参数：
+　　1. 基于容量的回收(size-based eviction)
+　　    * CacheBuilder.maximumSize(long):如果要规定缓存项的数据不超过固定值，只需要设置该参数。缓存将尝试回收最近没有使用或总体上很少使用的缓存项。_警告：在缓存项的数目达到限定值之前，缓存就可能进行回收操作，通常来说，这种情况发生在缓存项的数目逼近限定值时。_
+        * CacheBuilder.weigher(Weigher):不同的缓存项有不同的 “权重” (weights). 例如，如果你的缓存值，占据完全不同的内存空间可以设置该参数指定一个权重函数，并用 `CacheBuilder.maxumumWeigher(long)` 指定最大总重。
+        * CacheBuilder.maxumumWeigher(long):指定权重最大总重。_在权重限定场景中，除了要注意回收也是在冲了逼近限定值时就进行了，还要知道重量是在缓存创建时计算的，因此要考虑重量计算的复杂度。_
+　　2. 定时回收(Timed Eviction)
+　　    * expireAfterAccess(long, TimeUnit):缓存项在给定时间内没有被读/写访问，则回收。_请注意这种缓存的回收顺序和基于大小回收一样。_
+　　    * expireAfterWrite(long, TimeUnit):缓存项在给定时间内没有被写访问（创建或覆盖），则回收。_如果认为缓存数据总是在固定时候会变得         陈旧不可用，这种回收方式是可取的。_
+　　3. 引用的回收(Reference-based Eviction)
+　　    通过使用弱引用的键、或弱引用的值、或软引用的值，Guava Cache 可以把缓存设置为允许垃圾回收：
+　　    * CacheBuilder.weakKeys():使用弱引用存储键，当键没有其它（强或软）引用时，缓存项可以被垃圾回收。因为垃圾回收仅依赖恒等式`（==         ）`，使用弱医用建的缓存用 `==` 而不是 `equals` 比较键。
+　　    * CacheBuilder.weakValues():使用弱引用存储值。当值没有其它（强或软）引用是，缓存项可以被垃圾回收。因为垃圾回收仅依赖恒等式`（=         =）`而不是 `equals` 比较值。
+　　    * CacheBuilder.softValues():使用软引用存储值。软引用只有在响应内存需要是，才按照全局最近最少使用的顺序回收。考虑到使用软引用的         性能影响。我们通常建议使用更有性能预测性的缓存大小限定。使用软引用值的缓存同样用 `==` 而不是 `equals` 比较值。
+　　4. 显式清除
+　　    任何时候，你都可以显式地清除缓存项，而不是等到它被回收：
+        * Cache.invalidate(key):个别清除。
+        * Cache.invalidateAll(keys):批量清除。
+        * Cache.invalidateAll():清除所有缓存项。
+　　5. 移除监听器
+　　    * CacheBuilder.removalListener(RemovalListener):通过 `CacheBuilder.removalListener(RemovalListener)` 可以声明一个监听器，一边缓存项被移除是做一些额外操作。缓存项被移除是，`RemovalListener` 会获取移除通知 `RemovalNotification`,其中包含移除原因 `RemovalCause`、键和值。_请注意，RemovalListener 抛出的任何异常都会记录到日志后被丢弃 swallowed 。_
+
+
+
 **[参考资料](http://ifeve.com/google-guava-cachesexplained/)**
