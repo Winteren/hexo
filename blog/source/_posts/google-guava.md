@@ -122,4 +122,4 @@ try {
 
 ```
 
-**[参考资料]**(http://ifeve.com/google-guava-cachesexplained/)
+**[参考资料](http://ifeve.com/google-guava-cachesexplained/)**
