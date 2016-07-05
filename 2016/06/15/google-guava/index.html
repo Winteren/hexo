@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://blog.xueni.ren/2016/06/15/google-guava/index.html">
 <meta property="og:site_name" content="Apple">
 <meta property="og:description" content="缓存缓存主要作用是就是预读取（预先读取将要载入的数据）、存储临时访问过的数据和对写入的数据进行暂时存放。">
-<meta property="og:updated_time" content="2016-07-05T10:40:34.482Z">
+<meta property="og:updated_time" content="2016-07-05T14:28:52.654Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Google Guava Cache 学习笔记">
 <meta name="twitter:description" content="缓存缓存主要作用是就是预读取（预先读取将要载入的数据）、存储临时访问过的数据和对写入的数据进行暂时存放。">
@@ -305,16 +305,28 @@
 <p>参照官网的范例，我的测试代码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> Cache&lt;String,List&lt;User&gt;&gt; cache = <span class="keyword">null</span>;</div><div class="line">   <span class="keyword">private</span> List&lt;User&gt; users = <span class="keyword">null</span>;</div><div class="line">   <span class="meta">@Before</span></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">callableCache</span><span class="params">()</span></span>&#123;</div><div class="line">       cache = CacheBuilder.newBuilder().maximumSize(<span class="number">1000</span>).build();</div><div class="line">       <span class="keyword">try</span> &#123;</div><div class="line">               users = cache.get(<span class="string">"user"</span>, <span class="keyword">new</span> Callable&lt;List&lt;User&gt;&gt;() &#123;</div><div class="line">               <span class="function"><span class="keyword">public</span> List&lt;User&gt; <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">               <span class="keyword">return</span> userService.getAllUser();</div><div class="line">               &#125;</div><div class="line">           &#125;);</div><div class="line">       &#125; <span class="keyword">catch</span> (ExecutionException e) &#123;</div><div class="line">           e.printStackTrace();</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line">   </div><div class="line">   <span class="meta">@Test</span></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testCallableCache</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line"></div><div class="line">       System.out.println(<span class="string">"user value : "</span> + users);</div><div class="line">       System.out.println(<span class="string">"user value : "</span> + users);</div><div class="line">       System.out.println(<span class="string">"user value : "</span> + users);</div><div class="line">       System.out.println(<span class="string">"user value : "</span> + users);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
 <p>使用 <code>cache.put(key,value)</code> 方法可以直接向缓存中插入值，这回直接覆盖掉给定键之前映射的值。使用 <code>Cache.asMap()</code> 视图提供的任何方法也能修改缓存。但请注意，<code>asMap</code> 视图的任何方法都不能保证缓存项被院子地加载到缓存中。进一步说，<code>asMap</code> 视图的原子运算在 <strong>Guava Cache</strong> 的原子加载范畴之外，所以相比于 <code>Cache.asMap().putIfAbsent(K,V)</code>, <code>Cache.get(K,Callable&lt;K&gt;)</code> 应该总是优先使用。</p>
-<h2 id="Cache-参数说明："><a href="#Cache-参数说明：" class="headerlink" title="Cache 参数说明："></a>Cache 参数说明：</h2><p>回收的参数：<br>　　1. 基于容量的回收(size-based eviction)<br>　　    * CacheBuilder.maximumSize(long):如果要规定缓存项的数据不超过固定值，只需要设置该参数。缓存将尝试回收最近没有使用或总体上很少使用的缓存项。<em>警告：在缓存项的数目达到限定值之前，缓存就可能进行回收操作，通常来说，这种情况发生在缓存项的数目逼近限定值时。</em> </p>
-<pre><code>* CacheBuilder.weigher(Weigher):不同的缓存项有不同的 “权重” (weights). 例如，如果你的缓存值，占据完全不同的内存空间可以设置该参数指定一个权重函数，并用 `CacheBuilder.maxumumWeigher(long)` 指定最大总重。
-* CacheBuilder.maxumumWeigher(long):指定权重最大总重。_在权重限定场景中，除了要注意回收也是在冲了逼近限定值时就进行了，还要知道重量是在缓存创建时计算的，因此要考虑重量计算的复杂度。_
-</code></pre><p>　　2. 定时回收(Timed Eviction)<br>　　    <em> expireAfterAccess(long, TimeUnit):缓存项在给定时间内没有被读/写访问，则回收。<em>请注意这种缓存的回收顺序和基于大小回收一样。</em>
-　　    </em> expireAfterWrite(long, TimeUnit):缓存项在给定时间内没有被写访问（创建或覆盖），则回收。<em>如果认为缓存数据总是在固定时候会变得         陈旧不可用，这种回收方式是可取的。</em><br>　　3. 引用的回收(Reference-based Eviction)<br>　　    通过使用弱引用的键、或弱引用的值、或软引用的值，Guava Cache 可以把缓存设置为允许垃圾回收：<br>　　    <em> CacheBuilder.weakKeys():使用弱引用存储键，当键没有其它（强或软）引用时，缓存项可以被垃圾回收。因为垃圾回收仅依赖恒等式<code>（==         ）</code>，使用弱医用建的缓存用 <code>==</code> 而不是 <code>equals</code> 比较键。
-　　    </em> CacheBuilder.weakValues():使用弱引用存储值。当值没有其它（强或软）引用是，缓存项可以被垃圾回收。因为垃圾回收仅依赖恒等式<code>（=         =）</code>而不是 <code>equals</code> 比较值。<br>　　    * CacheBuilder.softValues():使用软引用存储值。软引用只有在响应内存需要是，才按照全局最近最少使用的顺序回收。考虑到使用软引用的         性能影响。我们通常建议使用更有性能预测性的缓存大小限定。使用软引用值的缓存同样用 <code>==</code> 而不是 <code>equals</code> 比较值。<br>　　4. 显式清除<br>　　    任何时候，你都可以显式地清除缓存项，而不是等到它被回收：  </p>
-<pre><code>* Cache.invalidate(key):个别清除。
-* Cache.invalidateAll(keys):批量清除。
-* Cache.invalidateAll():清除所有缓存项。
-</code></pre><p>　　5. 移除监听器<br>　　    * CacheBuilder.removalListener(RemovalListener):通过 <code>CacheBuilder.removalListener(RemovalListener)</code> 可以声明一个监听器，一边缓存项被移除是做一些额外操作。缓存项被移除是，<code>RemovalListener</code> 会获取移除通知 <code>RemovalNotification</code>,其中包含移除原因 <code>RemovalCause</code>、键和值。<em>请注意，RemovalListener 抛出的任何异常都会记录到日志后被丢弃 swallowed 。</em></p>
+<h2 id="Cache-参数说明："><a href="#Cache-参数说明：" class="headerlink" title="Cache 参数说明："></a>Cache 参数说明：</h2><p>回收的参数：</p>
+<h3 id="基于容量的回收-size-based-eviction"><a href="#基于容量的回收-size-based-eviction" class="headerlink" title="基于容量的回收(size-based eviction)"></a>基于容量的回收(size-based eviction)</h3><ul>
+<li>CacheBuilder.maximumSize(long):如果要规定缓存项的数据不超过固定值，只需要设置该参数。缓存将尝试回收最近没有使用或总体上很少使用的缓存项。<em>警告：在缓存项的数目达到限定值之前，缓存就可能进行回收操作，通常来说，这种情况发生在缓存项的数目逼近限定值时。</em> </li>
+<li>CacheBuilder.weigher(Weigher):不同的缓存项有不同的 “权重” (weights). 例如，如果你的缓存值，占据完全不同的内存空间可以设置该参数指定一个权重函数，并用 <code>CacheBuilder.maxumumWeigher(long)</code> 指定最大总重。</li>
+<li>CacheBuilder.maxumumWeigher(long):指定权重最大总重。<em>在权重限定场景中，除了要注意回收也是在冲了逼近限定值时就进行了，还要知道重量是在缓存创建时计算的，因此要考虑重量计算的复杂度。</em></li>
+</ul>
+<h3 id="定时回收-Timed-Eviction"><a href="#定时回收-Timed-Eviction" class="headerlink" title="定时回收(Timed Eviction)"></a>定时回收(Timed Eviction)</h3><ul>
+<li>expireAfterAccess(long, TimeUnit):缓存项在给定时间内没有被读/写访问，则回收。<em>请注意这种缓存的回收顺序和基于大小回收一样。</em></li>
+<li>expireAfterWrite(long, TimeUnit):缓存项在给定时间内没有被写访问（创建或覆盖），则回收。<em>如果认为缓存数据总是在固定时候会变得陈旧不可用，这种回收方式是可取的。</em><h3 id="引用的回收-Reference-based-Eviction"><a href="#引用的回收-Reference-based-Eviction" class="headerlink" title="引用的回收(Reference-based Eviction)"></a>引用的回收(Reference-based Eviction)</h3>通过使用弱引用的键、或弱引用的值、或软引用的值，Guava Cache 可以把缓存设置为允许垃圾回收：</li>
+<li>CacheBuilder.weakKeys():使用弱引用存储键，当键没有其它（强或软）引用时，缓存项可以被垃圾回收。因为垃圾回收仅依赖恒等式<code>（==）</code>，使用弱医用建的缓存用 <code>==</code> 而不是 <code>equals</code> 比较键。</li>
+<li>CacheBuilder.weakValues():使用弱引用存储值。当值没有其它（强或软）引用是，缓存项可以被垃圾回收。因为垃圾回收仅依赖恒等式<code>（==）</code>而不是 <code>equals</code> 比较值。</li>
+<li>CacheBuilder.softValues():使用软引用存储值。软引用只有在响应内存需要是，才按照全局最近最少使用的顺序回收。考虑到使用软引用的性能影响。我们通常建议使用更有性能预测性的缓存大小限定。使用软引用值的缓存同样用 <code>==</code> 而不是 <code>equals</code> 比较值。</li>
+</ul>
+<h3 id="显式清除"><a href="#显式清除" class="headerlink" title="显式清除"></a>显式清除</h3><p>任何时候，你都可以显式地清除缓存项，而不是等到它被回收：  </p>
+<ul>
+<li>Cache.invalidate(key):个别清除。</li>
+<li>Cache.invalidateAll(keys):批量清除。</li>
+<li>Cache.invalidateAll():清除所有缓存项。</li>
+</ul>
+<h3 id="移除监听器"><a href="#移除监听器" class="headerlink" title="移除监听器"></a>移除监听器</h3><ul>
+<li>CacheBuilder.removalListener(RemovalListener):通过 <code>CacheBuilder.removalListener(RemovalListener)</code> 可以声明一个监听器，一边缓存项被移除是做一些额外操作。缓存项被移除是，<code>RemovalListener</code> 会获取移除通知 <code>RemovalNotification</code>,其中包含移除原因 <code>RemovalCause</code>、键和值。<em>请注意，RemovalListener 抛出的任何异常都会记录到日志后被丢弃 swallowed 。</em></li>
+</ul>
 <p><strong><a href="http://ifeve.com/google-guava-cachesexplained/" target="_blank" rel="external">参考资料</a></strong></p>
 
       
@@ -327,7 +339,7 @@
         <p><span>本文标题:</span><a href="/2016/06/15/google-guava/">Google Guava Cache 学习笔记</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Apple</a></p>
         <p><span>发布时间:</span>2016-06-15, 00:00:00</p>
-        <p><span>最后更新:</span>2016-07-05, 18:40:34</p>
+        <p><span>最后更新:</span>2016-07-05, 22:28:52</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/06/15/google-guava/" title="Google Guava Cache 学习笔记">http://blog.xueni.ren/2016/06/15/google-guava/</a>
             <span class="copy-path" data-clipboard-text="原文: http://blog.xueni.ren/2016/06/15/google-guava/　　作者: Apple" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -356,7 +368,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#缓存"><span class="toc-number">1.</span> <span class="toc-text">缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#比较常见的几种缓存"><span class="toc-number">2.</span> <span class="toc-text">比较常见的几种缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Guava-Cache"><span class="toc-number">3.</span> <span class="toc-text">Guava Cache</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Guava-Cache-有两种创建方式"><span class="toc-number">4.</span> <span class="toc-text">Guava Cache 有两种创建方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CacheLoader"><span class="toc-number">4.1.</span> <span class="toc-text">CacheLoader</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Callable"><span class="toc-number">4.2.</span> <span class="toc-text">Callable</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cache-参数说明："><span class="toc-number">5.</span> <span class="toc-text">Cache 参数说明：</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#缓存"><span class="toc-number">1.</span> <span class="toc-text">缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#比较常见的几种缓存"><span class="toc-number">2.</span> <span class="toc-text">比较常见的几种缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Guava-Cache"><span class="toc-number">3.</span> <span class="toc-text">Guava Cache</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Guava-Cache-有两种创建方式"><span class="toc-number">4.</span> <span class="toc-text">Guava Cache 有两种创建方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CacheLoader"><span class="toc-number">4.1.</span> <span class="toc-text">CacheLoader</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Callable"><span class="toc-number">4.2.</span> <span class="toc-text">Callable</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cache-参数说明："><span class="toc-number">5.</span> <span class="toc-text">Cache 参数说明：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基于容量的回收-size-based-eviction"><span class="toc-number">5.1.</span> <span class="toc-text">基于容量的回收(size-based eviction)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定时回收-Timed-Eviction"><span class="toc-number">5.2.</span> <span class="toc-text">定时回收(Timed Eviction)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#引用的回收-Reference-based-Eviction"><span class="toc-number">5.3.</span> <span class="toc-text">引用的回收(Reference-based Eviction)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#显式清除"><span class="toc-number">5.4.</span> <span class="toc-text">显式清除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#移除监听器"><span class="toc-number">5.5.</span> <span class="toc-text">移除监听器</span></a></li></ol></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
