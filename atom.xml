@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.xueni.ren/"/>
-  <updated>2016-07-05T14:28:52.654Z</updated>
+  <updated>2016-07-15T01:30:41.947Z</updated>
   <id>http://blog.xueni.ren/</id>
   
   <author>
@@ -16,11 +16,109 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>定时器语法</title>
+    <link href="http://blog.xueni.ren/2016/07/15/timer-grammar-xml/"/>
+    <id>http://blog.xueni.ren/2016/07/15/timer-grammar-xml/</id>
+    <published>2016-07-14T23:00:00.000Z</published>
+    <updated>2016-07-15T01:30:41.947Z</updated>
+    
+    <content type="html">&lt;p&gt;日常工作中我们经常会实现这样一些功能，比如定时删除或者下载文件等等。首先我们想到的就是通过一个定时器定时的帮助我们去干一些我们需要它们帮着&lt;br&gt;我们做的事情。下面我们就了解一下，一些常用的定时器语法。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;字段&lt;/th&gt;
+&lt;th&gt;允许值&lt;/th&gt;
+&lt;th&gt;允许的特殊符号&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;秒&lt;/td&gt;
+&lt;td&gt;0-59&lt;/td&gt;
+&lt;td&gt;- * /&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;分&lt;/td&gt;
+&lt;td&gt;0-59&lt;/td&gt;
+&lt;td&gt;- * /&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;小时&lt;/td&gt;
+&lt;td&gt;0-23&lt;/td&gt;
+&lt;td&gt;- * /&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;日期&lt;/td&gt;
+&lt;td&gt;1-31&lt;/td&gt;
+&lt;td&gt;- * ? / L W C&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;月份&lt;/td&gt;
+&lt;td&gt;1-12或者JAN-DEC&lt;/td&gt;
+&lt;td&gt;- * /&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;星期&lt;/td&gt;
+&lt;td&gt;1-7或者SUN-SAT&lt;/td&gt;
+&lt;td&gt;- * ? / L C #&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;年（可选）&lt;/td&gt;
+&lt;td&gt;留空，1970-2099&lt;/td&gt;
+&lt;td&gt;- * /&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&quot;一些常用的示例：&quot;&gt;&lt;a href=&quot;#一些常用的示例：&quot; class=&quot;headerlink&quot; title=&quot;一些常用的示例：&quot;&gt;&lt;/a&gt;一些常用的示例：&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;&amp;quot;0 0 12 * * ?&amp;quot;            每天中午12点触发
+  &amp;quot;0 15 10 ? * *&amp;quot;            每天上午10:15触发
+  &amp;quot;0 15 10 * * ?&amp;quot;            每天上午10:15触发
+  &amp;quot;0 15 10 * * ? * &amp;quot;        每天上午10:15触发
+  &amp;quot;0 15 10 * * ? 2005 &amp;quot;    2005年的每天上午10:15触发
+  &amp;quot;0 * 14 * * ? &amp;quot;            每天下午2点到2点59期间的每一分钟触发
+  &amp;quot;0 0/5 14 * * ? &amp;quot;        每天下午2点到2点55期间的每5分钟触发
+  &amp;quot;0 0/5 14,18 * * ? &amp;quot;    每天下午2点到2点55期间和下午6点到6点55期间的每5分钟触发
+  &amp;quot;0 0-5 14 * * ? &amp;quot;        每天下午2点到2点5分期间的每1分钟触发
+  &amp;quot;0 10,44 14 ? 3 WED &amp;quot;    每年三月的星期三的下午2:10和2:44分触发
+  &amp;quot;0 15 10 ? * MON-FRI &amp;quot;    周一至周五的上午10:15触发
+  &amp;quot;0 15 10 15 * ? &amp;quot;        每月15日上午10:15触发
+  &amp;quot;0 15 10 L * ? &amp;quot;        每月最后一日上午10:15触发
+  &amp;quot;0 15 10 ? * 6L &amp;quot;        每月最后一个星期五上午10:15触发
+  &amp;quot;0 15 10 ? * 6L 2002-2005&amp;quot;        2002年至2005年每月最后一个星期五上午10:15触发
+  &amp;quot;0 15 10 ? * 6#3 &amp;quot;        每月的第三个星期五上午10:15触发
+
+  每隔5秒执行一次：*/5 * * * * ?
+每隔1分钟执行一次：0 */1 * * * ?
+每天23点执行一次：0 0 23 * * ?
+每天凌晨1点执行一次：0 0 1 * * ?
+每月1号凌晨1点执行一次：0 0 1 1 * ?
+每月最后一天23点执行一次：0 0 23 L * ?
+每周星期天凌晨1点实行一次：0 0 1 ? * L
+在26分、29分、33分执行一次：0 26,29,33 * * * ?
+每天的0点、13点、18点、21点都执行一次：0 0 0,13,18,21 * * ?
+&lt;/code&gt;&lt;/pre&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;日常工作中我们经常会实现这样一些功能，比如定时删除或者下载文件等等。首先我们想到的就是通过一个定时器定时的帮助我们去干一些我们需要它们帮着&lt;br&gt;我们做的事情。下面我们就了解一下，一些常用的定时器语法。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="学习笔记" scheme="http://blog.xueni.ren/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="timer" scheme="http://blog.xueni.ren/tags/timer/"/>
+    
+      <category term="xml" scheme="http://blog.xueni.ren/tags/xml/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Google Guava Cache 学习笔记</title>
     <link href="http://blog.xueni.ren/2016/06/15/google-guava/"/>
     <id>http://blog.xueni.ren/2016/06/15/google-guava/</id>
     <published>2016-06-14T16:00:00.000Z</published>
-    <updated>2016-07-05T14:28:52.654Z</updated>
+    <updated>2016-07-15T01:30:41.947Z</updated>
     
     <content type="html">&lt;h2 id=&quot;缓存&quot;&gt;&lt;a href=&quot;#缓存&quot; class=&quot;headerlink&quot; title=&quot;缓存&quot;&gt;&lt;/a&gt;缓存&lt;/h2&gt;&lt;p&gt;缓存主要作用是就是预读取（预先读取将要载入的数据）、存储临时访问过的数据和对写入的数据进行暂时存放。&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
@@ -90,7 +188,7 @@
     <link href="http://blog.xueni.ren/2016/06/13/BufferedReader-readLine/"/>
     <id>http://blog.xueni.ren/2016/06/13/BufferedReader-readLine/</id>
     <published>2016-06-13T14:15:00.000Z</published>
-    <updated>2016-07-05T14:28:52.654Z</updated>
+    <updated>2016-07-15T01:30:41.947Z</updated>
     
     <content type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;遇到这么一个问题，需要从网络上下载图片到本地，单元测试一直停不下来，有次让单元测试跑起来之后，自己出去吃了个早饭回来发现&lt;br&gt;单元测试还没有跑完。然后跟断点发现程序阻塞在 &lt;strong&gt;readLine()&lt;/strong&gt; 方法上了。&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
@@ -124,7 +222,7 @@
     <link href="http://blog.xueni.ren/2016/06/06/spring-data-mongodb/"/>
     <id>http://blog.xueni.ren/2016/06/06/spring-data-mongodb/</id>
     <published>2016-06-06T14:27:45.000Z</published>
-    <updated>2016-07-05T14:28:52.654Z</updated>
+    <updated>2016-07-15T01:30:41.947Z</updated>
     
     <content type="html">&lt;h1 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h1&gt;&lt;p&gt;平时都在用 SpringMVC 进行开发，但是，基本上都是在用 SpringMVC+Mybatis+MySQL 进行开发。对于 Mongodb 只是听说过，&lt;br&gt;自己实际没有操作过，近期，在工作之余决定研究一下 Mongodb 。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;br&gt;那么，开始进入正题吧，此次我构建的项目是 SpringMVC+Mongodb+Maven ，有不对之处，还望指出。&lt;/p&gt;
 &lt;p&gt;作为一个 Maven 工程，我们还是先从 pom.xml 文件开始把,在 pom.xml 里配置我们的工程所依赖的 jar。&lt;br&gt;pom.xml&lt;/p&gt;
@@ -159,7 +257,7 @@
     <link href="http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/"/>
     <id>http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/</id>
     <published>2016-06-01T15:15:45.000Z</published>
-    <updated>2016-07-05T14:28:52.654Z</updated>
+    <updated>2016-07-15T01:30:41.947Z</updated>
     
     <content type="html">&lt;h1 id=&quot;基础篇，从各种概念开始。&quot;&gt;&lt;a href=&quot;#基础篇，从各种概念开始。&quot; class=&quot;headerlink&quot; title=&quot;基础篇，从各种概念开始。&quot;&gt;&lt;/a&gt;基础篇，从各种概念开始。&lt;/h1&gt;&lt;h2 id=&quot;线程安全&quot;&gt;&lt;a href=&quot;#线程安全&quot; class=&quot;headerlink&quot; title=&quot;线程安全&quot;&gt;&lt;/a&gt;线程安全&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步货协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/li&gt;
@@ -243,7 +341,7 @@
     <link href="http://blog.xueni.ren/2016/06/01/MySQL-batch-insert/"/>
     <id>http://blog.xueni.ren/2016/06/01/MySQL-batch-insert/</id>
     <published>2016-06-01T14:22:22.000Z</published>
-    <updated>2016-07-05T14:28:52.654Z</updated>
+    <updated>2016-07-15T01:30:41.947Z</updated>
     
     <content type="html">&lt;p&gt;最近开始玩 &lt;strong&gt;MyBatis&lt;/strong&gt; ，想实现这么一个功能，就是将一张表里的数据作为历史数据存储到另一张表里去。&lt;br&gt;一开始我的代码是这么写的：&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
@@ -276,7 +374,7 @@
     <link href="http://blog.xueni.ren/2015/11/19/test/"/>
     <id>http://blog.xueni.ren/2015/11/19/test/</id>
     <published>2015-11-18T16:00:00.000Z</published>
-    <updated>2016-07-05T14:28:52.654Z</updated>
+    <updated>2016-07-15T01:30:41.947Z</updated>
     
     <content type="html">&lt;p&gt;&lt;a href=&quot;https://help.github.com/articles/basic-writing-and-formatting-syntax/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;md语法&lt;/a&gt;&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
@@ -351,7 +449,7 @@
     <link href="http://blog.xueni.ren/2015/04/01/pelican-blog/"/>
     <id>http://blog.xueni.ren/2015/04/01/pelican-blog/</id>
     <published>2015-03-31T16:00:00.000Z</published>
-    <updated>2016-07-05T14:28:52.654Z</updated>
+    <updated>2016-07-15T01:30:41.947Z</updated>
     
     <content type="html">&lt;p&gt;没有前言，没有概述，做个笔记而已。&lt;/p&gt;
 &lt;ol&gt;
@@ -383,7 +481,7 @@
     <link href="http://blog.xueni.ren/2014/11/19/hello-world/"/>
     <id>http://blog.xueni.ren/2014/11/19/hello-world/</id>
     <published>2014-11-18T16:00:00.000Z</published>
-    <updated>2016-07-05T14:28:52.654Z</updated>
+    <updated>2016-07-15T01:30:41.947Z</updated>
     
     <content type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
