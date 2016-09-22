@@ -26,7 +26,7 @@ public enum UserCache {
 	// 日志记录器
 	private final static org.apache.logging.log4j.Logger log = org.apache.logging.log4j.LogManager.getLogger(UserCache.class);
 
-	HashMap<Integer, String> UserMap = new HashMap<Integer, String>();
+	HashMap<Integer, String> UserMap = new HashMap<>();
 
 	static {
 		UserCache.instance.init();
