@@ -168,7 +168,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cache/">Cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Guava/">Guava</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/">JVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-编程/">Java 编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringMVC/">SpringMVC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hello/">hello</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/timer/">timer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xml/">xml</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/整合Mongod/">整合Mongod</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cache/">Cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Guava/">Guava</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HashMap/">HashMap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/">JVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-编程/">Java 编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringMVC/">SpringMVC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hello/">hello</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/timer/">timer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xml/">xml</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/整合Mongod/">整合Mongod</a></li></ul>
                     </div>
                 </section>
                 
@@ -244,6 +244,71 @@
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-custom-local-cache" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/09/22/custom-local-cache/" class="article-date">
+      <time datetime="2016-09-22T12:30:00.000Z" itemprop="datePublished">2016-09-22</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/22/custom-local-cache/">通过 HashMap 实现本地缓存</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>  本地缓存在我们的工作中是比较常见的一种技术手段，不管是分布式缓存，还是本地缓存，或多或少我们都会使用到，本地缓存比较常用的数 Guava 缓存。<br>今天我们不聊 Guava，而是聊一聊怎样通过 HashMap 来实现一个本地缓存。</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>通过 HashMap 实现本地缓存相当简单，废话不多说，先上代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span> UserCache &#123;</div><div class="line"></div><div class="line">	instance;</div><div class="line"></div><div class="line">	<span class="comment">// 日志记录器</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> org.apache.logging.log4j.Logger log = org.apache.logging.log4j.LogManager.getLogger(UserCache.class);</div><div class="line"></div><div class="line">	HashMap&lt;Integer, String&gt; UserMap = <span class="keyword">new</span> HashMap&lt;Integer, String&gt;();</div><div class="line"></div><div class="line">	<span class="keyword">static</span> &#123;</div><div class="line">		UserCache.instance.init();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 初始化缓存</div><div class="line">	 *</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">		log.info(<span class="string">"初始化 User 缓存初始化开始..."</span>);</div><div class="line"></div><div class="line">		<span class="comment">// web容器中获取上下文</span></div><div class="line">		WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();</div><div class="line">		IUserDao UserDao = (IUserDao) context.getBean(<span class="string">"UserDaoImpl"</span>);</div><div class="line"></div><div class="line">		List&lt;User&gt; Users = UserDao.selectAll();</div><div class="line">		<span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">		<span class="keyword">for</span> (User User : Users) &#123;</div><div class="line">			count++;</div><div class="line">			UserMap.put(User.getUser(), JSON.toJSONString(User));</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (Users.size() != count) &#123;</div><div class="line">			log.error(<span class="string">"User 数据未完全加载！"</span>);</div><div class="line">		&#125;</div><div class="line">		log.info(<span class="string">"共计加载："</span> + count);</div><div class="line">		log.info(<span class="string">"初始化 User 缓存初始化结束！"</span>);</div><div class="line"></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> HashMap&lt;Integer, String&gt; <span class="title">getPhoneAttr</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> UserMap;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>代码是不是相当简单，聪明的你一定能看懂这段代码。那么，请聪明的你再猜猜，我是怎么刷新缓存的？对了，就是定时器，用定时器去定时的刷新缓存。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Java-编程/">Java 编程</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HashMap/">HashMap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-JVM-read-notes" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -507,75 +572,9 @@
 
 
   
-    <article id="post-spring-data-mongodb" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/06/06/spring-data-mongodb/" class="article-date">
-      <time datetime="2016-06-06T14:27:45.000Z" itemprop="datePublished">2016-06-06</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/06/spring-data-mongodb/">SpringMVC 整合Mongodb</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>平时都在用 SpringMVC 进行开发，但是，基本上都是在用 SpringMVC+Mybatis+MySQL 进行开发。对于 Mongodb 只是听说过，<br>自己实际没有操作过，近期，在工作之余决定研究一下 Mongodb 。<br>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringMVC/">SpringMVC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/整合Mongod/">整合Mongod</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/06/06/spring-data-mongodb/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 </div>

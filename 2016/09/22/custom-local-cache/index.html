@@ -9,24 +9,24 @@
 
   <meta charset="utf-8">
   
-  <title>深入理解 Java 虚拟机 读书笔记 | Apple</title>
+  <title>通过 HashMap 实现本地缓存 | Apple</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在早之前，曾粗略的读过一次 《深入理解 Java 虚拟机》这边书，那时候，是在每天上下班路上在公交车上用 kindle 阅读。由于阅读体验并不怎么好，所以收获并不大。由于同事极力推荐这本书，于是，果断入手了一本纸质版。这次通过这次阅读，收获不小。（看来，技术类的书还是要看纸质的，电子版阅读体验太差。）废话少说，开始正题。
-&amp;lt;– more –&amp;gt;
-Java 虚拟机Java 虚拟机简称 JV">
+  <meta name="description" content="引言  本地缓存在我们的工作中是比较常见的一种技术手段，不管是分布式缓存，还是本地缓存，或多或少我们都会使用到，本地缓存比较常用的数 Guava 缓存。今天我们不聊 Guava，而是聊一聊怎样通过 HashMap 来实现一个本地缓存。
+实现通过 HashMap 实现本地缓存相当简单，废话不多说，先上代码:
+1234567891011121314151617181920212223242526272">
 <meta property="og:type" content="article">
-<meta property="og:title" content="深入理解 Java 虚拟机 读书笔记">
-<meta property="og:url" content="http://blog.xueni.ren/2016/08/09/JVM-read-notes/index.html">
+<meta property="og:title" content="通过 HashMap 实现本地缓存">
+<meta property="og:url" content="http://blog.xueni.ren/2016/09/22/custom-local-cache/index.html">
 <meta property="og:site_name" content="Apple">
-<meta property="og:description" content="在早之前，曾粗略的读过一次 《深入理解 Java 虚拟机》这边书，那时候，是在每天上下班路上在公交车上用 kindle 阅读。由于阅读体验并不怎么好，所以收获并不大。由于同事极力推荐这本书，于是，果断入手了一本纸质版。这次通过这次阅读，收获不小。（看来，技术类的书还是要看纸质的，电子版阅读体验太差。）废话少说，开始正题。
-&amp;lt;– more –&amp;gt;
-Java 虚拟机Java 虚拟机简称 JV">
+<meta property="og:description" content="引言  本地缓存在我们的工作中是比较常见的一种技术手段，不管是分布式缓存，还是本地缓存，或多或少我们都会使用到，本地缓存比较常用的数 Guava 缓存。今天我们不聊 Guava，而是聊一聊怎样通过 HashMap 来实现一个本地缓存。
+实现通过 HashMap 实现本地缓存相当简单，废话不多说，先上代码:
+1234567891011121314151617181920212223242526272">
 <meta property="og:updated_time" content="2016-09-22T09:38:23.793Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="深入理解 Java 虚拟机 读书笔记">
-<meta name="twitter:description" content="在早之前，曾粗略的读过一次 《深入理解 Java 虚拟机》这边书，那时候，是在每天上下班路上在公交车上用 kindle 阅读。由于阅读体验并不怎么好，所以收获并不大。由于同事极力推荐这本书，于是，果断入手了一本纸质版。这次通过这次阅读，收获不小。（看来，技术类的书还是要看纸质的，电子版阅读体验太差。）废话少说，开始正题。
-&amp;lt;– more –&amp;gt;
-Java 虚拟机Java 虚拟机简称 JV">
+<meta name="twitter:title" content="通过 HashMap 实现本地缓存">
+<meta name="twitter:description" content="引言  本地缓存在我们的工作中是比较常见的一种技术手段，不管是分布式缓存，还是本地缓存，或多或少我们都会使用到，本地缓存比较常用的数 Guava 缓存。今天我们不聊 Guava，而是聊一聊怎样通过 HashMap 来实现一个本地缓存。
+实现通过 HashMap 实现本地缓存相当简单，废话不多说，先上代码:
+1234567891011121314151617181920212223242526272">
   
     <link rel="alternative" href="/atom.xml" title="Apple" type="application/atom+xml">
   
@@ -248,11 +248,11 @@ Java 虚拟机Java 虚拟机简称 JV">
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-JVM-read-notes" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-custom-local-cache" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/08/09/JVM-read-notes/" class="article-date">
-      <time datetime="2016-08-09T15:15:00.000Z" itemprop="datePublished">2016-08-09</time>
+      <a href="/2016/09/22/custom-local-cache/" class="article-date">
+      <time datetime="2016-09-22T12:30:00.000Z" itemprop="datePublished">2016-09-22</time>
 </a>
     </div>
   
@@ -265,7 +265,7 @@ Java 虚拟机Java 虚拟机简称 JV">
         
   
     <h1 class="article-title" itemprop="name">
-      深入理解 Java 虚拟机 读书笔记
+      通过 HashMap 实现本地缓存
     </h1>
   
 
@@ -274,13 +274,13 @@ Java 虚拟机Java 虚拟机简称 JV">
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/读书笔记/">读书笔记</a>
+    <a class="article-category-link" href="/categories/Java-编程/">Java 编程</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HashMap/">HashMap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -290,9 +290,10 @@ Java 虚拟机Java 虚拟机简称 JV">
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>在早之前，曾粗略的读过一次 《深入理解 Java 虚拟机》这边书，那时候，是在每天上下班路上在公交车上用 kindle 阅读。由于阅读体验并不怎么好，所以收获并<br>不大。由于同事极力推荐这本书，于是，果断入手了一本纸质版。这次通过这次阅读，收获不小。（看来，技术类的书还是要看纸质的，电子版阅读体验太差。）<br>废话少说，开始正题。</p>
-<p>&lt;– more –&gt;</p>
-<h3 id="Java-虚拟机"><a href="#Java-虚拟机" class="headerlink" title="Java 虚拟机"></a>Java 虚拟机</h3><p>Java 虚拟机简称 JVM.</p>
+        <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>  本地缓存在我们的工作中是比较常见的一种技术手段，不管是分布式缓存，还是本地缓存，或多或少我们都会使用到，本地缓存比较常用的数 Guava 缓存。<br>今天我们不聊 Guava，而是聊一聊怎样通过 HashMap 来实现一个本地缓存。</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>通过 HashMap 实现本地缓存相当简单，废话不多说，先上代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span> UserCache &#123;</div><div class="line"></div><div class="line">	instance;</div><div class="line"></div><div class="line">	<span class="comment">// 日志记录器</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> org.apache.logging.log4j.Logger log = org.apache.logging.log4j.LogManager.getLogger(UserCache.class);</div><div class="line"></div><div class="line">	HashMap&lt;Integer, String&gt; UserMap = <span class="keyword">new</span> HashMap&lt;Integer, String&gt;();</div><div class="line"></div><div class="line">	<span class="keyword">static</span> &#123;</div><div class="line">		UserCache.instance.init();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 初始化缓存</div><div class="line">	 *</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">		log.info(<span class="string">"初始化 User 缓存初始化开始..."</span>);</div><div class="line"></div><div class="line">		<span class="comment">// web容器中获取上下文</span></div><div class="line">		WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();</div><div class="line">		IUserDao UserDao = (IUserDao) context.getBean(<span class="string">"UserDaoImpl"</span>);</div><div class="line"></div><div class="line">		List&lt;User&gt; Users = UserDao.selectAll();</div><div class="line">		<span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">		<span class="keyword">for</span> (User User : Users) &#123;</div><div class="line">			count++;</div><div class="line">			UserMap.put(User.getUser(), JSON.toJSONString(User));</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (Users.size() != count) &#123;</div><div class="line">			log.error(<span class="string">"User 数据未完全加载！"</span>);</div><div class="line">		&#125;</div><div class="line">		log.info(<span class="string">"共计加载："</span> + count);</div><div class="line">		log.info(<span class="string">"初始化 User 缓存初始化结束！"</span>);</div><div class="line"></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> HashMap&lt;Integer, String&gt; <span class="title">getPhoneAttr</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> UserMap;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>代码是不是相当简单，聪明的你一定能看懂这段代码。那么，请聪明的你再猜猜，我是怎么刷新缓存的？对了，就是定时器，用定时器去定时的刷新缓存。</p>
 
       
     </div>
@@ -301,13 +302,13 @@ Java 虚拟机Java 虚拟机简称 JV">
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/08/09/JVM-read-notes/">深入理解 Java 虚拟机 读书笔记</a></p>
+        <p><span>本文标题:</span><a href="/2016/09/22/custom-local-cache/">通过 HashMap 实现本地缓存</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Apple</a></p>
-        <p><span>发布时间:</span>2016-08-09, 23:15:00</p>
+        <p><span>发布时间:</span>2016-09-22, 20:30:00</p>
         <p><span>最后更新:</span>2016-09-22, 17:38:23</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/08/09/JVM-read-notes/" title="深入理解 Java 虚拟机 读书笔记">http://blog.xueni.ren/2016/08/09/JVM-read-notes/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://blog.xueni.ren/2016/08/09/JVM-read-notes/　　作者: Apple" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/09/22/custom-local-cache/" title="通过 HashMap 实现本地缓存">http://blog.xueni.ren/2016/09/22/custom-local-cache/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.xueni.ren/2016/09/22/custom-local-cache/　　作者: Apple" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -319,16 +320,10 @@ Java 虚拟机Java 虚拟机简称 JV">
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/09/22/custom-local-cache/">
-                    通过 HashMap 实现本地缓存
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/07/15/timer-grammar-xml/">
-                    定时器语法
+                <a href="/2016/08/09/JVM-read-notes/">
+                    深入理解 Java 虚拟机 读书笔记
                 </a>
             </div>
         
@@ -339,7 +334,7 @@ Java 虚拟机Java 虚拟机简称 JV">
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Java-虚拟机"><span class="toc-number">1.</span> <span class="toc-text">Java 虚拟机</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#引言"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现"><span class="toc-number">2.</span> <span class="toc-text">实现</span></a></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
@@ -396,7 +391,7 @@ Java 虚拟机Java 虚拟机简称 JV">
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"深入理解 Java 虚拟机 读书笔记　| Apple　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"通过 HashMap 实现本地缓存　| Apple　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -432,15 +427,13 @@ Java 虚拟机Java 虚拟机简称 JV">
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/09/22/custom-local-cache/" title="上一篇: 通过 HashMap 实现本地缓存">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/07/15/timer-grammar-xml/" title="下一篇: 定时器语法">
+            <a href="/2016/08/09/JVM-read-notes/" title="下一篇: 深入理解 Java 虚拟机 读书笔记">
                 <i class="fa fa-angle-right"></i>
             </a>
         

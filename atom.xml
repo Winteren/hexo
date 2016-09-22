@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.xueni.ren/"/>
-  <updated>2016-09-17T03:46:51.122Z</updated>
+  <updated>2016-09-22T09:38:23.793Z</updated>
   <id>http://blog.xueni.ren/</id>
   
   <author>
@@ -16,11 +16,39 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>通过 HashMap 实现本地缓存</title>
+    <link href="http://blog.xueni.ren/2016/09/22/custom-local-cache/"/>
+    <id>http://blog.xueni.ren/2016/09/22/custom-local-cache/</id>
+    <published>2016-09-22T12:30:00.000Z</published>
+    <updated>2016-09-22T09:38:23.793Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>  本地缓存在我们的工作中是比较常见的一种技术手段，不管是分布式缓存，还是本地缓存，或多或少我们都会使用到，本地缓存比较常用的数 Guava 缓存。<br>今天我们不聊 Guava，而是聊一聊怎样通过 HashMap 来实现一个本地缓存。</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>通过 HashMap 实现本地缓存相当简单，废话不多说，先上代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span> UserCache &#123;</div><div class="line"></div><div class="line">	instance;</div><div class="line"></div><div class="line">	<span class="comment">// 日志记录器</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> org.apache.logging.log4j.Logger log = org.apache.logging.log4j.LogManager.getLogger(UserCache.class);</div><div class="line"></div><div class="line">	HashMap&lt;Integer, String&gt; UserMap = <span class="keyword">new</span> HashMap&lt;Integer, String&gt;();</div><div class="line"></div><div class="line">	<span class="keyword">static</span> &#123;</div><div class="line">		UserCache.instance.init();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 初始化缓存</div><div class="line">	 *</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">		log.info(<span class="string">"初始化 User 缓存初始化开始..."</span>);</div><div class="line"></div><div class="line">		<span class="comment">// web容器中获取上下文</span></div><div class="line">		WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();</div><div class="line">		IUserDao UserDao = (IUserDao) context.getBean(<span class="string">"UserDaoImpl"</span>);</div><div class="line"></div><div class="line">		List&lt;User&gt; Users = UserDao.selectAll();</div><div class="line">		<span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">		<span class="keyword">for</span> (User User : Users) &#123;</div><div class="line">			count++;</div><div class="line">			UserMap.put(User.getUser(), JSON.toJSONString(User));</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (Users.size() != count) &#123;</div><div class="line">			log.error(<span class="string">"User 数据未完全加载！"</span>);</div><div class="line">		&#125;</div><div class="line">		log.info(<span class="string">"共计加载："</span> + count);</div><div class="line">		log.info(<span class="string">"初始化 User 缓存初始化结束！"</span>);</div><div class="line"></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> HashMap&lt;Integer, String&gt; <span class="title">getPhoneAttr</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> UserMap;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>代码是不是相当简单，聪明的你一定能看懂这段代码。那么，请聪明的你再猜猜，我是怎么刷新缓存的？对了，就是定时器，用定时器去定时的刷新缓存。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h2&gt;&lt;p&gt;  本地缓存在我们的工作中是比较常见的一种技术手段，不管是分布式缓存，还是本地缓存，或多或少我们都会使用到，本地缓存比较常用的数 Guava
+    
+    </summary>
+    
+      <category term="Java 编程" scheme="http://blog.xueni.ren/categories/Java-%E7%BC%96%E7%A8%8B/"/>
+    
+    
+      <category term="Java" scheme="http://blog.xueni.ren/tags/Java/"/>
+    
+      <category term="HashMap" scheme="http://blog.xueni.ren/tags/HashMap/"/>
+    
+  </entry>
+  
+  <entry>
     <title>深入理解 Java 虚拟机 读书笔记</title>
     <link href="http://blog.xueni.ren/2016/08/09/JVM-read-notes/"/>
     <id>http://blog.xueni.ren/2016/08/09/JVM-read-notes/</id>
     <published>2016-08-09T15:15:00.000Z</published>
-    <updated>2016-09-17T03:46:51.122Z</updated>
+    <updated>2016-09-22T09:38:23.793Z</updated>
     
     <content type="html"><![CDATA[<p>在早之前，曾粗略的读过一次 《深入理解 Java 虚拟机》这边书，那时候，是在每天上下班路上在公交车上用 kindle 阅读。由于阅读体验并不怎么好，所以收获并<br>不大。由于同事极力推荐这本书，于是，果断入手了一本纸质版。这次通过这次阅读，收获不小。（看来，技术类的书还是要看纸质的，电子版阅读体验太差。）<br>废话少说，开始正题。</p>
 <p>&lt;– more –&gt;</p>
@@ -47,7 +75,7 @@
     <link href="http://blog.xueni.ren/2016/07/15/timer-grammar-xml/"/>
     <id>http://blog.xueni.ren/2016/07/15/timer-grammar-xml/</id>
     <published>2016-07-14T23:00:00.000Z</published>
-    <updated>2016-09-17T03:46:51.122Z</updated>
+    <updated>2016-09-22T09:38:23.793Z</updated>
     
     <content type="html"><![CDATA[<p>日常工作中我们经常会实现这样一些功能，比如定时删除或者下载文件等等。首先我们想到的就是通过一个定时器定时的帮助我们去干一些我们需要它们帮助我们做的事情。<br><a id="more"></a><br>下面我们就了解一下，一些常用的定时器语法。</p>
 <table>
@@ -120,7 +148,7 @@
     <link href="http://blog.xueni.ren/2016/06/15/google-guava/"/>
     <id>http://blog.xueni.ren/2016/06/15/google-guava/</id>
     <published>2016-06-14T16:00:00.000Z</published>
-    <updated>2016-09-17T03:46:51.122Z</updated>
+    <updated>2016-09-22T09:38:23.793Z</updated>
     
     <content type="html"><![CDATA[<h2 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h2><p>缓存主要作用是就是预读取（预先读取将要载入的数据）、存储临时访问过的数据和对写入的数据进行暂时存放。</p>
 <a id="more"></a>
@@ -190,7 +218,7 @@
     <link href="http://blog.xueni.ren/2016/06/13/BufferedReader-readLine/"/>
     <id>http://blog.xueni.ren/2016/06/13/BufferedReader-readLine/</id>
     <published>2016-06-13T14:15:00.000Z</published>
-    <updated>2016-09-17T03:46:51.122Z</updated>
+    <updated>2016-09-22T09:38:23.793Z</updated>
     
     <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>遇到这么一个问题，需要从网络上下载图片到本地，单元测试一直停不下来，有次让单元测试跑起来之后，自己出去吃了个早饭回来发现<br>单元测试还没有跑完。然后跟断点发现程序阻塞在 <strong>readLine()</strong> 方法上了。</p>
 <a id="more"></a>
@@ -224,7 +252,7 @@
     <link href="http://blog.xueni.ren/2016/06/06/spring-data-mongodb/"/>
     <id>http://blog.xueni.ren/2016/06/06/spring-data-mongodb/</id>
     <published>2016-06-06T14:27:45.000Z</published>
-    <updated>2016-09-17T03:46:51.122Z</updated>
+    <updated>2016-09-22T09:38:23.793Z</updated>
     
     <content type="html"><![CDATA[<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>平时都在用 SpringMVC 进行开发，但是，基本上都是在用 SpringMVC+Mybatis+MySQL 进行开发。对于 Mongodb 只是听说过，<br>自己实际没有操作过，近期，在工作之余决定研究一下 Mongodb 。<br><a id="more"></a><br>那么，开始进入正题吧，此次我构建的项目是 SpringMVC+Mongodb+Maven ，有不对之处，还望指出。</p>
 <p>作为一个 Maven 工程，我们还是先从 pom.xml 文件开始把,在 pom.xml 里配置我们的工程所依赖的 jar。<br>pom.xml</p>
@@ -259,7 +287,7 @@
     <link href="http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/"/>
     <id>http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/</id>
     <published>2016-06-01T15:15:45.000Z</published>
-    <updated>2016-09-17T03:46:51.122Z</updated>
+    <updated>2016-09-22T09:38:23.793Z</updated>
     
     <content type="html"><![CDATA[<h1 id="基础篇，从各种概念开始。"><a href="#基础篇，从各种概念开始。" class="headerlink" title="基础篇，从各种概念开始。"></a>基础篇，从各种概念开始。</h1><h2 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h2><ul>
 <li>当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步货协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。<a id="more"></a></li>
@@ -343,7 +371,7 @@
     <link href="http://blog.xueni.ren/2016/06/01/MySQL-batch-insert/"/>
     <id>http://blog.xueni.ren/2016/06/01/MySQL-batch-insert/</id>
     <published>2016-06-01T14:22:22.000Z</published>
-    <updated>2016-09-17T03:46:51.122Z</updated>
+    <updated>2016-09-22T09:38:23.793Z</updated>
     
     <content type="html"><![CDATA[<p>最近开始玩 <strong>MyBatis</strong> ，想实现这么一个功能，就是将一张表里的数据作为历史数据存储到另一张表里去。<br>一开始我的代码是这么写的：</p>
 <a id="more"></a>
@@ -376,7 +404,7 @@
     <link href="http://blog.xueni.ren/2015/11/19/test/"/>
     <id>http://blog.xueni.ren/2015/11/19/test/</id>
     <published>2015-11-18T16:00:00.000Z</published>
-    <updated>2016-09-17T03:46:51.122Z</updated>
+    <updated>2016-09-22T09:38:23.793Z</updated>
     
     <content type="html"><![CDATA[<p><a href="https://help.github.com/articles/basic-writing-and-formatting-syntax/" target="_blank" rel="external">md语法</a></p>
 <a id="more"></a>
@@ -405,7 +433,7 @@
 <p>We’re living the future so<br>the present is our past.</p>
 </blockquote>
 <p>I think you should use an<br><code>&lt;addr&gt;</code> element here instead.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fancyAlert</span>(<span class="params">arg</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span>(arg) &#123;</div><div class="line">    $.facebox(&#123;div:<span class="string">'#foo'</span>&#125;)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fancyAlert</span>(<span class="params">arg</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span>(arg) &#123;</div><div class="line">    $.facebox(&#123;<span class="attr">div</span>:<span class="string">'#foo'</span>&#125;)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
 <li>[x] @mentions, #refs, <a href="">links</a>, <strong>formatting</strong>, and <del>tags</del> supported</li>
 <li>[x] list syntax required (any unordered or ordered list supported)</li>
@@ -451,7 +479,7 @@
     <link href="http://blog.xueni.ren/2015/04/01/pelican-blog/"/>
     <id>http://blog.xueni.ren/2015/04/01/pelican-blog/</id>
     <published>2015-03-31T16:00:00.000Z</published>
-    <updated>2016-09-17T03:46:51.122Z</updated>
+    <updated>2016-09-22T09:38:23.793Z</updated>
     
     <content type="html"><![CDATA[<p>没有前言，没有概述，做个笔记而已。</p>
 <ol>
@@ -483,7 +511,7 @@
     <link href="http://blog.xueni.ren/2014/11/19/hello-world/"/>
     <id>http://blog.xueni.ren/2014/11/19/hello-world/</id>
     <published>2014-11-18T16:00:00.000Z</published>
-    <updated>2016-09-17T03:46:51.122Z</updated>
+    <updated>2016-09-22T09:38:23.793Z</updated>
     
     <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
 <a id="more"></a>
