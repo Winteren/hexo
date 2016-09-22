@@ -48,7 +48,7 @@ public enum UserCache {
 		int count = 0;
 		for (User User : Users) {
 			count++;
-			UserMap.put(User.getUser(), JSON.toJSONString(User));
+			UserMap.put(User.getUserId(), JSON.toJSONString(User));
 		}
 
 		if (Users.size() != count) {
