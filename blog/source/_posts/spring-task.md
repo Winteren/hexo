@@ -12,6 +12,8 @@ description:
 # Spring 定时任务的两种简单实现
     前段时间参与的项目，有一个定时作业来定时的拉取数据。最近得空整理一下我所了解的基于 Spring 的定时器的两种简单实现。
 
+<!-- more -->
+
 ## Spring 定时任务基于 XML
     Spring 定时任务基于 XML 的实现正是在我们项目中应用的。Spring3.0 以后自带的 task 大大的方便了我们的实现定时任务。
 ### 定时任务类
@@ -24,7 +26,7 @@ public class Task01 {
 }
 ```
 
-就是一个普通的类，其中，printJob() 是我们需要定时执行的任务方法。
+就是一个普通的类，其中，`printJob()` 是我们需要定时执行的任务方法。
 
 ### XML
 
@@ -68,11 +70,11 @@ public class Task01 {
 </beans>
 ```
 
-    在 XML 里我们可以设置定时任务的执行频率或者执行时间，关于定时任务 *cron* 的语法可以参照我之前的一篇博客，[定时器语法](http://blog.xueni.ren/2016/07/15/timer-grammar-xml/) 
+    在 XML 里我们可以设置定时任务的执行频率或者执行时间，关于定时任务 `cron` 的语法可以参照我之前的一篇博客，[定时器语法](http://blog.xueni.ren/2016/07/15/timer-grammar-xml/) 
 来修改成符合成你业务需求的。
 
 ## Spring 定时任务基于注解
-      因为用的 Spring 框架，其实基于注解来实现定时任务相对来说方便很多。
+      因为用的 `Spring` 框架，其实基于注解来实现定时任务相对来说方便很多。
 ### 定时任务类
 
 ``` java
@@ -84,9 +86,9 @@ public class Task02 {
     }
 }
 ```
-    这里我们主要用到了两个注解 *@Component* 和 *@Scheduled* 。
+    这里我们主要用到了两个注解 `@Component` 和 `@Scheduled` 。
 ### XML
-···xml
+```xml
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p" xmlns:c="http://www.springframework.org/schema/c" xmlns:tool="http://www.springframework.org/schema/tool" xmlns:util="http://www.springframework.org/schema/util" xmlns:context="http://www.springframework.org/schema/context" xmlns:jee="http://www.springframework.org/schema/jee" xmlns:lang="http://www.springframework.org/schema/lang" xmlns:task="http://www.springframework.org/schema/task" xmlns:cache="http://www.springframework.org/schema/cache" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jms="http://www.springframework.org/schema/jms"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -118,6 +120,6 @@ public class Task02 {
 	<task:annotation-driven />
 	<context:component-scan base-package="com.apple.springmvc.task"/>
 </beans>
-···
+```
 
-    以上就是 Spring-task 的两种简单实现，因为代码很简单，就不做过多解释了。
+    以上就是 `Spring-task` 的两种简单实现，因为代码很简单，就不做过多解释了。
