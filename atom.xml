@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.xueni.ren/"/>
-  <updated>2016-09-22T09:52:40.680Z</updated>
+  <updated>2016-09-27T07:29:48.519Z</updated>
   <id>http://blog.xueni.ren/</id>
   
   <author>
@@ -16,11 +16,77 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Spring 定时器的两种简单实现</title>
+    <link href="http://blog.xueni.ren/2016/09/27/spring-task/"/>
+    <id>http://blog.xueni.ren/2016/09/27/spring-task/</id>
+    <published>2016-09-27T06:55:00.000Z</published>
+    <updated>2016-09-27T07:29:48.519Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Spring-定时任务的两种简单实现"><a href="#Spring-定时任务的两种简单实现" class="headerlink" title="Spring 定时任务的两种简单实现"></a>Spring 定时任务的两种简单实现</h1><pre><code>前段时间参与的项目，有一个定时作业来定时的拉取数据。最近得空整理一下我所了解的基于 Spring 的定时器的两种简单实现。
+</code></pre><h2 id="Spring-定时任务基于-XML"><a href="#Spring-定时任务基于-XML" class="headerlink" title="Spring 定时任务基于 XML"></a>Spring 定时任务基于 XML</h2><pre><code>Spring 定时任务基于 XML 的实现正是在我们项目中应用的。Spring3.0 以后自带的 task 大大的方便了我们的实现定时任务。
+</code></pre><h3 id="定时任务类"><a href="#定时任务类" class="headerlink" title="定时任务类"></a>定时任务类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Task01</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printJob</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"************定时打印---XML**************"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>就是一个普通的类，其中，printJob() 是我们需要定时执行的任务方法。</p>
+<h3 id="XML"><a href="#XML" class="headerlink" title="XML"></a>XML</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="attr">xmlns:p</span>=<span class="string">"http://www.springframework.org/schema/p"</span> <span class="attr">xmlns:c</span>=<span class="string">"http://www.springframework.org/schema/c"</span> <span class="attr">xmlns:tool</span>=<span class="string">"http://www.springframework.org/schema/tool"</span> <span class="attr">xmlns:util</span>=<span class="string">"http://www.springframework.org/schema/util"</span> <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span> <span class="attr">xmlns:jee</span>=<span class="string">"http://www.springframework.org/schema/jee"</span> <span class="attr">xmlns:lang</span>=<span class="string">"http://www.springframework.org/schema/lang"</span> <span class="attr">xmlns:task</span>=<span class="string">"http://www.springframework.org/schema/task"</span> <span class="attr">xmlns:cache</span>=<span class="string">"http://www.springframework.org/schema/cache"</span> <span class="attr">xmlns:aop</span>=<span class="string">"http://www.springframework.org/schema/aop"</span> <span class="attr">xmlns:tx</span>=<span class="string">"http://www.springframework.org/schema/tx"</span> <span class="attr">xmlns:mvc</span>=<span class="string">"http://www.springframework.org/schema/mvc"</span> <span class="attr">xmlns:jdbc</span>=<span class="string">"http://www.springframework.org/schema/jdbc"</span> <span class="attr">xmlns:jms</span>=<span class="string">"http://www.springframework.org/schema/jms"</span></span></div><div class="line">	<span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span></div><div class="line">	http://www.springframework.org/schema/beans/spring-beans.xsd</div><div class="line">	http://www.springframework.org/schema/tool</div><div class="line">	http://www.springframework.org/schema/tool/spring-tool.xsd</div><div class="line">	http://www.springframework.org/schema/util</div><div class="line">	http://www.springframework.org/schema/util/spring-util.xsd</div><div class="line">	http://www.springframework.org/schema/context</div><div class="line">	http://www.springframework.org/schema/context/spring-context.xsd</div><div class="line">	http://www.springframework.org/schema/jee</div><div class="line">	http://www.springframework.org/schema/jee/spring-jee.xsd</div><div class="line">	http://www.springframework.org/schema/lang</div><div class="line">	http://www.springframework.org/schema/lang/spring-lang.xsd</div><div class="line">	http://www.springframework.org/schema/task</div><div class="line">	http://www.springframework.org/schema/task/spring-task.xsd</div><div class="line">	http://www.springframework.org/schema/cache</div><div class="line">	http://www.springframework.org/schema/cache/spring-cache.xsd</div><div class="line">	http://www.springframework.org/schema/aop</div><div class="line">	http://www.springframework.org/schema/aop/spring-aop.xsd</div><div class="line">	http://www.springframework.org/schema/tx</div><div class="line">	http://www.springframework.org/schema/tx/spring-tx.xsd</div><div class="line">	http://www.springframework.org/schema/mvc</div><div class="line">	http://www.springframework.org/schema/mvc/spring-mvc.xsd</div><div class="line">	http://www.springframework.org/schema/jdbc</div><div class="line">	http://www.springframework.org/schema/jdbc/spring-jdbc.xsd</div><div class="line">	http://www.springframework.org/schema/jms</div><div class="line">	http://www.springframework.org/schema/jms/spring-jms.xsd"&gt;</div><div class="line"></div><div class="line">	<span class="tag">&lt;<span class="name">task:annotation-driven</span> /&gt;</span></div><div class="line">  </div><div class="line">	<span class="comment">&lt;!-- 定时任务（每隔5秒执行一次） --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"Task01"</span> <span class="attr">class</span>=<span class="string">"com.apple.springmvc.task.Task01"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">task:scheduled-tasks</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">task:scheduled</span> <span class="attr">ref</span>=<span class="string">"Task01"</span> <span class="attr">method</span>=<span class="string">"printJob"</span> <span class="attr">cron</span>=<span class="string">"*/5 * * * * ?"</span> /&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">task:scheduled-tasks</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
+<pre><code>在 XML 里我们可以设置定时任务的执行频率或者执行时间，关于定时任务 *cron* 的语法可以参照我之前的一篇博客，[定时器语法](http://blog.xueni.ren/2016/07/15/timer-grammar-xml/) 
+</code></pre><p>来修改成符合成你业务需求的。</p>
+<h2 id="Spring-定时任务基于注解"><a href="#Spring-定时任务基于注解" class="headerlink" title="Spring 定时任务基于注解"></a>Spring 定时任务基于注解</h2><pre><code>因为用的 Spring 框架，其实基于注解来实现定时任务相对来说方便很多。
+</code></pre><h3 id="定时任务类-1"><a href="#定时任务类-1" class="headerlink" title="定时任务类"></a>定时任务类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Component</span>(<span class="string">"task"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Task02</span> </span>&#123;</div><div class="line">    <span class="meta">@Scheduled</span>(cron = <span class="string">"*/7 * * * * ?"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printJob2</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"************定时打印---注解**************"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<pre><code>这里我们主要用到了两个注解 *@Component* 和 *@Scheduled* 。
+</code></pre><h3 id="XML-1"><a href="#XML-1" class="headerlink" title="XML"></a>XML</h3><p>···xml</p>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p" xmlns:c="http://www.springframework.org/schema/c" xmlns:tool="http://www.springframework.org/schema/tool" xmlns:util="http://www.springframework.org/schema/util" xmlns:context="http://www.springframework.org/schema/context" xmlns:jee="http://www.springframework.org/schema/jee" xmlns:lang="http://www.springframework.org/schema/lang" xmlns:task="http://www.springframework.org/schema/task" xmlns:cache="http://www.springframework.org/schema/cache" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jms="http://www.springframework.org/schema/jms" xsi:schemalocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/tool
+    http://www.springframework.org/schema/tool/spring-tool.xsd
+    http://www.springframework.org/schema/util
+    http://www.springframework.org/schema/util/spring-util.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/jee
+    http://www.springframework.org/schema/jee/spring-jee.xsd
+    http://www.springframework.org/schema/lang
+    http://www.springframework.org/schema/lang/spring-lang.xsd
+    http://www.springframework.org/schema/task
+    http://www.springframework.org/schema/task/spring-task.xsd
+    http://www.springframework.org/schema/cache
+    http://www.springframework.org/schema/cache/spring-cache.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc.xsd
+    http://www.springframework.org/schema/jdbc
+    http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+    http://www.springframework.org/schema/jms
+    http://www.springframework.org/schema/jms/spring-jms.xsd">
+
+<pre><code>&lt;task:annotation-driven /&gt;
+&lt;context:component-scan base-package=&quot;com.apple.springmvc.task&quot;/&gt;
+</code></pre><p></p></beans><br>···<p></p>
+<pre><code>以上就是 Spring-task 的两种简单实现，因为代码很简单，就不做过多解释了。
+</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;Spring-定时任务的两种简单实现&quot;&gt;&lt;a href=&quot;#Spring-定时任务的两种简单实现&quot; class=&quot;headerlink&quot; title=&quot;Spring 定时任务的两种简单实现&quot;&gt;&lt;/a&gt;Spring 定时任务的两种简单实现&lt;/h1&gt;&lt;pre&gt;&lt;cod
+    
+    </summary>
+    
+      <category term="Java 编程" scheme="http://blog.xueni.ren/categories/Java-%E7%BC%96%E7%A8%8B/"/>
+    
+    
+      <category term="Java" scheme="http://blog.xueni.ren/tags/Java/"/>
+    
+      <category term="Spring" scheme="http://blog.xueni.ren/tags/Spring/"/>
+    
+  </entry>
+  
+  <entry>
     <title>通过 HashMap 实现本地缓存</title>
     <link href="http://blog.xueni.ren/2016/09/22/custom-local-cache/"/>
     <id>http://blog.xueni.ren/2016/09/22/custom-local-cache/</id>
     <published>2016-09-22T12:30:00.000Z</published>
-    <updated>2016-09-22T09:52:40.680Z</updated>
+    <updated>2016-09-27T07:29:48.515Z</updated>
     
     <content type="html"><![CDATA[<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>  本地缓存在我们的工作中是比较常见的一种技术手段，不管是分布式缓存，还是本地缓存，或多或少我们都会使用到，本地缓存比较常用的数 Guava 缓存。<br>今天我们不聊 Guava，而是聊一聊怎样通过 HashMap 来实现一个本地缓存。</p>
 <a id="more"></a>
@@ -49,7 +115,7 @@
     <link href="http://blog.xueni.ren/2016/08/09/JVM-read-notes/"/>
     <id>http://blog.xueni.ren/2016/08/09/JVM-read-notes/</id>
     <published>2016-08-09T15:15:00.000Z</published>
-    <updated>2016-09-22T09:52:40.676Z</updated>
+    <updated>2016-09-27T07:29:48.515Z</updated>
     
     <content type="html"><![CDATA[<p>在早之前，曾粗略的读过一次 《深入理解 Java 虚拟机》这边书，那时候，是在每天上下班路上在公交车上用 kindle 阅读。由于阅读体验并不怎么好，所以收获并<br>不大。由于同事极力推荐这本书，于是，果断入手了一本纸质版。这次通过这次阅读，收获不小。（看来，技术类的书还是要看纸质的，电子版阅读体验太差。）<br>废话少说，开始正题。</p>
 <a id="more"></a>
@@ -76,7 +142,7 @@
     <link href="http://blog.xueni.ren/2016/07/15/timer-grammar-xml/"/>
     <id>http://blog.xueni.ren/2016/07/15/timer-grammar-xml/</id>
     <published>2016-07-14T23:00:00.000Z</published>
-    <updated>2016-09-22T09:52:40.680Z</updated>
+    <updated>2016-09-27T07:29:48.519Z</updated>
     
     <content type="html"><![CDATA[<p>日常工作中我们经常会实现这样一些功能，比如定时删除或者下载文件等等。首先我们想到的就是通过一个定时器定时的帮助我们去干一些我们需要它们帮助我们做的事情。<br><a id="more"></a><br>下面我们就了解一下，一些常用的定时器语法。</p>
 <table>
@@ -149,7 +215,7 @@
     <link href="http://blog.xueni.ren/2016/06/15/google-guava/"/>
     <id>http://blog.xueni.ren/2016/06/15/google-guava/</id>
     <published>2016-06-14T16:00:00.000Z</published>
-    <updated>2016-09-22T09:52:40.680Z</updated>
+    <updated>2016-09-27T07:29:48.515Z</updated>
     
     <content type="html"><![CDATA[<h2 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h2><p>缓存主要作用是就是预读取（预先读取将要载入的数据）、存储临时访问过的数据和对写入的数据进行暂时存放。</p>
 <a id="more"></a>
@@ -219,7 +285,7 @@
     <link href="http://blog.xueni.ren/2016/06/13/BufferedReader-readLine/"/>
     <id>http://blog.xueni.ren/2016/06/13/BufferedReader-readLine/</id>
     <published>2016-06-13T14:15:00.000Z</published>
-    <updated>2016-09-22T09:52:40.676Z</updated>
+    <updated>2016-09-27T07:29:48.515Z</updated>
     
     <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>遇到这么一个问题，需要从网络上下载图片到本地，单元测试一直停不下来，有次让单元测试跑起来之后，自己出去吃了个早饭回来发现<br>单元测试还没有跑完。然后跟断点发现程序阻塞在 <strong>readLine()</strong> 方法上了。</p>
 <a id="more"></a>
@@ -253,7 +319,7 @@
     <link href="http://blog.xueni.ren/2016/06/06/spring-data-mongodb/"/>
     <id>http://blog.xueni.ren/2016/06/06/spring-data-mongodb/</id>
     <published>2016-06-06T14:27:45.000Z</published>
-    <updated>2016-09-22T09:52:40.680Z</updated>
+    <updated>2016-09-27T07:29:48.519Z</updated>
     
     <content type="html"><![CDATA[<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>平时都在用 SpringMVC 进行开发，但是，基本上都是在用 SpringMVC+Mybatis+MySQL 进行开发。对于 Mongodb 只是听说过，<br>自己实际没有操作过，近期，在工作之余决定研究一下 Mongodb 。<br><a id="more"></a><br>那么，开始进入正题吧，此次我构建的项目是 SpringMVC+Mongodb+Maven ，有不对之处，还望指出。</p>
 <p>作为一个 Maven 工程，我们还是先从 pom.xml 文件开始把,在 pom.xml 里配置我们的工程所依赖的 jar。<br>pom.xml</p>
@@ -288,7 +354,7 @@
     <link href="http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/"/>
     <id>http://blog.xueni.ren/2016/06/01/Java-compli-read-notes-basis/</id>
     <published>2016-06-01T15:15:45.000Z</published>
-    <updated>2016-09-22T09:52:40.676Z</updated>
+    <updated>2016-09-27T07:29:48.515Z</updated>
     
     <content type="html"><![CDATA[<h1 id="基础篇，从各种概念开始。"><a href="#基础篇，从各种概念开始。" class="headerlink" title="基础篇，从各种概念开始。"></a>基础篇，从各种概念开始。</h1><h2 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h2><ul>
 <li>当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步货协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。<a id="more"></a></li>
@@ -372,7 +438,7 @@
     <link href="http://blog.xueni.ren/2016/06/01/MySQL-batch-insert/"/>
     <id>http://blog.xueni.ren/2016/06/01/MySQL-batch-insert/</id>
     <published>2016-06-01T14:22:22.000Z</published>
-    <updated>2016-09-22T09:52:40.680Z</updated>
+    <updated>2016-09-27T07:29:48.515Z</updated>
     
     <content type="html"><![CDATA[<p>最近开始玩 <strong>MyBatis</strong> ，想实现这么一个功能，就是将一张表里的数据作为历史数据存储到另一张表里去。<br>一开始我的代码是这么写的：</p>
 <a id="more"></a>
@@ -405,7 +471,7 @@
     <link href="http://blog.xueni.ren/2015/11/19/test/"/>
     <id>http://blog.xueni.ren/2015/11/19/test/</id>
     <published>2015-11-18T16:00:00.000Z</published>
-    <updated>2016-09-22T09:52:40.680Z</updated>
+    <updated>2016-09-27T07:29:48.519Z</updated>
     
     <content type="html"><![CDATA[<p><a href="https://help.github.com/articles/basic-writing-and-formatting-syntax/" target="_blank" rel="external">md语法</a></p>
 <a id="more"></a>
@@ -480,7 +546,7 @@
     <link href="http://blog.xueni.ren/2015/04/01/pelican-blog/"/>
     <id>http://blog.xueni.ren/2015/04/01/pelican-blog/</id>
     <published>2015-03-31T16:00:00.000Z</published>
-    <updated>2016-09-22T09:52:40.680Z</updated>
+    <updated>2016-09-27T07:29:48.515Z</updated>
     
     <content type="html"><![CDATA[<p>没有前言，没有概述，做个笔记而已。</p>
 <ol>
@@ -512,7 +578,7 @@
     <link href="http://blog.xueni.ren/2014/11/19/hello-world/"/>
     <id>http://blog.xueni.ren/2014/11/19/hello-world/</id>
     <published>2014-11-18T16:00:00.000Z</published>
-    <updated>2016-09-22T09:52:40.680Z</updated>
+    <updated>2016-09-27T07:29:48.515Z</updated>
     
     <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
 <a id="more"></a>

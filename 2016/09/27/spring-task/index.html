@@ -9,18 +9,24 @@
 
   <meta charset="utf-8">
   
-  <title>MySQL 入库操作的优化 | Apple</title>
+  <title>Spring 定时器的两种简单实现 | Apple</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="最近开始玩 MyBatis ，想实现这么一个功能，就是将一张表里的数据作为历史数据存储到另一张表里去。一开始我的代码是这么写的：">
+  <meta name="description" content="Spring 定时任务的两种简单实现前段时间参与的项目，有一个定时作业来定时的拉取数据。最近得空整理一下我所了解的基于 Spring 的定时器的两种简单实现。
+Spring 定时任务基于 XMLSpring 定时任务基于 XML 的实现正是在我们项目中应用的。Spring3.0 以后自带的 task 大大的方便了我们的实现定时任务。
+定时任务类12345public class Task01 &amp;#">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MySQL 入库操作的优化">
-<meta property="og:url" content="http://blog.xueni.ren/2016/06/01/MySQL-batch-insert/index.html">
+<meta property="og:title" content="Spring 定时器的两种简单实现">
+<meta property="og:url" content="http://blog.xueni.ren/2016/09/27/spring-task/index.html">
 <meta property="og:site_name" content="Apple">
-<meta property="og:description" content="最近开始玩 MyBatis ，想实现这么一个功能，就是将一张表里的数据作为历史数据存储到另一张表里去。一开始我的代码是这么写的：">
-<meta property="og:updated_time" content="2016-09-27T07:29:48.515Z">
+<meta property="og:description" content="Spring 定时任务的两种简单实现前段时间参与的项目，有一个定时作业来定时的拉取数据。最近得空整理一下我所了解的基于 Spring 的定时器的两种简单实现。
+Spring 定时任务基于 XMLSpring 定时任务基于 XML 的实现正是在我们项目中应用的。Spring3.0 以后自带的 task 大大的方便了我们的实现定时任务。
+定时任务类12345public class Task01 &amp;#">
+<meta property="og:updated_time" content="2016-09-27T07:29:48.519Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MySQL 入库操作的优化">
-<meta name="twitter:description" content="最近开始玩 MyBatis ，想实现这么一个功能，就是将一张表里的数据作为历史数据存储到另一张表里去。一开始我的代码是这么写的：">
+<meta name="twitter:title" content="Spring 定时器的两种简单实现">
+<meta name="twitter:description" content="Spring 定时任务的两种简单实现前段时间参与的项目，有一个定时作业来定时的拉取数据。最近得空整理一下我所了解的基于 Spring 的定时器的两种简单实现。
+Spring 定时任务基于 XMLSpring 定时任务基于 XML 的实现正是在我们项目中应用的。Spring3.0 以后自带的 task 大大的方便了我们的实现定时任务。
+定时任务类12345public class Task01 &amp;#">
   
     <link rel="alternative" href="/atom.xml" title="Apple" type="application/atom+xml">
   
@@ -242,11 +248,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-MySQL-batch-insert" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-spring-task" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/06/01/MySQL-batch-insert/" class="article-date">
-      <time datetime="2016-06-01T14:22:22.000Z" itemprop="datePublished">2016-06-01</time>
+      <a href="/2016/09/27/spring-task/" class="article-date">
+      <time datetime="2016-09-27T06:55:00.000Z" itemprop="datePublished">2016-09-27</time>
 </a>
     </div>
   
@@ -259,7 +265,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      MySQL 入库操作的优化
+      Spring 定时器的两种简单实现
     </h1>
   
 
@@ -274,7 +280,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -284,18 +290,49 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>最近开始玩 <strong>MyBatis</strong> ，想实现这么一个功能，就是将一张表里的数据作为历史数据存储到另一张表里去。<br>一开始我的代码是这么写的：</p>
-<a id="more"></a>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">List&lt;BookHistory&gt; bookHistories = bookHisDao.getBookList();<span class="comment">//获取需要存储的历史数据</span></div><div class="line"><span class="keyword">for</span> (BookHistory BookHistory:bookHistories) &#123;</div><div class="line">	BookHistory book = bookHisDao.selectBookById(BookHistory);</div><div class="line">	<span class="keyword">if</span>(<span class="keyword">null</span> == book)&#123;</div><div class="line">		bookHisDao.insertBook(bookHistory);<span class="comment">// 数据入库操作</span></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>看起来简单粗暴，似乎没有什么问题，查询出来一个<code>list</code>，然后循环遍历，检查是否已经存在历史库中，如果不存在则入库。功能也正确实现，但是，存在的问题是，速度有点太慢。<code>2007</code> 条数据的执行时间是 <code>2m 1s 505ms</code> 。对于追求完美的我，这是不能忍受的，首先我能想到的就是优化入库操作，因为一条数据一条数据的插入，确实会速度特别慢，说干就干，首先先将入库操作由原来的一条一条入库改成批量入库。接下来我的代码变成了这样：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">List&lt;BookHistory&gt; bookHistories = bookHisDao.getBookList();</div><div class="line">Iterator&lt;BookHistory&gt; bookIter= bookHistories.iterator();</div><div class="line"><span class="keyword">while</span> (bookIter.hasNext())&#123;</div><div class="line">	BookHistory bookHistory = bookIter.next();</div><div class="line">	BookHistory book = bookHisDao.selectBookById(bookHistory);</div><div class="line">	<span class="keyword">if</span>(<span class="keyword">null</span> != book)&#123;</div><div class="line">		bookIter.remove();</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">int</span> count = bookHisDao.insertBookBatch(bookHistories);<span class="comment">//批量入库操作</span></div><div class="line">System.out.println(<span class="string">"insert "</span>+count+<span class="string">" records"</span>);</div></pre></td></tr></table></figure>
-<p>改成批量入库操作后，速度直线上升，<code>2007</code>条数据的执行时间是 <code>6s 737ms</code> ，现在看来，情况很乐观，但是随之而来的又出来了另一个问题，因为做测试，我并没有将所有字段都进行入库操作。    当我把字段补齐时，控制台报了这样一个错：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">org.springframework.dao.TransientDataAccessResourceException: </div><div class="line">### Error updating database.  Cause: com.mysql.jdbc.PacketTooBigException: Packet for query is too large (13513737 &gt; 4194304). You can change this value on the server by setting the max_allowed_packet&apos; variable.</div><div class="line">### The error may involve BookHistory.insertBookBatch-Inline</div></pre></td></tr></table></figure>
-<p>看到控制台提到了  <strong>max_allowed_packet</strong> 这个参数，那么我们就需要了解一下，这个参数是干什么用的。<strong>max_allowed_packet</strong> 是 <strong>MySQL</strong> 变量的一个变量，用于控制其通信缓冲区的最大长度。默认值是：<code>4194304</code>.从控制台的报错信息可以看出来，我此时需要的缓冲区长度为：<code>13513737</code>，远大于<code>4194304</code>。最简单粗暴的办法就是修改 <strong>MySQL</strong> 的 <strong>max_allowed_packet</strong> 参数。修改这个参数，可以暂时的解决问题，但是不能长久的解决问题，因为我无法保证线上的数据量会是多大。这时候，我需要寻找别的突破点。既然<code>2007</code>条数据同时入库，会导致 <strong>MySQL</strong> 的缓冲区不够用，那么，我是否可以改一下自己的程序，不让数据一次性都插入，而是，分批插入，比如说每次 <code>500</code> 条数据呢？接下来，我又对我的代码做了如下修改：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">List&lt;BookHistory&gt; bookHistories = bookHisDao.getBookList();</div><div class="line">Iterator&lt;BookHistory&gt; bookIter= bookHistories.iterator();</div><div class="line"><span class="keyword">while</span> (bookIter.hasNext())&#123;</div><div class="line">	BookHistory bookHistory = bookIter.next();</div><div class="line">	BookHistory book = bookHisDao.selectBookById(bookHistory);</div><div class="line">	<span class="keyword">if</span>(<span class="keyword">null</span> != book)&#123;</div><div class="line">		bookIter.remove();</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//int count = bookHisDao.insertBookBatch(bookHistories);//批量入库操作</span></div><div class="line"><span class="comment">//System.out.println("insert "+count+" records");</span></div><div class="line"></div><div class="line"><span class="comment">//分批，批量入库操作</span></div><div class="line"><span class="keyword">int</span> batch = <span class="number">0</span>;</div><div class="line">List&lt;BookHistory&gt;  bookList = <span class="keyword">new</span> ArrayList&lt;BookHistory&gt;();</div><div class="line"><span class="keyword">for</span> (BookHistory bookHistory:bookHistories)&#123;</div><div class="line">	batch++;</div><div class="line">	bookList.add(bookHistory);</div><div class="line">	System.out.println(batch);</div><div class="line">	<span class="keyword">if</span> (batch == <span class="number">500</span>)&#123;</div><div class="line">		bookHisDao.insertBookBatch(bookList);</div><div class="line">		System.out.println(bookList.size());</div><div class="line">		batch = <span class="number">0</span>;</div><div class="line">		bookList.clear();</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">bookHisDao.insertBookBatch(bookList);</div></pre></td></tr></table></figure>
-<p>这样一修改之后，控制台的错误消失，程序的运行速度是 <code>8s 393ms</code> 。比刚才的 一次性批量入库慢了 <code>2s</code> 。。。暂时还没有想到更好的解决方案，先这样，我再想想还有么有更好的解决方案。<br>以上的修改，虽然解决了问题，但是代码不够优雅。</p>
-<p>最后，我们需要思考的问题是，为什么 <strong>MySQL</strong> 入库，批量入库比一条一条的数据入库性能好很多？</p>
+        <h1 id="Spring-定时任务的两种简单实现"><a href="#Spring-定时任务的两种简单实现" class="headerlink" title="Spring 定时任务的两种简单实现"></a>Spring 定时任务的两种简单实现</h1><pre><code>前段时间参与的项目，有一个定时作业来定时的拉取数据。最近得空整理一下我所了解的基于 Spring 的定时器的两种简单实现。
+</code></pre><h2 id="Spring-定时任务基于-XML"><a href="#Spring-定时任务基于-XML" class="headerlink" title="Spring 定时任务基于 XML"></a>Spring 定时任务基于 XML</h2><pre><code>Spring 定时任务基于 XML 的实现正是在我们项目中应用的。Spring3.0 以后自带的 task 大大的方便了我们的实现定时任务。
+</code></pre><h3 id="定时任务类"><a href="#定时任务类" class="headerlink" title="定时任务类"></a>定时任务类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Task01</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printJob</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"************定时打印---XML**************"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>就是一个普通的类，其中，printJob() 是我们需要定时执行的任务方法。</p>
+<h3 id="XML"><a href="#XML" class="headerlink" title="XML"></a>XML</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="attr">xmlns:p</span>=<span class="string">"http://www.springframework.org/schema/p"</span> <span class="attr">xmlns:c</span>=<span class="string">"http://www.springframework.org/schema/c"</span> <span class="attr">xmlns:tool</span>=<span class="string">"http://www.springframework.org/schema/tool"</span> <span class="attr">xmlns:util</span>=<span class="string">"http://www.springframework.org/schema/util"</span> <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span> <span class="attr">xmlns:jee</span>=<span class="string">"http://www.springframework.org/schema/jee"</span> <span class="attr">xmlns:lang</span>=<span class="string">"http://www.springframework.org/schema/lang"</span> <span class="attr">xmlns:task</span>=<span class="string">"http://www.springframework.org/schema/task"</span> <span class="attr">xmlns:cache</span>=<span class="string">"http://www.springframework.org/schema/cache"</span> <span class="attr">xmlns:aop</span>=<span class="string">"http://www.springframework.org/schema/aop"</span> <span class="attr">xmlns:tx</span>=<span class="string">"http://www.springframework.org/schema/tx"</span> <span class="attr">xmlns:mvc</span>=<span class="string">"http://www.springframework.org/schema/mvc"</span> <span class="attr">xmlns:jdbc</span>=<span class="string">"http://www.springframework.org/schema/jdbc"</span> <span class="attr">xmlns:jms</span>=<span class="string">"http://www.springframework.org/schema/jms"</span></span></div><div class="line">	<span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span></div><div class="line">	http://www.springframework.org/schema/beans/spring-beans.xsd</div><div class="line">	http://www.springframework.org/schema/tool</div><div class="line">	http://www.springframework.org/schema/tool/spring-tool.xsd</div><div class="line">	http://www.springframework.org/schema/util</div><div class="line">	http://www.springframework.org/schema/util/spring-util.xsd</div><div class="line">	http://www.springframework.org/schema/context</div><div class="line">	http://www.springframework.org/schema/context/spring-context.xsd</div><div class="line">	http://www.springframework.org/schema/jee</div><div class="line">	http://www.springframework.org/schema/jee/spring-jee.xsd</div><div class="line">	http://www.springframework.org/schema/lang</div><div class="line">	http://www.springframework.org/schema/lang/spring-lang.xsd</div><div class="line">	http://www.springframework.org/schema/task</div><div class="line">	http://www.springframework.org/schema/task/spring-task.xsd</div><div class="line">	http://www.springframework.org/schema/cache</div><div class="line">	http://www.springframework.org/schema/cache/spring-cache.xsd</div><div class="line">	http://www.springframework.org/schema/aop</div><div class="line">	http://www.springframework.org/schema/aop/spring-aop.xsd</div><div class="line">	http://www.springframework.org/schema/tx</div><div class="line">	http://www.springframework.org/schema/tx/spring-tx.xsd</div><div class="line">	http://www.springframework.org/schema/mvc</div><div class="line">	http://www.springframework.org/schema/mvc/spring-mvc.xsd</div><div class="line">	http://www.springframework.org/schema/jdbc</div><div class="line">	http://www.springframework.org/schema/jdbc/spring-jdbc.xsd</div><div class="line">	http://www.springframework.org/schema/jms</div><div class="line">	http://www.springframework.org/schema/jms/spring-jms.xsd"&gt;</div><div class="line"></div><div class="line">	<span class="tag">&lt;<span class="name">task:annotation-driven</span> /&gt;</span></div><div class="line">  </div><div class="line">	<span class="comment">&lt;!-- 定时任务（每隔5秒执行一次） --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"Task01"</span> <span class="attr">class</span>=<span class="string">"com.apple.springmvc.task.Task01"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">task:scheduled-tasks</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">task:scheduled</span> <span class="attr">ref</span>=<span class="string">"Task01"</span> <span class="attr">method</span>=<span class="string">"printJob"</span> <span class="attr">cron</span>=<span class="string">"*/5 * * * * ?"</span> /&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">task:scheduled-tasks</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
+<pre><code>在 XML 里我们可以设置定时任务的执行频率或者执行时间，关于定时任务 *cron* 的语法可以参照我之前的一篇博客，[定时器语法](http://blog.xueni.ren/2016/07/15/timer-grammar-xml/) 
+</code></pre><p>来修改成符合成你业务需求的。</p>
+<h2 id="Spring-定时任务基于注解"><a href="#Spring-定时任务基于注解" class="headerlink" title="Spring 定时任务基于注解"></a>Spring 定时任务基于注解</h2><pre><code>因为用的 Spring 框架，其实基于注解来实现定时任务相对来说方便很多。
+</code></pre><h3 id="定时任务类-1"><a href="#定时任务类-1" class="headerlink" title="定时任务类"></a>定时任务类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Component</span>(<span class="string">"task"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Task02</span> </span>&#123;</div><div class="line">    <span class="meta">@Scheduled</span>(cron = <span class="string">"*/7 * * * * ?"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printJob2</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"************定时打印---注解**************"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<pre><code>这里我们主要用到了两个注解 *@Component* 和 *@Scheduled* 。
+</code></pre><h3 id="XML-1"><a href="#XML-1" class="headerlink" title="XML"></a>XML</h3><p>···xml</p>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p" xmlns:c="http://www.springframework.org/schema/c" xmlns:tool="http://www.springframework.org/schema/tool" xmlns:util="http://www.springframework.org/schema/util" xmlns:context="http://www.springframework.org/schema/context" xmlns:jee="http://www.springframework.org/schema/jee" xmlns:lang="http://www.springframework.org/schema/lang" xmlns:task="http://www.springframework.org/schema/task" xmlns:cache="http://www.springframework.org/schema/cache" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jms="http://www.springframework.org/schema/jms" xsi:schemalocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/tool
+    http://www.springframework.org/schema/tool/spring-tool.xsd
+    http://www.springframework.org/schema/util
+    http://www.springframework.org/schema/util/spring-util.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/jee
+    http://www.springframework.org/schema/jee/spring-jee.xsd
+    http://www.springframework.org/schema/lang
+    http://www.springframework.org/schema/lang/spring-lang.xsd
+    http://www.springframework.org/schema/task
+    http://www.springframework.org/schema/task/spring-task.xsd
+    http://www.springframework.org/schema/cache
+    http://www.springframework.org/schema/cache/spring-cache.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc.xsd
+    http://www.springframework.org/schema/jdbc
+    http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+    http://www.springframework.org/schema/jms
+    http://www.springframework.org/schema/jms/spring-jms.xsd">
 
+<pre><code>&lt;task:annotation-driven /&gt;
+&lt;context:component-scan base-package=&quot;com.apple.springmvc.task&quot;/&gt;
+</code></pre><p></p></beans><br>···<p></p>
+<pre><code>以上就是 Spring-task 的两种简单实现，因为代码很简单，就不做过多解释了。
+</code></pre>
       
     </div>
     
@@ -303,13 +340,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/06/01/MySQL-batch-insert/">MySQL 入库操作的优化</a></p>
+        <p><span>本文标题:</span><a href="/2016/09/27/spring-task/">Spring 定时器的两种简单实现</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Apple</a></p>
-        <p><span>发布时间:</span>2016-06-01, 22:22:22</p>
+        <p><span>发布时间:</span>2016-09-27, 14:55:00</p>
         <p><span>最后更新:</span>2016-09-27, 15:29:48</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/06/01/MySQL-batch-insert/" title="MySQL 入库操作的优化">http://blog.xueni.ren/2016/06/01/MySQL-batch-insert/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://blog.xueni.ren/2016/06/01/MySQL-batch-insert/　　作者: Apple" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/09/27/spring-task/" title="Spring 定时器的两种简单实现">http://blog.xueni.ren/2016/09/27/spring-task/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.xueni.ren/2016/09/27/spring-task/　　作者: Apple" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -321,16 +358,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/06/01/Java-compli-read-notes-basis/">
-                    Java 并发编程读书笔记(基础篇)
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2015/11/19/test/">
-                    test
+                <a href="/2016/09/22/custom-local-cache/">
+                    通过 HashMap 实现本地缓存
                 </a>
             </div>
         
@@ -341,7 +372,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Spring-定时任务的两种简单实现"><span class="toc-number">1.</span> <span class="toc-text">Spring 定时任务的两种简单实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-定时任务基于-XML"><span class="toc-number">1.1.</span> <span class="toc-text">Spring 定时任务基于 XML</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定时任务类"><span class="toc-number">1.1.1.</span> <span class="toc-text">定时任务类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XML"><span class="toc-number">1.1.2.</span> <span class="toc-text">XML</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-定时任务基于注解"><span class="toc-number">1.2.</span> <span class="toc-text">Spring 定时任务基于注解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定时任务类-1"><span class="toc-number">1.2.1.</span> <span class="toc-text">定时任务类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XML-1"><span class="toc-number">1.2.2.</span> <span class="toc-text">XML</span></a></li></ol></li></ol></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
@@ -398,7 +429,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"MySQL 入库操作的优化　| Apple　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Spring 定时器的两种简单实现　| Apple　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -434,15 +465,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/06/01/Java-compli-read-notes-basis/" title="上一篇: Java 并发编程读书笔记(基础篇)">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2015/11/19/test/" title="下一篇: test">
+            <a href="/2016/09/22/custom-local-cache/" title="下一篇: 通过 HashMap 实现本地缓存">
                 <i class="fa fa-angle-right"></i>
             </a>
         
