@@ -9,14 +9,18 @@
 
   <meta charset="utf-8">
   
-  <title>Apple</title>
+  <title>TRUNCATE 和 DELETE 的区别 | Apple</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Apple">
-<meta property="og:url" content="http://blog.xueni.ren/page/2/index.html">
+  <meta name="description" content="##前言  工作中有这么一个业务场景，数据库里的数据需要定时全量删除。全量删除数据有两个选择，1：DELETE FROM table_name 2:TRUNCATE TABLE table_name。由于TRUNCATE TABLE 相当于不带 WHERE条件的DELETE语句，那么不论是选择DELETE还是选择TRUNCATE TABLE好像都能达到我删除全量数据的目的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TRUNCATE 和 DELETE 的区别">
+<meta property="og:url" content="http://blog.xueni.ren/2016/11/14/MySQL-truncate-delete/index.html">
 <meta property="og:site_name" content="Apple">
+<meta property="og:description" content="##前言  工作中有这么一个业务场景，数据库里的数据需要定时全量删除。全量删除数据有两个选择，1：DELETE FROM table_name 2:TRUNCATE TABLE table_name。由于TRUNCATE TABLE 相当于不带 WHERE条件的DELETE语句，那么不论是选择DELETE还是选择TRUNCATE TABLE好像都能达到我删除全量数据的目的。">
+<meta property="og:updated_time" content="2016-11-04T08:57:28.572Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Apple">
+<meta name="twitter:title" content="TRUNCATE 和 DELETE 的区别">
+<meta name="twitter:description" content="##前言  工作中有这么一个业务场景，数据库里的数据需要定时全量删除。全量删除数据有两个选择，1：DELETE FROM table_name 2:TRUNCATE TABLE table_name。由于TRUNCATE TABLE 相当于不带 WHERE条件的DELETE语句，那么不论是选择DELETE还是选择TRUNCATE TABLE好像都能达到我删除全量数据的目的。">
   
     <link rel="alternative" href="/atom.xml" title="Apple" type="application/atom+xml">
   
@@ -32,13 +36,8 @@
   
   <link rel="stylesheet" href="/css/style.css">
   
-      <style> .article { opacity: 0;} </style>
-  
   <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  
-    
-    
   
   
       <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
@@ -49,8 +48,8 @@
       var yiliaConfig = {
           fancybox: true,
           animate: true,
-          isHome: true,
-          isPost: false,
+          isHome: false,
+          isPost: true,
           isArchive: false,
           isTag: false,
           isCategory: false,
@@ -243,13 +242,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap">
-  
-    <article id="post-google-guava" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-MySQL-truncate-delete" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/06/15/google-guava/" class="article-date">
-      <time datetime="2016-06-14T16:00:00.000Z" itemprop="datePublished">2016-06-15</time>
+      <a href="/2016/11/14/MySQL-truncate-delete/" class="article-date">
+      <time datetime="2016-11-14T14:15:00.000Z" itemprop="datePublished">2016-11-14</time>
 </a>
     </div>
   
@@ -261,312 +258,142 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/15/google-guava/">Google Guava Cache 学习笔记</a>
+    <h1 class="article-title" itemprop="name">
+      TRUNCATE 和 DELETE 的区别
     </h1>
   
 
       </header>
       
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h2 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h2><p>缓存主要作用是就是预读取（预先读取将要载入的数据）、存储临时访问过的数据和对写入的数据进行暂时存放。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Cache/">Cache</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Guava/">Guava</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java-编程/">Java 编程</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/06/15/google-guava/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-BufferedReader-readLine" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/06/13/BufferedReader-readLine/" class="article-date">
-      <time datetime="2016-06-13T14:15:00.000Z" itemprop="datePublished">2016-06-13</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
+      <div class="article-info article-info-post">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/13/BufferedReader-readLine/">BufferedReader.readLine() 的使用中遇到的问题</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>遇到这么一个问题，需要从网络上下载图片到本地，单元测试一直停不下来，有次让单元测试跑起来之后，自己出去吃了个早饭回来发现<br>单元测试还没有跑完。然后跟断点发现程序阻塞在 <strong>readLine()</strong> 方法上了。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
     <div class="article-category tagcloud">
     <a class="article-category-link" href="/categories/Java-编程/">Java 编程</a>
     </div>
 
 
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/06/13/BufferedReader-readLine/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-spring-data-mongodb" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/06/06/spring-data-mongodb/" class="article-date">
-      <time datetime="2016-06-06T14:27:45.000Z" itemprop="datePublished">2016-06-06</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/06/spring-data-mongodb/">SpringMVC 整合Mongodb</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>平时都在用 SpringMVC 进行开发，但是，基本上都是在用 SpringMVC+Mybatis+MySQL 进行开发。对于 Mongodb 只是听说过，<br>自己实际没有操作过，近期，在工作之余决定研究一下 Mongodb 。<br>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringMVC/">SpringMVC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/整合Mongod/">整合Mongod</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/06/06/spring-data-mongodb/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Java-compli-read-notes-basis" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/06/01/Java-compli-read-notes-basis/" class="article-date">
-      <time datetime="2016-06-01T15:15:45.000Z" itemprop="datePublished">2016-06-01</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/01/Java-compli-read-notes-basis/">Java 并发编程读书笔记(基础篇)</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="基础篇，从各种概念开始。"><a href="#基础篇，从各种概念开始。" class="headerlink" title="基础篇，从各种概念开始。"></a>基础篇，从各种概念开始。</h1><h2 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h2><ul>
-<li>当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步货协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/读书笔记/">读书笔记</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/06/01/Java-compli-read-notes-basis/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-MySQL-batch-insert" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/06/01/MySQL-batch-insert/" class="article-date">
-      <time datetime="2016-06-01T14:22:22.000Z" itemprop="datePublished">2016-06-01</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/01/MySQL-batch-insert/">MySQL 入库操作的优化</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>最近开始玩 <strong>MyBatis</strong> ，想实现这么一个功能，就是将一张表里的数据作为历史数据存储到另一张表里去。<br>一开始我的代码是这么写的：</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Java-编程/">Java 编程</a>
-    </div>
-
-
-      
     <div class="article-tag tagcloud">
         <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li></ul>
     </div>
 
+        <div class="clearfix"></div>
+      </div>
       
-        <p class="article-more-link">
-          <a href="/2016/06/01/MySQL-batch-insert/#more">阅读全文 >></a>
-        </p>
+    
+    <div class="article-entry" itemprop="articleBody">
       
-      <div class="clearfix"></div>
+          
+        <p>##前言<br>  工作中有这么一个业务场景，数据库里的数据需要定时全量删除。全量删除数据有两个选择，1：<strong>DELETE FROM table_name</strong> 2:<strong>TRUNCATE TABLE table_name</strong>。<br>由于<strong>TRUNCATE TABLE</strong> 相当于不带 <strong>WHERE</strong>条件的<strong>DELETE</strong>语句，那么不论是选择<strong>DELETE</strong>还是选择<strong>TRUNCATE TABLE</strong>好像都能达到我删除全量数据的目的。<br><a id="more"></a></p>
+<p>##DELETE 语法<br><strong>DELETE</strong> 语句大家都熟悉，语法如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 单表操作 --&gt;</div><div class="line">DELETE [LOW_PRIORITY] [QUICK] [IGNORE] FROM tbl_name</div><div class="line">    [PARTITION (partition_name,...)]</div><div class="line">    [WHERE where_condition]</div><div class="line">    [ORDER BY ...]</div><div class="line">    [LIMIT row_count]</div><div class="line">    </div><div class="line">&lt;!-- 多表操作1 --&gt;</div><div class="line">DELETE [LOW_PRIORITY] [QUICK] [IGNORE]</div><div class="line">    tbl_name[.*] [, tbl_name[.*]] ...</div><div class="line">    FROM table_references</div><div class="line">    [WHERE where_condition]</div><div class="line">    </div><div class="line">&lt;!-- 多表操作2 --&gt;</div><div class="line">DELETE [LOW_PRIORITY] [QUICK] [IGNORE]</div><div class="line">    FROM tbl_name[.*] [, tbl_name[.*]] ...</div><div class="line">    USING table_references</div><div class="line">    [WHERE where_condition]</div></pre></td></tr></table></figure>
+<p>##TRUNCATE TABLE 语法</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">TRUNCATE</span> [<span class="keyword">TABLE</span>] tbl_name</div></pre></td></tr></table></figure>
+<p>##<strong>DELETE</strong>和<strong>TRUNCATE TABLE</strong>的区别<br>现在我们了解了<strong>DELETE</strong>和<strong>TRUNCATE TABLE</strong>的共同点和语法后，现在我们来了解一下它们的区别。<br><strong>DELETE</strong>和<strong>TRUNCATE TABLE</strong>的最大区别在于执行速度和是否可以条件删除。<br><strong>DELETE</strong>可以通过<strong>WHERE</strong>条件来筛选需要删除的记录，且可以返回删除的记录数。<br><strong>TRUNCATE TABLE</strong>不能条件筛选需要删除的记录，且不返回删除的记录数。<br><strong>TRUNCATE TABLE</strong>的执行速度非常快，<strong>DELETE</strong>的执行速度不是很快。</p>
+<p>未完待续。。。</p>
+
+      
     </div>
     
   </div>
   
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/11/14/MySQL-truncate-delete/">TRUNCATE 和 DELETE 的区别</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Apple</a></p>
+        <p><span>发布时间:</span>2016-11-14, 22:15:00</p>
+        <p><span>最后更新:</span>2016-11-04, 16:57:28</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/11/14/MySQL-truncate-delete/" title="TRUNCATE 和 DELETE 的区别">http://blog.xueni.ren/2016/11/14/MySQL-truncate-delete/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.xueni.ren/2016/11/14/MySQL-truncate-delete/　　作者: Apple" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/09/27/spring-task/">
+                    Spring 定时器的两种简单实现
+                </a>
+            </div>
+        
+    </nav>
+
+  
 </article>
 
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"TRUNCATE 和 DELETE 的区别　| Apple　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
 
 
 
@@ -574,13 +401,49 @@
 
 
 
+    
+        <section id="comments">
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'winteren'; // required: replace example with your forum shortname
 
-  
-  
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
-    </nav>
-  
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/09/27/spring-task/" title="下一篇: Spring 定时器的两种简单实现">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/11/14/MySQL-truncate-delete/">TRUNCATE 和 DELETE 的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/27/spring-task/">Spring 定时器的两种简单实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/22/custom-local-cache/">通过 HashMap 实现本地缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/09/JVM-read-notes/">深入理解 Java 虚拟机 读书笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/timer-grammar-xml/">定时器语法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/15/google-guava/">Google Guava Cache 学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/13/BufferedReader-readLine/">BufferedReader.readLine() 的使用中遇到的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/06/spring-data-mongodb/">SpringMVC 整合Mongodb</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/01/Java-compli-read-notes-basis/">Java 并发编程读书笔记(基础篇)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/01/MySQL-batch-insert/">MySQL 入库操作的优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/11/19/test/">test</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/04/01/pelican-blog/">发布pelican博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2014/11/19/hello-world/">Hello World</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
 </div>
       <footer id="footer">
     <div class="outer">

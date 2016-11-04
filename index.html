@@ -245,6 +245,72 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-MySQL-truncate-delete" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/11/14/MySQL-truncate-delete/" class="article-date">
+      <time datetime="2016-11-14T14:15:00.000Z" itemprop="datePublished">2016-11-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/14/MySQL-truncate-delete/">TRUNCATE 和 DELETE 的区别</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>##前言<br>  工作中有这么一个业务场景，数据库里的数据需要定时全量删除。全量删除数据有两个选择，1：<strong>DELETE FROM table_name</strong> 2:<strong>TRUNCATE TABLE table_name</strong>。<br>由于<strong>TRUNCATE TABLE</strong> 相当于不带 <strong>WHERE</strong>条件的<strong>DELETE</strong>语句，那么不论是选择<strong>DELETE</strong>还是选择<strong>TRUNCATE TABLE</strong>好像都能达到我删除全量数据的目的。<br>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Java-编程/">Java 编程</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/11/14/MySQL-truncate-delete/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-spring-task" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -491,72 +557,6 @@
       
         <p class="article-more-link">
           <a href="/2016/07/15/timer-grammar-xml/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-google-guava" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/06/15/google-guava/" class="article-date">
-      <time datetime="2016-06-14T16:00:00.000Z" itemprop="datePublished">2016-06-15</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/15/google-guava/">Google Guava Cache 学习笔记</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h2 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h2><p>缓存主要作用是就是预读取（预先读取将要载入的数据）、存储临时访问过的数据和对写入的数据进行暂时存放。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Cache/">Cache</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Guava/">Guava</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java-编程/">Java 编程</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/06/15/google-guava/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
