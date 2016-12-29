@@ -11,16 +11,16 @@
   
   <title>TRUNCATE 和 DELETE 的区别 | Apple</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言  工作中有这么一个业务场景，数据库里的数据需要定时全量删除。全量删除数据有两个选择，1：DELETE FROM table_name 2:TRUNCATE TABLE table_name。由于 TRUNCATE TABLE 相当于不带 WHERE 条件的 DELETE 语句，那么不论是选择 DELETE 还是选择 TRUNCATE TABLE 好像都能达到我删除全量数据的目的。">
+  <meta name="description" content="前言  工作中有这么一个业务场景，数据库里的数据需要定时全量删除。  全量删除数据有两个选择，  1：DELETE FROM table_name  2:TRUNCATE TABLE table_name。由于 TRUNCATE TABLE 相当于不带 WHERE 条件的 DELETE 语句，那么不论是选择 DELETE 还是选择 TRUNCATE TABLE 好像都能达到我删除全量数据的目的。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TRUNCATE 和 DELETE 的区别">
 <meta property="og:url" content="http://blog.xueni.ren/2016/11/14/MySQL-truncate-delete/index.html">
 <meta property="og:site_name" content="Apple">
-<meta property="og:description" content="前言  工作中有这么一个业务场景，数据库里的数据需要定时全量删除。全量删除数据有两个选择，1：DELETE FROM table_name 2:TRUNCATE TABLE table_name。由于 TRUNCATE TABLE 相当于不带 WHERE 条件的 DELETE 语句，那么不论是选择 DELETE 还是选择 TRUNCATE TABLE 好像都能达到我删除全量数据的目的。">
-<meta property="og:updated_time" content="2016-11-04T09:08:15.337Z">
+<meta property="og:description" content="前言  工作中有这么一个业务场景，数据库里的数据需要定时全量删除。  全量删除数据有两个选择，  1：DELETE FROM table_name  2:TRUNCATE TABLE table_name。由于 TRUNCATE TABLE 相当于不带 WHERE 条件的 DELETE 语句，那么不论是选择 DELETE 还是选择 TRUNCATE TABLE 好像都能达到我删除全量数据的目的。">
+<meta property="og:updated_time" content="2016-12-29T08:01:55.004Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TRUNCATE 和 DELETE 的区别">
-<meta name="twitter:description" content="前言  工作中有这么一个业务场景，数据库里的数据需要定时全量删除。全量删除数据有两个选择，1：DELETE FROM table_name 2:TRUNCATE TABLE table_name。由于 TRUNCATE TABLE 相当于不带 WHERE 条件的 DELETE 语句，那么不论是选择 DELETE 还是选择 TRUNCATE TABLE 好像都能达到我删除全量数据的目的。">
+<meta name="twitter:description" content="前言  工作中有这么一个业务场景，数据库里的数据需要定时全量删除。  全量删除数据有两个选择，  1：DELETE FROM table_name  2:TRUNCATE TABLE table_name。由于 TRUNCATE TABLE 相当于不带 WHERE 条件的 DELETE 语句，那么不论是选择 DELETE 还是选择 TRUNCATE TABLE 好像都能达到我删除全量数据的目的。">
   
     <link rel="alternative" href="/atom.xml" title="Apple" type="application/atom+xml">
   
@@ -284,12 +284,11 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>  工作中有这么一个业务场景，数据库里的数据需要定时全量删除。全量删除数据有两个选择，1：<code>DELETE FROM table_name</code> 2:<code>TRUNCATE TABLE table_name</code>。<br>由于 <strong>TRUNCATE TABLE</strong> 相当于不带 <strong>WHERE</strong> 条件的 <strong>DELETE</strong> 语句，那么不论是选择 <strong>DELETE</strong> 还是选择 <strong>TRUNCATE TABLE</strong> 好像都能达到我删除全量数据的目的。<br><a id="more"></a></p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>  工作中有这么一个业务场景，数据库里的数据需要定时全量删除。<br>  全量删除数据有两个选择，<br>  1：<code>DELETE FROM table_name</code><br>  2:<code>TRUNCATE TABLE table_name</code>。<br>由于 <strong>TRUNCATE TABLE</strong> 相当于不带 <strong>WHERE</strong> 条件的 <strong>DELETE</strong> 语句，那么不论是选择 <strong>DELETE</strong> 还是选择 <strong>TRUNCATE TABLE</strong> 好像都能达到我删除全量数据的目的。<br><a id="more"></a></p>
 <h2 id="DELETE-语法"><a href="#DELETE-语法" class="headerlink" title="DELETE 语法"></a>DELETE 语法</h2><p><strong>DELETE</strong> 语句大家都熟悉，语法如下：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 单表操作 --&gt;</div><div class="line">DELETE [LOW_PRIORITY] [QUICK] [IGNORE] FROM tbl_name</div><div class="line">    [PARTITION (partition_name,...)]</div><div class="line">    [WHERE where_condition]</div><div class="line">    [ORDER BY ...]</div><div class="line">    [LIMIT row_count]</div><div class="line">    </div><div class="line">&lt;!-- 多表操作1 --&gt;</div><div class="line">DELETE [LOW_PRIORITY] [QUICK] [IGNORE]</div><div class="line">    tbl_name[.*] [, tbl_name[.*]] ...</div><div class="line">    FROM table_references</div><div class="line">    [WHERE where_condition]</div><div class="line">    </div><div class="line">&lt;!-- 多表操作2 --&gt;</div><div class="line">DELETE [LOW_PRIORITY] [QUICK] [IGNORE]</div><div class="line">    FROM tbl_name[.*] [, tbl_name[.*]] ...</div><div class="line">    USING table_references</div><div class="line">    [WHERE where_condition]</div></pre></td></tr></table></figure>
 <h2 id="TRUNCATE-TABLE-语法"><a href="#TRUNCATE-TABLE-语法" class="headerlink" title="TRUNCATE TABLE 语法"></a>TRUNCATE TABLE 语法</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">TRUNCATE</span> [<span class="keyword">TABLE</span>] tbl_name</div></pre></td></tr></table></figure>
 <h2 id="DELETE-和-TRUNCATE-TABLE-的区别"><a href="#DELETE-和-TRUNCATE-TABLE-的区别" class="headerlink" title="DELETE 和 TRUNCATE TABLE 的区别"></a><strong>DELETE</strong> 和 <strong>TRUNCATE TABLE</strong> 的区别</h2><p>现在我们了解了 <strong>DELETE</strong> 和 <strong>TRUNCATE TABLE</strong> 的共同点和语法后，现在我们来了解一下它们的区别。<br><strong>DELETE</strong> 和 <strong>TRUNCATE TABLE</strong> 的最大区别在于执行速度和是否可以条件删除。<br><strong>DELETE</strong> 可以通过 <strong>WHERE</strong> 条件来筛选需要删除的记录，且可以返回删除的记录数。<br><strong>TRUNCATE TABLE</strong> 不能条件筛选需要删除的记录，且不返回删除的记录数。<br><strong>TRUNCATE TABLE</strong> 的执行速度非常快，<strong>DELETE</strong> 的执行速度不是很快。</p>
-<p>未完待续。。。</p>
 
       
     </div>
@@ -301,7 +300,7 @@
         <p><span>本文标题:</span><a href="/2016/11/14/MySQL-truncate-delete/">TRUNCATE 和 DELETE 的区别</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Apple</a></p>
         <p><span>发布时间:</span>2016-11-14, 22:15:00</p>
-        <p><span>最后更新:</span>2016-11-04, 17:08:15</p>
+        <p><span>最后更新:</span>2016-12-29, 16:01:55</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/11/14/MySQL-truncate-delete/" title="TRUNCATE 和 DELETE 的区别">http://blog.xueni.ren/2016/11/14/MySQL-truncate-delete/</a>
             <span class="copy-path" data-clipboard-text="原文: http://blog.xueni.ren/2016/11/14/MySQL-truncate-delete/　　作者: Apple" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
