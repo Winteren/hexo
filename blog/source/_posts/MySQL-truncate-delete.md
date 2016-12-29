@@ -9,7 +9,10 @@ description:
 ---
 
 ## 前言
-  工作中有这么一个业务场景，数据库里的数据需要定时全量删除。全量删除数据有两个选择，1：`DELETE FROM table_name` 2:`TRUNCATE TABLE table_name`。
+  工作中有这么一个业务场景，数据库里的数据需要定时全量删除。
+  全量删除数据有两个选择，
+  1：`DELETE FROM table_name` 
+  2:`TRUNCATE TABLE table_name`。
 由于 **TRUNCATE TABLE** 相当于不带 **WHERE** 条件的 **DELETE** 语句，那么不论是选择 **DELETE** 还是选择 **TRUNCATE TABLE** 好像都能达到我删除全量数据的目的。
 <!-- more -->
 ## DELETE 语法
@@ -47,4 +50,3 @@ TRUNCATE [TABLE] tbl_name
 **TRUNCATE TABLE** 不能条件筛选需要删除的记录，且不返回删除的记录数。
 **TRUNCATE TABLE** 的执行速度非常快，**DELETE** 的执行速度不是很快。
 
-未完待续。。。
