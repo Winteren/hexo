@@ -80,7 +80,51 @@ description:
 	<bean id="sqlSessionTemplateR" class="org.mybatis.spring.SqlSessionTemplate" c:sqlSessionFactory-ref="sqlSessionFactoryR" scope="prototype" />
 ```
 
-
-
-
-随着
+## db.properties
+```xml
+#---------------------Write---------------------------------
+db_w.driverClassName=com.mysql.jdbc.Driver
+db_w.url=jdbc:mysql://127.0.01:3306/address_shipping
+db_w.username=root
+db_w.password=root
+db_w.jmxEnabled=true
+db_w.testOnBorrow=false
+db_w.testWhileIdle=true
+db_w.testOnReturn=false
+db_w.validationInterval=30000
+db_w.validationQuery=select 1
+db_w.timeBetweenEvictionRunsMillis=30000
+db_w.initialSize=5
+db_w.maxActive=20
+db_w.maxIdle=5
+db_w.minIdle=5
+db_w.maxWait=30000
+db_w.minEvictableIdleTimeMillis=30000
+db_w.logAbandoned=false
+db_w.removeAbandoned=true
+db_w.removeAbandonedTimeout=60
+db_w.jdbcInterceptors=org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer
+#---------------------Read---------------------------------
+db_r.driverClassName=com.mysql.jdbc.Driver
+db_r.url=jdbc:mysql://127.0.01:3306/address_shipping
+db_r.username=root
+db_r.password=root
+db_r.jmxEnabled=true
+db_r.testOnBorrow=false
+db_r.testWhileIdle=true
+db_r.testOnReturn=false
+db_r.validationInterval=30000
+db_r.validationQuery=select 1
+db_r.timeBetweenEvictionRunsMillis=30000
+db_r.initialSize=5
+db_r.maxActive=20
+db_r.maxIdle=5
+db_r.minIdle=5
+db_r.maxWait=30000
+db_r.minEvictableIdleTimeMillis=30000
+db_r.logAbandoned=false
+db_r.removeAbandoned=true
+db_r.removeAbandonedTimeout=60
+db_r.jdbcInterceptors=org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer
+```
+以上，备忘录。
