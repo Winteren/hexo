@@ -12,12 +12,13 @@
   <title>TRUNCATE 和 DELETE 的区别 | Apple</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="前言  工作中有这么一个业务场景，数据库里的数据需要定时全量删除。  全量删除数据有两个选择，  1：DELETE FROM table_name  2:TRUNCATE TABLE table_name。由于 TRUNCATE TABLE 相当于不带 WHERE 条件的 DELETE 语句，那么不论是选择 DELETE 还是选择 TRUNCATE TABLE 好像都能达到我删除全量数据的目的。">
+<meta name="keywords" content="MySQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TRUNCATE 和 DELETE 的区别">
 <meta property="og:url" content="http://blog.xueni.ren/2016/11/14/MySQL-truncate-delete/index.html">
 <meta property="og:site_name" content="Apple">
 <meta property="og:description" content="前言  工作中有这么一个业务场景，数据库里的数据需要定时全量删除。  全量删除数据有两个选择，  1：DELETE FROM table_name  2:TRUNCATE TABLE table_name。由于 TRUNCATE TABLE 相当于不带 WHERE 条件的 DELETE 语句，那么不论是选择 DELETE 还是选择 TRUNCATE TABLE 好像都能达到我删除全量数据的目的。">
-<meta property="og:updated_time" content="2017-01-04T06:59:06.582Z">
+<meta property="og:updated_time" content="2017-04-07T14:48:16.119Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TRUNCATE 和 DELETE 的区别">
 <meta name="twitter:description" content="前言  工作中有这么一个业务场景，数据库里的数据需要定时全量删除。  全量删除数据有两个选择，  1：DELETE FROM table_name  2:TRUNCATE TABLE table_name。由于 TRUNCATE TABLE 相当于不带 WHERE 条件的 DELETE 语句，那么不论是选择 DELETE 还是选择 TRUNCATE TABLE 好像都能达到我删除全量数据的目的。">
@@ -167,7 +168,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cache/">Cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Guava/">Guava</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HashMap/">HashMap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JDBC/">JDBC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/">JVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-编程/">Java 编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringMVC/">SpringMVC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hello/">hello</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/timer/">timer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xml/">xml</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/整合Mongod/">整合Mongod</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cache/">Cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Guava/">Guava</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HashMap/">HashMap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JDBC/">JDBC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/">JVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-编程/">Java 编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringMVC/">SpringMVC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hello/">hello</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/timer/">timer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xStream/">xStream</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xml/">xml</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/整合Mongod/">整合Mongod</a></li></ul>
                     </div>
                 </section>
                 
@@ -300,7 +301,7 @@
         <p><span>本文标题:</span><a href="/2016/11/14/MySQL-truncate-delete/">TRUNCATE 和 DELETE 的区别</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Apple</a></p>
         <p><span>发布时间:</span>2016-11-14, 22:15:00</p>
-        <p><span>最后更新:</span>2017-01-04, 14:59:06</p>
+        <p><span>最后更新:</span>2017-04-07, 22:48:16</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/11/14/MySQL-truncate-delete/" title="TRUNCATE 和 DELETE 的区别">http://blog.xueni.ren/2016/11/14/MySQL-truncate-delete/</a>
             <span class="copy-path" data-clipboard-text="原文: http://blog.xueni.ren/2016/11/14/MySQL-truncate-delete/　　作者: Apple" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -316,15 +317,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/01/04/double-data-source/">
-                    Tomcat JDBC Pool 多数据源配置
+                <a href="/2016/09/27/spring-task/">
+                    Spring 定时器的两种简单实现
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/09/27/spring-task/">
-                    Spring 定时器的两种简单实现
+                <a href="/2017/01/04/double-data-source/">
+                    Tomcat JDBC Pool 多数据源配置
                 </a>
             </div>
         
@@ -428,7 +429,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/01/04/double-data-source/" title="上一篇: Tomcat JDBC Pool 多数据源配置">
+            <a href="/2016/09/27/spring-task/" title="上一篇: Spring 定时器的两种简单实现">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -436,13 +437,13 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/09/27/spring-task/" title="下一篇: Spring 定时器的两种简单实现">
+            <a href="/2017/01/04/double-data-source/" title="下一篇: Tomcat JDBC Pool 多数据源配置">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/01/04/double-data-source/">Tomcat JDBC Pool 多数据源配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/14/MySQL-truncate-delete/">TRUNCATE 和 DELETE 的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/27/spring-task/">Spring 定时器的两种简单实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/22/custom-local-cache/">通过 HashMap 实现本地缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/09/JVM-read-notes/">深入理解 Java 虚拟机 读书笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/timer-grammar-xml/">定时器语法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/15/google-guava/">Google Guava Cache 学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/13/BufferedReader-readLine/">BufferedReader.readLine() 的使用中遇到的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/06/spring-data-mongodb/">SpringMVC 整合Mongodb</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/01/Java-compli-read-notes-basis/">Java 并发编程读书笔记(基础篇)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/01/MySQL-batch-insert/">MySQL 入库操作的优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/11/19/test/">test</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/04/01/pelican-blog/">发布pelican博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2014/11/19/hello-world/">Hello World</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/04/07/XStream/">XStream 之 JavaBean 与 XML 相互转换</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/04/double-data-source/">Tomcat JDBC Pool 多数据源配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/14/MySQL-truncate-delete/">TRUNCATE 和 DELETE 的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/27/spring-task/">Spring 定时器的两种简单实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/22/custom-local-cache/">通过 HashMap 实现本地缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/09/JVM-read-notes/">深入理解 Java 虚拟机 读书笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/timer-grammar-xml/">定时器语法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/15/google-guava/">Google Guava Cache 学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/13/BufferedReader-readLine/">BufferedReader.readLine() 的使用中遇到的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/06/spring-data-mongodb/">SpringMVC 整合Mongodb</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/01/Java-compli-read-notes-basis/">Java 并发编程读书笔记(基础篇)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/01/MySQL-batch-insert/">MySQL 入库操作的优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/11/19/test/">test</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/04/01/pelican-blog/">发布pelican博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2014/11/19/hello-world/">Hello World</a></li></ul>
 
 
 
