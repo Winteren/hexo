@@ -8,8 +8,8 @@ node_js:
 - '4.2'
 
 before_install:
-- git config --global user.name "summeren"
-- git config --global user.email "Summeren@users.noreply.github.com"
+- git config --global user.name "Winteren"
+- git config --global user.email "Winteren@users.noreply.github.com"
 
 env:
   - TZ="Asia/Shanghai"
