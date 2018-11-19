@@ -6,7 +6,7 @@ categories:
 tags: 
 - Go
 description: 
-Go 语言学习笔记
+- Go 语言学习笔记
 ---
 # 初识 Go 语言
   Go （又称 Golang）是 Google 开发的一种静态强类型、编译型、并发型，并具有垃圾回收功能的编程语言。
