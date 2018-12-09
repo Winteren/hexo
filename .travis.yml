@@ -30,7 +30,7 @@ script:
 after_success:
 - mkdir .deploy
 - cd .deploy
-- git clone --depth 1 --branch gh-pages --single-branch $DEPLOY_REPO . || (git init && git remote add -t gh-pages origin $DEPLOY_REPO)
+- git clone --depth 1 --branch gh-pages --single-branch $DEPLOY_REPO2 . || (git init && git remote add -t gh-pages origin $DEPLOY_REPO2)
 - rm -rf ./*
 - cp -r ../public/* .
 - git add -A .
