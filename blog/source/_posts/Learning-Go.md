@@ -23,7 +23,7 @@ description:
 # 配置环境变量
   ``` 
   ➜  ~ echo "export PATH=/usr/local/go/bin:$PATH" >> .bashrc
-  ➜  ~ echo "export GOPATH=/Users/renxueni/go" >> .bashrc
+  ➜  ~ echo "export GOPATH=/Users/xxx/go" >> .bashrc
   ➜  ~ echo "export GOBIN=$GOPATH/bin" >> .bashrc
   ➜  ~ source .bashrc
 ```
@@ -32,13 +32,13 @@ description:
 ➜  ~ go env
 GOARCH="amd64"
 GOBIN="/bin"
-GOCACHE="/Users/renxueni/Library/Caches/go-build"
+GOCACHE="/Users/xxx/Library/Caches/go-build"
 GOEXE=""
 GOFLAGS=""
 GOHOSTARCH="amd64"
 GOHOSTOS="darwin"
 GOOS="darwin"
-GOPATH="/Users/renxueni/go"
+GOPATH="/Users/xxx/go"
 GOPROXY=""
 GORACE=""
 GOROOT="/usr/local/go"
@@ -59,7 +59,7 @@ GOGCCFLAGS="-fPIC -m64 -pthread -fno-caret-diagnostics -Qunused-arguments -fmess
 ```
 # 进入工作空间源码目录
 ```
-➜  ~ cd /Users/renxueni/go/src
+➜  ~ cd /Users/xxx/go/src
 ```
 # 创建测试包目录
 ```
